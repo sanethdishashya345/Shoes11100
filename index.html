@@ -1,144 +1,632 @@
-<script>
-const app = {
-    // Database of Kicks
-    products: [
-        { id: 1, brand: 'Jordan', title: 'Air Jordan 1 High OG', price: 45000, badge: 'limited', image: 'https://images.unsplash.com/photo-1584735175315-9d5823860e14?auto=format&fit=crop&q=80&w=400' },
-        { id: 2, brand: 'Nike', title: 'Dunk Low "Panda"', price: 28000, badge: 'new', image: 'https://images.unsplash.com/photo-1600054800747-be294a6a0d26?auto=format&fit=crop&q=80&w=400' },
-        { id: 3, brand: 'Adidas', title: 'Yeezy Boost 350 V2', price: 55000, badge: 'authenticated', image: 'https://images.unsplash.com/photo-1586525198428-225f6f12cff5?auto=format&fit=crop&q=80&w=400' },
-        { id: 4, brand: 'New Balance', title: '2002R Protection Pack', price: 32000, badge: 'sale', image: 'https://images.unsplash.com/photo-1539185441755-769473a23570?auto=format&fit=crop&q=80&w=400' },
-        { id: 5, brand: 'Puma', title: 'MB.01 LaMelo Ball', price: 24500, badge: 'new', image: 'https://images.unsplash.com/photo-1608231387042-66d1773070a5?auto=format&fit=crop&q=80&w=400' }
-    ],
-    cart: [],
-
-    init() {
-        this.renderProducts(this.products);
-        this.initCursor();
-        this.initScrollProgress();
-        this.setupEventListeners();
-        console.log("KICKZ Engine: Fully Loaded");
-    },
-
-    // 1. PERFORMANCE MOUSE FOLLOWER
-    initCursor() {
-        const cursor = document.getElementById('cursor');
-        window.addEventListener('mousemove', (e) => {
-            // translate3d uses hardware acceleration for 60fps movement
-            window.requestAnimationFrame(() => {
-                cursor.style.transform = `translate3d(${e.clientX}px, ${e.clientY}px, 0)`;
-            });
-        });
-
-        // Detect hovers on any interactive element
-        document.addEventListener('mouseover', (e) => {
-            if (e.target.closest('button, .filter-chip, .brand-logo, .card, a')) {
-                cursor.classList.add('hovered');
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NEXUS | Premium Smartphones</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        charcoal: '#1a1a1a',
+                        'electric-blue': '#0066FF',
+                        'electric-blue-light': '#3385FF',
+                    },
+                    fontFamily: {
+                        sans: ['-apple-system', 'BlinkMacSystemFont', 'SF Pro Display', 'Segoe UI', 'sans-serif'],
+                    },
+                    animation: {
+                        'float': 'float 6s ease-in-out infinite',
+                        'pulse-slow': 'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                        'slide-up': 'slideUp 0.8s ease-out forwards',
+                        'fade-in': 'fadeIn 1s ease-out forwards',
+                    },
+                    keyframes: {
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0px)' },
+                            '50%': { transform: 'translateY(-20px)' },
+                        },
+                        slideUp: {
+                            '0%': { opacity: '0', transform: 'translateY(30px)' },
+                            '100%': { opacity: '1', transform: 'translateY(0)' },
+                        },
+                        fadeIn: {
+                            '0%': { opacity: '0' },
+                            '100%': { opacity: '1' },
+                        }
+                    }
+                }
             }
-        });
-        document.addEventListener('mouseout', (e) => {
-            if (e.target.closest('button, .filter-chip, .brand-logo, .card, a')) {
-                cursor.classList.remove('hovered');
-            }
-        });
-    },
-
-    // 2. PRODUCT GRID GENERATOR
-    renderProducts(items) {
-        const grid = document.getElementById('productGrid');
-        if (items.length === 0) {
-            grid.innerHTML = `<div style="grid-column: 1/-1; text-align: center; padding: 80px; opacity: 0.5;">No items found.</div>`;
-            return;
         }
-        grid.innerHTML = items.map(p => `
-            <div class="card">
-                <div class="badge badge-${p.badge}">${p.badge}</div>
-                <div class="img-container">
-                    <img src="${p.image}" alt="${p.title}" loading="lazy">
-                    <button class="quick-view" onclick="app.openModal(${p.id})">QUICK VIEW</button>
+    </script>
+    <style>
+        .glass {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        .dark .glass {
+            background: rgba(30, 30, 30, 0.6);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        .glass-btn {
+            background: rgba(255, 255, 255, 0.25);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+        }
+        .dark .glass-btn {
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        .glass-btn:hover {
+            background: rgba(255, 255, 255, 0.35);
+            transform: translateY(-2px);
+            box-shadow: 0 12px 40px 0 rgba(31, 38, 135, 0.45);
+        }
+        .text-gradient {
+            background: linear-gradient(135deg, #0066FF 0%, #00D4FF 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .phone-shadow {
+            filter: drop-shadow(0 25px 50px rgba(0, 102, 255, 0.3));
+        }
+        .spec-card {
+            transition: all 0.3s ease;
+        }
+        .spec-card:hover {
+            transform: translateY(-5px);
+        }
+        .carousel-slide {
+            transition: transform 0.5s ease-in-out;
+        }
+        .hide-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .hide-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+    </style>
+</head>
+<body class="bg-white dark:bg-charcoal text-charcoal dark:text-white transition-colors duration-300 font-sans antialiased overflow-x-hidden">
+
+    <!-- Navigation -->
+    <nav class="fixed w-full z-50 top-0 transition-all duration-300" id="navbar">
+        <div class="glass mx-4 mt-4 rounded-2xl px-6 py-4 flex justify-between items-center max-w-7xl mx-auto">
+            <div class="flex items-center gap-2">
+                <div class="w-8 h-8 bg-electric-blue rounded-lg flex items-center justify-center">
+                    <span class="text-white font-bold text-lg">N</span>
                 </div>
-                <div style="text-align:left">
-                    <small style="color:var(--primary); font-weight:700; text-transform:uppercase;">${p.brand}</small>
-                    <h3 style="margin:5px 0; font-size:1.1rem;">${p.title}</h3>
-                    <p class="text-gradient" style="font-weight:900; margin:0">Rs. ${p.price.toLocaleString()}</p>
-                    <button class="btn-buy" style="margin-top:15px; padding: 12px;" onclick="app.addToCart(${p.id})">ADD TO CART</button>
+                <span class="font-semibold text-xl tracking-tight">NEXUS</span>
+            </div>
+            
+            <div class="hidden md:flex items-center gap-8 text-sm font-medium">
+                <a href="#specs" class="hover:text-electric-blue transition-colors">Specs</a>
+                <a href="#compare" class="hover:text-electric-blue transition-colors">Compare</a>
+                <a href="#reviews" class="hover:text-electric-blue transition-colors">Reviews</a>
+                <button onclick="toggleDarkMode()" class="p-2 rounded-full hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors" aria-label="Toggle dark mode">
+                    <svg id="sun-icon" class="w-5 h-5 hidden dark:block" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"></path>
+                    </svg>
+                    <svg id="moon-icon" class="w-5 h-5 block dark:hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"></path>
+                    </svg>
+                </button>
+                <button class="bg-electric-blue text-white px-6 py-2 rounded-full text-sm font-medium hover:bg-electric-blue-light transition-all transform hover:scale-105">
+                    Pre-order
+                </button>
+            </div>
+
+            <button class="md:hidden p-2" onclick="toggleMobileMenu()">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                </svg>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Mobile Menu -->
+    <div id="mobile-menu" class="fixed inset-0 z-40 bg-white dark:bg-charcoal transform translate-x-full transition-transform duration-300 md:hidden pt-24 px-6">
+        <div class="flex flex-col gap-6 text-lg font-medium">
+            <a href="#specs" onclick="toggleMobileMenu()" class="border-b border-gray-200 dark:border-gray-700 pb-4">Specifications</a>
+            <a href="#compare" onclick="toggleMobileMenu()" class="border-b border-gray-200 dark:border-gray-700 pb-4">Compare</a>
+            <a href="#reviews" onclick="toggleMobileMenu()" class="border-b border-gray-200 dark:border-gray-700 pb-4">Reviews</a>
+            <button onclick="toggleDarkMode()" class="flex items-center gap-3 border-b border-gray-200 dark:border-gray-700 pb-4">
+                <span>Dark Mode</span>
+                <div class="w-12 h-6 bg-gray-300 dark:bg-electric-blue rounded-full relative transition-colors">
+                    <div class="w-4 h-4 bg-white rounded-full absolute top-1 left-1 dark:left-7 transition-all"></div>
+                </div>
+            </button>
+        </div>
+    </div>
+
+    <!-- Hero Section -->
+    <section class="relative min-h-screen flex items-center justify-center pt-20 overflow-hidden">
+        <!-- Background Elements -->
+        <div class="absolute inset-0 overflow-hidden pointer-events-none">
+            <div class="absolute top-1/4 left-1/4 w-96 h-96 bg-electric-blue/20 rounded-full blur-3xl animate-pulse-slow"></div>
+            <div class="absolute bottom-1/4 right-1/4 w-96 h-96 bg-purple-500/20 rounded-full blur-3xl animate-pulse-slow" style="animation-delay: 2s;"></div>
+        </div>
+
+        <div class="max-w-7xl mx-auto px-6 grid md:grid-cols-2 gap-12 items-center relative z-10">
+            <!-- Text Content -->
+            <div class="text-center md:text-left space-y-8 animate-slide-up">
+                <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gray-100 dark:bg-gray-800 text-sm font-medium mb-4">
+                    <span class="w-2 h-2 bg-green-500 rounded-full animate-pulse"></span>
+                    Now Available
+                </div>
+                
+                <h1 class="text-5xl md:text-7xl font-bold leading-tight tracking-tight">
+                    NEXUS <span class="text-gradient">Pro X</span>
+                </h1>
+                
+                <p class="text-xl md:text-2xl text-gray-600 dark:text-gray-300 font-light leading-relaxed max-w-lg">
+                    Experience the future of mobile technology. Titanium design, quantum processing, and camera capabilities that redefine possibility.
+                </p>
+
+                <div class="flex flex-col sm:flex-row gap-4 justify-center md:justify-start pt-4">
+                    <button class="glass-btn px-8 py-4 rounded-full text-lg font-semibold text-electric-blue dark:text-white transition-all flex items-center justify-center gap-2 group">
+                        Buy Now
+                        <svg class="w-5 h-5 transform group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
+                        </svg>
+                    </button>
+                    <button class="px-8 py-4 rounded-full text-lg font-medium border border-gray-300 dark:border-gray-600 hover:border-electric-blue dark:hover:border-electric-blue transition-colors">
+                        Watch Film
+                    </button>
+                </div>
+
+                <div class="flex items-center gap-8 pt-8 justify-center md:justify-start text-sm text-gray-500 dark:text-gray-400">
+                    <div class="flex items-center gap-2">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                        </svg>
+                        Free Shipping
+                    </div>
+                    <div class="flex items-center gap-2">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path>
+                        </svg>
+                        2-Year Warranty
+                    </div>
                 </div>
             </div>
-        `).join('');
-    },
 
-    // 3. SEARCH & BRAND FILTERS
-    handleSearch(query) {
-        const filtered = this.products.filter(p => 
-            p.title.toLowerCase().includes(query.toLowerCase()) || 
-            p.brand.toLowerCase().includes(query.toLowerCase())
-        );
-        this.renderProducts(filtered);
-    },
+            <!-- Phone Image -->
+            <div class="relative animate-float">
+                <div class="relative z-10 phone-shadow">
+                    <img src="https://images.unsplash.com/photo-1616348436168-de43ad0db179?w=600&h=800&fit=crop" 
+                         alt="NEXUS Pro X Smartphone" 
+                         class="w-full max-w-md mx-auto rounded-[3rem] shadow-2xl transform hover:scale-105 transition-transform duration-500">
+                    
+                    <!-- Floating UI Elements -->
+                    <div class="absolute -right-4 top-20 glass px-4 py-3 rounded-2xl animate-fade-in" style="animation-delay: 0.5s;">
+                        <div class="flex items-center gap-3">
+                            <div class="w-10 h-10 bg-electric-blue/20 rounded-full flex items-center justify-center">
+                                <svg class="w-5 h-5 text-electric-blue" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+                                </svg>
+                            </div>
+                            <div>
+                                <p class="text-xs text-gray-500 dark:text-gray-400">Battery</p>
+                                <p class="font-semibold">48h Life</p>
+                            </div>
+                        </div>
+                    </div>
 
-    filterByBrand(brand, element) {
-        document.querySelectorAll('.filter-chip').forEach(chip => chip.classList.remove('active'));
-        element.classList.add('active');
+                    <div class="absolute -left-4 bottom-32 glass px-4 py-3 rounded-2xl animate-fade-in" style="animation-delay: 0.7s;">
+                        <div class="flex items-center gap-3">
+                            <div class="w-10 h-10 bg-purple-500/20 rounded-full flex items-center justify-center">
+                                <svg class="w-5 h-5 text-purple-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z"></path>
+                                </svg>
+                            </div>
+                            <div>
+                                <p class="text-xs text-gray-500 dark:text-gray-400">Camera</p>
+                                <p class="font-semibold">200MP</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Scroll Indicator -->
+        <div class="absolute bottom-8 left-1/2 transform -translate-x-1/2 animate-bounce">
+            <svg class="w-6 h-6 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path>
+            </svg>
+        </div>
+    </section>
+
+    <!-- Specifications Section -->
+    <section id="specs" class="py-24 bg-gray-50 dark:bg-gray-900/50 transition-colors">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="text-center mb-16 space-y-4">
+                <h2 class="text-4xl md:text-5xl font-bold">Top Specifications</h2>
+                <p class="text-gray-600 dark:text-gray-400 text-lg max-w-2xl mx-auto">
+                    Engineered for excellence. Every component crafted to deliver unprecedented performance.
+                </p>
+            </div>
+
+            <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+                <!-- Spec Card 1 -->
+                <div class="spec-card bg-white dark:bg-charcoal p-8 rounded-3xl shadow-lg dark:shadow-none border border-gray-100 dark:border-gray-800">
+                    <div class="w-14 h-14 bg-blue-100 dark:bg-blue-900/30 rounded-2xl flex items-center justify-center mb-6">
+                        <svg class="w-7 h-7 text-electric-blue" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 3v2m6-2v2M9 19v2m6-2v2M5 9H3m2 6H3m18-6h-2m2 6h-2M7 19h10a2 2 0 002-2V7a2 2 0 00-2-2H7a2 2 0 00-2 2v10a2 2 0 002 2zM9 9h6v6H9V9z"></path>
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-2">Quantum Chip</h3>
+                    <p class="text-gray-600 dark:text-gray-400 text-sm leading-relaxed">
+                        3nm architecture with 16-core neural engine for AI processing 50% faster than previous generation.
+                    </p>
+                </div>
+
+                <!-- Spec Card 2 -->
+                <div class="spec-card bg-white dark:bg-charcoal p-8 rounded-3xl shadow-lg dark:shadow-none border border-gray-100 dark:border-gray-800">
+                    <div class="w-14 h-14 bg-purple-100 dark:bg-purple-900/30 rounded-2xl flex items-center justify-center mb-6">
+                        <svg class="w-7 h-7 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z"></path>
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-2">Pro Camera</h3>
+                    <p class="text-gray-600 dark:text-gray-400 text-sm leading-relaxed">
+                        Triple-lens 200MP system with periscope zoom, night mode 3.0, and cinematic video stabilization.
+                    </p>
+                </div>
+
+                <!-- Spec Card 3 -->
+                <div class="spec-card bg-white dark:bg-charcoal p-8 rounded-3xl shadow-lg dark:shadow-none border border-gray-100 dark:border-gray-800">
+                    <div class="w-14 h-14 bg-green-100 dark:bg-green-900/30 rounded-2xl flex items-center justify-center mb-6">
+                        <svg class="w-7 h-7 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z"></path>
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-2">Ceramic Shield</h3>
+                    <p class="text-gray-600 dark:text-gray-400 text-sm leading-relaxed">
+                        Aerospace-grade titanium frame with ceramic shield front. 4x better drop performance.
+                    </p>
+                </div>
+
+                <!-- Spec Card 4 -->
+                <div class="spec-card bg-white dark:bg-charcoal p-8 rounded-3xl shadow-lg dark:shadow-none border border-gray-100 dark:border-gray-800">
+                    <div class="w-14 h-14 bg-orange-100 dark:bg-orange-900/30 rounded-2xl flex items-center justify-center mb-6">
+                        <svg class="w-7 h-7 text-orange-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-2">All-Day Battery</h3>
+                    <p class="text-gray-600 dark:text-gray-400 text-sm leading-relaxed">
+                        5000mAh with 65W fast charging. 0-50% in 15 minutes. Wireless charging 2.0 compatible.
+                    </p>
+                </div>
+            </div>
+
+            <!-- Additional Specs Grid -->
+            <div class="mt-12 grid grid-cols-2 md:grid-cols-4 gap-4 text-center">
+                <div class="p-4">
+                    <p class="text-3xl font-bold text-electric-blue">6.9"</p>
+                    <p class="text-sm text-gray-600 dark:text-gray-400 mt-1">Super Retina XDR</p>
+                </div>
+                <div class="p-4">
+                    <p class="text-3xl font-bold text-electric-blue">1TB</p>
+                    <p class="text-sm text-gray-600 dark:text-gray-400 mt-1">Max Storage</p>
+                </div>
+                <div class="p-4">
+                    <p class="text-3xl font-bold text-electric-blue">5G</p>
+                    <p class="text-sm text-gray-600 dark:text-gray-400 mt-1">Ultra-Wideband</p>
+                </div>
+                <div class="p-4">
+                    <p class="text-3xl font-bold text-electric-blue">IP68</p>
+                    <p class="text-sm text-gray-600 dark:text-gray-400 mt-1">Water Resistant</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Price Comparison Section -->
+    <section id="compare" class="py-24 relative overflow-hidden">
+        <div class="absolute inset-0 bg-gradient-to-b from-transparent via-electric-blue/5 to-transparent pointer-events-none"></div>
         
-        const filtered = brand === 'All' ? this.products : this.products.filter(p => p.brand === brand);
-        this.renderProducts(filtered);
-    },
+        <div class="max-w-5xl mx-auto px-6 relative z-10">
+            <div class="text-center mb-16 space-y-4">
+                <h2 class="text-4xl md:text-5xl font-bold">Choose Your Model</h2>
+                <p class="text-gray-600 dark:text-gray-400 text-lg">
+                    Compare storage options and find your perfect match.
+                </p>
+            </div>
 
-    // 4. UI COMPONENTS (Theme, Cart, Search Box)
-    toggleTheme() {
-        const body = document.body;
-        const current = body.getAttribute('data-theme');
-        body.setAttribute('data-theme', current === 'light' ? 'dark' : 'light');
-    },
+            <div class="glass rounded-3xl overflow-hidden shadow-2xl">
+                <div class="overflow-x-auto">
+                    <table class="w-full">
+                        <thead>
+                            <tr class="border-b border-gray-200 dark:border-gray-700">
+                                <th class="text-left p-6 font-semibold text-lg">Model</th>
+                                <th class="text-center p-6 font-semibold text-lg">Storage</th>
+                                <th class="text-center p-6 font-semibold text-lg">Display</th>
+                                <th class="text-right p-6 font-semibold text-lg">Price</th>
+                                <th class="p-6"></th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-gray-200 dark:divide-gray-700">
+                            <tr class="hover:bg-white/50 dark:hover:bg-white/5 transition-colors group">
+                                <td class="p-6">
+                                    <div class="flex items-center gap-4">
+                                        <div class="w-12 h-12 bg-gray-200 dark:bg-gray-700 rounded-xl flex items-center justify-center text-2xl">📱</div>
+                                        <div>
+                                            <p class="font-semibold text-lg">NEXUS Pro X</p>
+                                            <p class="text-sm text-gray-500 dark:text-gray-400">Standard Edition</p>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td class="text-center p-6 text-gray-600 dark:text-gray-300">256GB</td>
+                                <td class="text-center p-6 text-gray-600 dark:text-gray-300">6.7" OLED</td>
+                                <td class="text-right p-6">
+                                    <p class="text-2xl font-bold">$999</p>
+                                </td>
+                                <td class="p-6">
+                                    <button class="opacity-0 group-hover:opacity-100 transition-opacity bg-electric-blue text-white px-6 py-2 rounded-full text-sm font-medium hover:bg-electric-blue-light transform hover:scale-105 transition-all">
+                                        Select
+                                    </button>
+                                </td>
+                            </tr>
+                            <tr class="hover:bg-white/50 dark:hover:bg-white/5 transition-colors group bg-electric-blue/5 dark:bg-electric-blue/10">
+                                <td class="p-6">
+                                    <div class="flex items-center gap-4">
+                                        <div class="w-12 h-12 bg-electric-blue/20 rounded-xl flex items-center justify-center text-2xl relative">
+                                            📱
+                                            <span class="absolute -top-2 -right-2 bg-electric-blue text-white text-xs px-2 py-1 rounded-full">Popular</span>
+                                        </div>
+                                        <div>
+                                            <p class="font-semibold text-lg">NEXUS Pro X</p>
+                                            <p class="text-sm text-gray-500 dark:text-gray-400">Pro Edition</p>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td class="text-center p-6 text-gray-600 dark:text-gray-300">512GB</td>
+                                <td class="text-center p-6 text-gray-600 dark:text-gray-300">6.9" XDR</td>
+                                <td class="text-right p-6">
+                                    <p class="text-2xl font-bold text-electric-blue">$1,199</p>
+                                </td>
+                                <td class="p-6">
+                                    <button class="bg-electric-blue text-white px-6 py-2 rounded-full text-sm font-medium hover:bg-electric-blue-light transform hover:scale-105 transition-all shadow-lg shadow-electric-blue/30">
+                                        Select
+                                    </button>
+                                </td>
+                            </tr>
+                            <tr class="hover:bg-white/50 dark:hover:bg-white/5 transition-colors group">
+                                <td class="p-6">
+                                    <div class="flex items-center gap-4">
+                                        <div class="w-12 h-12 bg-purple-100 dark:bg-purple-900/30 rounded-xl flex items-center justify-center text-2xl">📱</div>
+                                        <div>
+                                            <p class="font-semibold text-lg">NEXUS Pro X</p>
+                                            <p class="text-sm text-gray-500 dark:text-gray-400">Ultra Edition</p>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td class="text-center p-6 text-gray-600 dark:text-gray-300">1TB</td>
+                                <td class="text-center p-6 text-gray-600 dark:text-gray-300">6.9" Pro XDR</td>
+                                <td class="text-right p-6">
+                                    <p class="text-2xl font-bold">$1,399</p>
+                                </td>
+                                <td class="p-6">
+                                    <button class="opacity-0 group-hover:opacity-100 transition-opacity bg-electric-blue text-white px-6 py-2 rounded-full text-sm font-medium hover:bg-electric-blue-light transform hover:scale-105 transition-all">
+                                        Select
+                                    </button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
 
-    toggleSearch() {
-        const box = document.getElementById('searchBox');
-        box.classList.toggle('active');
-        if (box.classList.contains('active')) {
-            document.getElementById('searchInput').focus();
-        }
-    },
+            <div class="mt-8 flex flex-wrap justify-center gap-4 text-sm text-gray-500 dark:text-gray-400">
+                <span class="flex items-center gap-2">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                    </svg>
+                    Trade-in available
+                </span>
+                <span class="flex items-center gap-2">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                    </svg>
+                    0% financing options
+                </span>
+                <span class="flex items-center gap-2">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                    </svg>
+                    30-day returns
+                </span>
+            </div>
+        </div>
+    </section>
 
-    addToCart(id) {
-        const item = this.products.find(p => p.id === id);
-        this.cart.push(item);
-        const count = document.getElementById('cartCount');
-        count.innerText = this.cart.length;
-        count.style.display = 'block';
-        // Small animation effect
-        count.style.transform = 'scale(1.5)';
-        setTimeout(() => count.style.transform = 'scale(1)', 200);
-    },
+    <!-- Reviews Carousel Section -->
+    <section id="reviews" class="py-24 bg-gray-50 dark:bg-gray-900/50">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="flex justify-between items-end mb-12">
+                <div>
+                    <h2 class="text-4xl md:text-5xl font-bold mb-4">Customer Reviews</h2>
+                    <p class="text-gray-600 dark:text-gray-400 text-lg">See what tech enthusiasts are saying.</p>
+                </div>
+                <div class="flex gap-2">
+                    <button onclick="moveCarousel(-1)" class="w-12 h-12 rounded-full border border-gray-300 dark:border-gray-600 flex items-center justify-center hover:bg-electric-blue hover:border-electric-blue hover:text-white transition-all">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
+                        </svg>
+                    </button>
+                    <button onclick="moveCarousel(1)" class="w-12 h-12 rounded-full border border-gray-300 dark:border-gray-600 flex items-center justify-center hover:bg-electric-blue hover:border-electric-blue hover:text-white transition-all">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                        </svg>
+                    </button>
+                </div>
+            </div>
 
-    // 5. MODAL SYSTEM
-    openModal(id) {
-        const p = this.products.find(x => x.id === id);
-        document.getElementById('mTitle').innerText = p.title;
-        document.getElementById('mBrand').innerText = p.brand;
-        document.getElementById('mPrice').innerText = `Rs. ${p.price.toLocaleString()}`;
-        document.getElementById('modalMainImg').src = p.image;
-        document.getElementById('quickModal').classList.add('open');
-    },
+            <div class="overflow-hidden">
+                <div id="carousel" class="flex gap-6 transition-transform duration-500 ease-out">
+                    <!-- Review 1 -->
+                    <div class="min-w-[100%] md:min-w-[calc(50%-12px)] lg:min-w-[calc(33.333%-16px)] bg-white dark:bg-charcoal p-8 rounded-3xl shadow-lg dark:shadow-none border border-gray-100 dark:border-gray-800">
+                        <div class="flex items-center gap-4 mb-6">
+                            <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100&h=100&fit=crop&crop=face" alt="User" class="w-14 h-14 rounded-full object-cover">
+                            <div>
+                                <p class="font-semibold">Marcus Chen</p>
+                                <p class="text-sm text-gray-500 dark:text-gray-400">Tech Reviewer</p>
+                            </div>
+                            <div class="ml-auto flex gap-1">
+                                <svg class="w-5 h-5 text-yellow-400 fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                                <svg class="w-5 h-5 text-yellow-400 fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                                <svg class="w-5 h-5 text-yellow-400 fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                                <svg class="w-5 h-5 text-yellow-400 fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                                <svg class="w-5 h-5 text-yellow-400 fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                            </div>
+                        </div>
+                        <p class="text-gray-600 dark:text-gray-300 leading-relaxed mb-4">
+                            "The camera system is absolutely revolutionary. I've replaced my professional DSLR with this phone for most shoots. The low-light performance is unmatched."
+                        </p>
+                        <p class="text-sm text-electric-blue font-medium">Verified Purchase</p>
+                    </div>
 
-    closeModal() {
-        document.getElementById('quickModal').classList.remove('open');
-    },
+                    <!-- Review 2 -->
+                    <div class="min-w-[100%] md:min-w-[calc(50%-12px)] lg:min-w-[calc(33.333%-16px)] bg-white dark:bg-charcoal p-8 rounded-3xl shadow-lg dark:shadow-none border border-gray-100 dark:border-gray-800">
+                        <div class="flex items-center gap-4 mb-6">
+                            <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=100&h=100&fit=crop&crop=face" alt="User" class="w-14 h-14 rounded-full object-cover">
+                            <div>
+                                <p class="font-semibold">Sarah Williams</p>
+                                <p class="text-sm text-gray-500 dark:text-gray-400">Product Designer</p>
+                            </div>
+                            <div class="ml-auto flex gap-1">
+                                <svg class="w-5 h-5 text-yellow-400 fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                                <svg class="w-5 h-5 text-yellow-400 fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                                <svg class="w-5 h-5 text-yellow-400 fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                                <svg class="w-5 h-5 text-yellow-400 fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                                <svg class="w-5 h-5 text-yellow-400 fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                            </div>
+                        </div>
+                        <p class="text-gray-600 dark:text-gray-300 leading-relaxed mb-4">
+                            "The build quality is exquisite. The titanium frame feels incredibly premium, and the ceramic shield has already saved me from several drops. Worth every penny."
+                        </p>
+                        <p class="text-sm text-electric-blue font-medium">Verified Purchase</p>
+                    </div>
 
-    // 6. UTILITIES
-    initScrollProgress() {
-        const bar = document.getElementById('scrollProgress');
-        window.addEventListener('scroll', () => {
-            const pct = (window.scrollY / (document.documentElement.scrollHeight - window.innerHeight)) * 100;
-            bar.style.width = pct + '%';
-        });
-    },
+                    <!-- Review 3 -->
+                    <div class="min-w-[100%] md:min-w-[calc(50%-12px)] lg:min-w-[calc(33.333%-16px)] bg-white dark:bg-charcoal p-8 rounded-3xl shadow-lg dark:shadow-none border border-gray-100 dark:border-gray-800">
+                        <div class="flex items-center gap-4 mb-6">
+                            <img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=100&h=100&fit=crop&crop=face" alt="User" class="w-14 h-14 rounded-full object-cover">
+                            <div>
+                                <p class="font-semibold">James Rodriguez</p>
+                                <p class="text-sm text-gray-500 dark:text-gray-400">Software Engineer</p>
+                            </div>
+                            <div class="ml-auto flex gap-1">
+                                <svg class="w-5 h-5 text-yellow-400 fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                                <svg class="w-5 h-5 text-yellow-400 fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                                <svg class="w-5 h-5 text-yellow-400 fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                                <svg class="w-5 h-5 text-yellow-400 fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                                <svg class="w-5 h-5 text-gray-300 dark:text-gray-600 fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                            </div>
+                        </div>
+                        <p class="text-gray-600 dark:text-gray-300 leading-relaxed mb-4">
+                            "Performance is blazing fast. As a developer, I appreciate the raw power for compiling and testing apps. Battery life easily gets me through heavy usage days."
+                        </p>
+                        <p class="text-sm text-electric-blue font-medium">Verified Purchase</p>
+                    </div>
 
-    setupEventListeners() {
-        // Allow 'Esc' key to close modal
-        window.addEventListener('keydown', (e) => { 
-            if (e.key === 'Escape') this.closeModal(); 
-        });
-    }
-};
+                    <!-- Review 4 -->
+                    <div class="min-w-[100%] md:min-w-[calc(50%-12px)] lg:min-w-[calc(33.333%-16px)] bg-white dark:bg-charcoal p-8 rounded-3xl shadow-lg dark:shadow-none border border-gray-100 dark:border-gray-800">
+                        <div class="flex items-center gap-4 mb-6">
+                            <img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=100&h=100&fit=crop&crop=face" alt="User" class="w-14 h-14 rounded-full object-cover">
+                            <div>
+                                <p class="font-semibold">Emma Thompson</p>
+                                <p class="text-sm text-gray-500 dark:text-gray-400">Photographer</p>
+                            </div>
+                            <div class="ml-auto flex gap-1">
+                                <svg class="w-5 h-5 text-yellow-400 fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                                <svg class="w-5 h-5 text-yellow-400 fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                                <svg class="w-5 h-5 text-yellow-400 fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                                <svg class="w-5 h-5 text-yellow-400 fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                                <svg class="w-5 h-5 text-yellow-400 fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                            </div>
+                        </div>
+                        <p class="text-gray-600 dark:text-gray-300 leading-relaxed mb-4">
+                            "The display is stunning for editing photos on the go. Color accuracy is professional-grade. This phone has become an essential part of my workflow."
+                        </p>
+                        <p class="text-sm text-electric-blue font-medium">Verified Purchase</p>
+                    </div>
+                </div>
+            </div>
 
-// INITIALIZE ON LOAD
-document.addEventListener('DOMContentLoaded', () => app.init());
-</script>
+            <!-- Carousel Indicators -->
+            <div class="flex justify-center gap-2 mt-8">
+                <button onclick="goToSlide(0)" class="carousel-dot w-2 h-2 rounded-full bg-electric-blue transition-all"></button>
+                <button onclick="goToSlide(1)" class="carousel-dot w-2 h-2 rounded-full bg-gray-300 dark:bg-gray-600 transition-all"></button>
+                <button onclick="goToSlide(2)" class="carousel-dot w-2 h-2 rounded-full bg-gray-300 dark:bg-gray-600 transition-all"></button>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="py-24 relative overflow-hidden">
+        <div class="absolute inset-0 bg-gradient-to-r from-electric-blue/20 to-purple-500/20 pointer-events-none"></div>
+        <div class="max-w-4xl mx-auto px-6 text-center relative z-10">
+            <h2 class="text-4xl md:text-6xl font-bold mb-6">Ready to upgrade?</h2>
+            <p class="text-xl text-gray-600 dark:text-gray-300 mb-8 max-w-2xl mx-auto">
+                Join millions who have already made the switch. Free shipping on all orders over $500.
+            </p>
+            <button class="bg-electric-blue text-white px-12 py-4 rounded-full text-lg font-semibold hover:bg-electric-blue-light transform hover:scale-105 transition-all shadow-2xl shadow-electric-blue/30">
+                Shop Now
+            </button>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-100 dark:bg-gray-900 pt-16 pb-8 transition-colors">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="grid md:grid-cols-4 gap-12 mb-12">
+                <div>
+                    <div class="flex items-center gap-2 mb-4">
+                        <div class="w-8 h-8 bg-electric-blue rounded-lg flex items-center justify-center">
+                            <span class="text-white font-bold">N</span>
+                        </div>
+                        <span class="font-semibold text-xl">NEXUS</span>
+                    </div>
+                    <p class="text-gray-600 dark:text-gray-400 text-sm leading-relaxed">
+                        Redefining mobile technology through innovation and design excellence.
+                    </p>
+                </div>
+                <div>
+                    <h4 class="font-semibold mb-4">Products</h4>
+                    <ul class="space-y-2 text-sm text-gray-600 dark:text-gray-400">
+                        <li><a href="#" class="hover:text-electric-blue transition-colors">NEXUS Pro X</a></li>
+                        <li><a href="#" class="hover:text-electric-blue transition-colors">NEXUS Watch</a></li>
+                        <li><a href="#" class="hover:text-electric-blue transition-colors">Accessories</a></li>
+                        <li><a href="#" class="hover:text-electric-blue transition-colors">Trade In</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="font-semibold mb-4">Support</h4>
+                    <ul class="space-y-2 text-sm text-gray-600 dark:text-gray-400">
+                        <li><a href="#" class="hover:text-electric-blue transition-colors">Help Center</a></li>
+                        <li><a href="#" class="hover:text-electric-blue transition-colors">Contact Us</a></li>
+                        <li><a href="#" class="hover:text-electric-blue transition-colors">Warranty</a></li>
+                        <li><a href="#" class="hover:text-electric-blue transition-colors">Status</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="font-semibold mb-4">Connect</h4>
+                    <div class="flex gap-4">
+                        <a href="#" class="w-10 h-10 rounded-full bg-gray-200 dark:bg-gray-800 flex items-center justify-center hover:bg-electric-blue hover:text-white transition-all">
+                            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M24 4.557c-.883.392-1.832.656-2.828.775 1.017-.609 1.798-1.574 2.165-2.724-.951.564-2.005.974-3.127 1.195-.897-.957-2.178-1.555-3.594-1.555-3.179 0-5.515 2.966-4.797 6.045-4.091-.205-7.719-2.165-10.148-5.144-1.29 2.213-.669 5.108 1.523 6.574-.806-.026-1.566-.247-2.229-.616-.054 2.281 1.581 4.415 3.949 4.89-.693.188-1.452.232-2.224.084.626 1.956 2.444 3.379 4.6 3.419-2.07 1.623-4.678 2.348-7.29 2.04 2.179 1.397 4.768 2.212 7.548 2.212 9.142 0 14.307-7.721 13.995-14.646.962-.695 1.797-1.562 2.457-2.549z"/></svg>
+                        </a>
+                        <a href="#" class="w-10 h-10 rounded-full bg-gray-200 dark:bg-gray-800 flex items-center justify-center hover:bg-electric-blue hover:text-white transition-all">
+                            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-

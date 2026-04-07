@@ -3,630 +3,762 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NEXUS | Premium Smartphones</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script>
-        tailwind.config = {
-            darkMode: 'class',
-            theme: {
-                extend: {
-                    colors: {
-                        charcoal: '#1a1a1a',
-                        'electric-blue': '#0066FF',
-                        'electric-blue-light': '#3385FF',
-                    },
-                    fontFamily: {
-                        sans: ['-apple-system', 'BlinkMacSystemFont', 'SF Pro Display', 'Segoe UI', 'sans-serif'],
-                    },
-                    animation: {
-                        'float': 'float 6s ease-in-out infinite',
-                        'pulse-slow': 'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
-                        'slide-up': 'slideUp 0.8s ease-out forwards',
-                        'fade-in': 'fadeIn 1s ease-out forwards',
-                    },
-                    keyframes: {
-                        float: {
-                            '0%, 100%': { transform: 'translateY(0px)' },
-                            '50%': { transform: 'translateY(-20px)' },
-                        },
-                        slideUp: {
-                            '0%': { opacity: '0', transform: 'translateY(30px)' },
-                            '100%': { opacity: '1', transform: 'translateY(0)' },
-                        },
-                        fadeIn: {
-                            '0%': { opacity: '0' },
-                            '100%': { opacity: '1' },
-                        }
-                    }
-                }
-            }
-        }
-    </script>
+    <title>NEXUS | Pro X — Premium Smartphones</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,800;1,700&family=Outfit:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
     <style>
-        .glass {
-            background: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            border: 1px solid rgba(255, 255, 255, 0.2);
+        :root {
+            --cream:    #FAF8F4;
+            --ivory:    #F5F0E8;
+            --blush:    #FDE8E0;
+            --sky:      #E0EEFF;
+            --mint:     #E0F5F0;
+            --lavender: #EDE8FF;
+            --blue:     #1A5CFF;
+            --navy:     #0D1B4B;
+            --coral:    #FF5C3A;
+            --teal:     #00BFA5;
+            --text:     #1A1A2E;
+            --muted:    #6B7280;
+            --border:   rgba(0,0,0,0.07);
         }
-        .dark .glass {
-            background: rgba(30, 30, 30, 0.6);
-            border: 1px solid rgba(255, 255, 255, 0.1);
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+        html { scroll-behavior: smooth; }
+        body { font-family: 'Outfit', sans-serif; background: var(--cream); color: var(--text); overflow-x: hidden; }
+        body::after {
+            content: '';
+            position: fixed; inset: 0;
+            pointer-events: none; z-index: 9999;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='0.025'/%3E%3C/svg%3E");
+            opacity: 0.5;
         }
-        .glass-btn {
-            background: rgba(255, 255, 255, 0.25);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            border: 1px solid rgba(255, 255, 255, 0.3);
-            box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+        .label { font-family:'DM Mono',monospace; font-size:11px; letter-spacing:3px; text-transform:uppercase; color:var(--blue); display:block; margin-bottom:14px; }
+        .card { background:rgba(255,255,255,0.8); backdrop-filter:blur(20px); -webkit-backdrop-filter:blur(20px); border:1px solid rgba(255,255,255,0.95); border-radius:20px; box-shadow:0 4px 24px rgba(0,0,0,0.07); }
+        .btn-blue { background:var(--blue); color:#fff; padding:14px 36px; border-radius:100px; font-size:14px; font-weight:600; letter-spacing:0.5px; border:none; cursor:pointer; transition:all 0.3s; display:inline-flex; align-items:center; gap:8px; font-family:'Outfit',sans-serif; }
+        .btn-blue:hover { background:#0047e0; transform:translateY(-3px); box-shadow:0 16px 40px rgba(26,92,255,0.3); }
+        .btn-outline { background:transparent; color:var(--text); padding:14px 36px; border-radius:100px; font-size:14px; font-weight:500; border:1.5px solid rgba(0,0,0,0.14); cursor:pointer; transition:all 0.3s; display:inline-flex; align-items:center; gap:8px; font-family:'Outfit',sans-serif; }
+        .btn-outline:hover { border-color:var(--blue); color:var(--blue); }
+        nav { position:fixed; top:0; left:0; right:0; z-index:100; padding:18px 48px; display:flex; align-items:center; justify-content:space-between; transition:all 0.4s; }
+        nav.scrolled { background:rgba(250,248,244,0.94); backdrop-filter:blur(20px); border-bottom:1px solid rgba(0,0,0,0.06); padding:12px 48px; }
+        .nav-logo { font-family:'Playfair Display',serif; font-size:24px; font-weight:800; color:var(--navy); letter-spacing:2px; }
+        .nav-logo span { color:var(--blue); }
+        .nav-links { display:flex; align-items:center; gap:36px; }
+        .nav-links a { font-size:13px; font-weight:500; color:var(--muted); text-decoration:none; transition:color 0.2s; }
+        .nav-links a:hover { color:var(--blue); }
+        #mobile-menu { position:fixed; inset:0; background:var(--cream); z-index:99; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:28px; transform:translateY(-100%); transition:transform 0.4s cubic-bezier(0.16,1,0.3,1); }
+        #mobile-menu.open { transform:translateY(0); }
+        #mobile-menu a { font-family:'Playfair Display',serif; font-size:36px; font-weight:700; color:var(--navy); text-decoration:none; }
+        .blob { position:absolute; border-radius:50%; filter:blur(70px); pointer-events:none; }
+        .ticker-wrap { overflow:hidden; background:var(--navy); padding:14px 0; }
+        .ticker { display:flex; gap:60px; white-space:nowrap; animation:ticker 22s linear infinite; }
+        @keyframes ticker { 0%{transform:translateX(0)} 100%{transform:translateX(-50%)} }
+        @keyframes floatUp { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-12px)} }
+        .float-a { animation:floatUp 5s ease-in-out infinite; }
+        .float-b { animation:floatUp 5s ease-in-out 1.8s infinite; }
+        .float-c { animation:floatUp 5s ease-in-out 0.9s infinite; }
+        @keyframes phoneFloat { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-16px)} }
+        .gallery-grid { display:grid; grid-template-columns:2fr 1fr; grid-template-rows:1fr 1fr; gap:10px; height:500px; }
+        .gallery-grid .span-2 { grid-row:span 2; }
+        .g-img { border-radius:20px; overflow:hidden; position:relative; }
+        .g-img img { width:100%; height:100%; object-fit:cover; transition:transform 0.5s ease; display:block; }
+        .g-img:hover img { transform:scale(1.06); }
+        .g-img-label { position:absolute; bottom:12px; left:12px; background:rgba(255,255,255,0.88); backdrop-filter:blur(8px); border-radius:100px; padding:5px 14px; font-size:11px; font-family:'DM Mono',monospace; color:var(--navy); }
+        .spec-card { padding:32px; border-radius:24px; background:#fff; border:1px solid var(--border); box-shadow:0 2px 20px rgba(0,0,0,0.04); transition:all 0.3s; }
+        .spec-card:hover { transform:translateY(-6px); box-shadow:0 20px 48px rgba(0,0,0,0.1); }
+        .stat-bar { background:var(--navy); border-radius:24px; display:grid; grid-template-columns:repeat(4,1fr); overflow:hidden; }
+        .stat-item { padding:32px 24px; text-align:center; border-right:1px solid rgba(255,255,255,0.08); color:#fff; }
+        .stat-item:last-child { border-right:none; }
+        .review-card { background:#fff; border:1px solid var(--border); border-radius:24px; padding:28px; box-shadow:0 2px 16px rgba(0,0,0,0.04); transition:all 0.3s; min-width:calc(33.333% - 14px); }
+        .review-card:hover { transform:translateY(-4px); box-shadow:0 12px 36px rgba(0,0,0,0.09); }
+        .compare-table { background:#fff; border-radius:24px; overflow:hidden; border:1px solid var(--border); box-shadow:0 4px 32px rgba(0,0,0,0.06); }
+        .compare-table th { font-size:11px; font-family:'DM Mono',monospace; letter-spacing:2px; text-transform:uppercase; color:var(--muted); padding:22px 28px; font-weight:400; background:var(--ivory); border-bottom:1px solid var(--border); text-align:left; }
+        .compare-table td { padding:22px 28px; border-bottom:1px solid var(--border); }
+        .compare-table tr:last-child td { border-bottom:none; }
+        .compare-table tr.popular td { background:var(--sky); }
+        .compare-table tr:not(.popular):hover td { background:var(--ivory); transition:background 0.2s; }
+        .cta-section { background:var(--navy); position:relative; overflow:hidden; border-radius:32px; margin:0 24px; }
+        .reveal { opacity:0; transform:translateY(36px); transition:opacity 0.8s ease, transform 0.8s ease; }
+        .reveal.visible { opacity:1; transform:translateY(0); }
+        .reveal-l { opacity:0; transform:translateX(-36px); transition:opacity 0.8s ease, transform 0.8s ease; }
+        .reveal-l.visible { opacity:1; transform:translateX(0); }
+        .reveal-r { opacity:0; transform:translateX(36px); transition:opacity 0.8s ease, transform 0.8s ease; }
+        .reveal-r.visible { opacity:1; transform:translateX(0); }
+        .video-wrap { border-radius:24px; overflow:hidden; position:relative; box-shadow:0 24px 64px rgba(0,0,0,0.15); }
+        .video-wrap video { width:100%; display:block; max-height:450px; object-fit:cover; }
+        .video-overlay-bar { position:absolute; bottom:0; left:0; right:0; background:linear-gradient(to top,rgba(10,15,40,0.85) 0%,transparent 100%); padding:28px; display:flex; align-items:flex-end; justify-content:space-between; }
+        .play-btn { position:absolute; top:50%; left:50%; transform:translate(-50%,-50%); width:68px; height:68px; background:rgba(255,255,255,0.22); backdrop-filter:blur(12px); border-radius:50%; display:flex; align-items:center; justify-content:center; cursor:pointer; border:1.5px solid rgba(255,255,255,0.5); transition:all 0.3s; }
+        .play-btn:hover { background:var(--blue); border-color:var(--blue); transform:translate(-50%,-50%) scale(1.1); }
+        .colour-strip { display:flex; gap:12px; overflow-x:auto; padding-bottom:8px; -ms-overflow-style:none; scrollbar-width:none; }
+        .colour-strip::-webkit-scrollbar { display:none; }
+        .colour-swatch { flex-shrink:0; border-radius:20px; overflow:hidden; width:280px; height:360px; position:relative; cursor:pointer; transition:transform 0.3s; }
+        .colour-swatch:hover { transform:scale(1.02); }
+        .colour-swatch img { width:100%; height:100%; object-fit:cover; display:block; }
+        .colour-swatch-label { position:absolute; bottom:14px; left:14px; background:rgba(255,255,255,0.88); backdrop-filter:blur(8px); border-radius:100px; padding:6px 16px; font-size:12px; font-family:'DM Mono',monospace; color:var(--navy); }
+        .timeline-line { position:absolute; left:20px; top:0; bottom:0; width:1.5px; background:linear-gradient(to bottom,var(--blue),rgba(26,92,255,0.1)); }
+        .timeline-item { position:relative; padding-left:52px; }
+        .timeline-dot { position:absolute; left:12px; top:6px; width:16px; height:16px; border-radius:50%; background:var(--blue); border:3px solid var(--cream); box-shadow:0 0 0 2px var(--blue); }
+        .fs-video { position:relative; height:70vh; overflow:hidden; border-radius:28px; margin:0 24px; }
+        .fs-video video { width:100%; height:100%; object-fit:cover; }
+        .fs-video-overlay { position:absolute; inset:0; background:linear-gradient(135deg,rgba(13,27,75,0.78) 0%,rgba(13,27,75,0.2) 55%,transparent 100%); display:flex; align-items:center; padding:60px; }
+        #vModal { display:none; position:fixed; inset:0; z-index:500; background:rgba(0,0,0,0.88); align-items:center; justify-content:center; backdrop-filter:blur(12px); }
+        #vModal.active { display:flex; }
+        .modal-inner { width:90%; max-width:860px; border-radius:20px; overflow:hidden; box-shadow:0 40px 100px rgba(0,0,0,0.5); }
+        .modal-close { position:absolute; top:20px; right:20px; width:44px; height:44px; border-radius:50%; background:rgba(255,255,255,0.12); border:1px solid rgba(255,255,255,0.2); color:#fff; font-size:18px; cursor:pointer; display:flex; align-items:center; justify-content:center; transition:background 0.2s; font-family:'Outfit',sans-serif; }
+        .modal-close:hover { background:rgba(255,255,255,0.22); }
+        ::-webkit-scrollbar { width:5px; }
+        ::-webkit-scrollbar-track { background:var(--cream); }
+        ::-webkit-scrollbar-thumb { background:rgba(26,92,255,0.3); border-radius:10px; }
+        @media (max-width:768px) {
+            nav { padding:16px 20px; }
+            nav.scrolled { padding:12px 20px; }
+            .gallery-grid { grid-template-columns:1fr; grid-template-rows:auto; height:auto; }
+            .gallery-grid .span-2 { grid-row:span 1; height:260px; }
+            .stat-bar { grid-template-columns:repeat(2,1fr); }
+            .stat-item { border-right:none; border-bottom:1px solid rgba(255,255,255,0.08); }
+            .review-card { min-width:85vw; }
+            .fs-video { margin:0 12px; height:50vh; }
+            .fs-video-overlay { padding:32px 24px; }
+            .cta-section { margin:0 12px; border-radius:24px; }
+            .grid-2col { grid-template-columns:1fr !important; }
+            .grid-4col { grid-template-columns:repeat(2,1fr) !important; }
         }
-        .dark .glass-btn {
-            background: rgba(255, 255, 255, 0.1);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-        }
-        .glass-btn:hover {
-            background: rgba(255, 255, 255, 0.35);
-            transform: translateY(-2px);
-            box-shadow: 0 12px 40px 0 rgba(31, 38, 135, 0.45);
-        }
-        .text-gradient {
-            background: linear-gradient(135deg, #0066FF 0%, #00D4FF 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-        .phone-shadow {
-            filter: drop-shadow(0 25px 50px rgba(0, 102, 255, 0.3));
-        }
-        .spec-card {
-            transition: all 0.3s ease;
-        }
-        .spec-card:hover {
-            transform: translateY(-5px);
-        }
-        .carousel-slide {
-            transition: transform 0.5s ease-in-out;
-        }
-        .hide-scrollbar::-webkit-scrollbar {
-            display: none;
-        }
-        .hide-scrollbar {
-            -ms-overflow-style: none;
-            scrollbar-width: none;
-        }
+        @keyframes pulse2 { 0%,100%{opacity:1} 50%{opacity:0.4} }
     </style>
 </head>
-<body class="bg-white dark:bg-charcoal text-charcoal dark:text-white transition-colors duration-300 font-sans antialiased overflow-x-hidden">
+<body>
 
-    <!-- Navigation -->
-    <nav class="fixed w-full z-50 top-0 transition-all duration-300" id="navbar">
-        <div class="glass mx-4 mt-4 rounded-2xl px-6 py-4 flex justify-between items-center max-w-7xl mx-auto">
-            <div class="flex items-center gap-2">
-                <div class="w-8 h-8 bg-electric-blue rounded-lg flex items-center justify-center">
-                    <span class="text-white font-bold text-lg">N</span>
+<!-- NAV -->
+<nav id="navbar">
+    <div class="nav-logo">NEX<span>US</span></div>
+    <div class="nav-links" id="navLinks">
+        <a href="#story">Story</a>
+        <a href="#camera">Camera</a>
+        <a href="#specs">Specs</a>
+        <a href="#compare">Compare</a>
+        <a href="#reviews">Reviews</a>
+    </div>
+    <div id="navBtns" style="display:flex; gap:12px; align-items:center;">
+        <button class="btn-outline" style="padding:10px 24px; font-size:13px;">Learn More</button>
+        <button class="btn-blue" style="padding:10px 24px; font-size:13px;">Pre-order</button>
+    </div>
+    <button id="menuBtn" onclick="toggleMenu()" style="display:none; flex-direction:column; gap:5px; background:none; border:none; cursor:pointer; padding:6px;">
+        <span style="display:block;width:24px;height:2px;background:var(--navy);border-radius:2px;"></span>
+        <span style="display:block;width:24px;height:2px;background:var(--navy);border-radius:2px;"></span>
+        <span style="display:block;width:18px;height:2px;background:var(--navy);border-radius:2px;"></span>
+    </button>
+</nav>
+
+<!-- MOBILE MENU -->
+<div id="mobile-menu">
+    <a href="#story" onclick="toggleMenu()">Story</a>
+    <a href="#camera" onclick="toggleMenu()">Camera</a>
+    <a href="#specs" onclick="toggleMenu()">Specs</a>
+    <a href="#compare" onclick="toggleMenu()">Compare</a>
+    <a href="#reviews" onclick="toggleMenu()">Reviews</a>
+    <button class="btn-blue" style="margin-top:12px;" onclick="toggleMenu()">Pre-order Now →</button>
+</div>
+
+<!-- ═══ HERO ═══ -->
+<section style="min-height:100vh; position:relative; overflow:hidden; display:flex; align-items:center; padding-top:90px; background:linear-gradient(160deg, #FFFFFF 0%, #EEF4FF 45%, #FDF0EB 100%);">
+    <div class="blob" style="width:600px;height:600px;background:rgba(26,92,255,0.09);top:-120px;left:-180px;"></div>
+    <div class="blob" style="width:500px;height:500px;background:rgba(255,92,58,0.07);bottom:-100px;right:-120px;"></div>
+    <div class="blob" style="width:350px;height:350px;background:rgba(108,63,239,0.06);top:45%;left:48%;"></div>
+
+    <div style="max-width:1280px; margin:0 auto; padding:0 48px; width:100%; position:relative; z-index:2;">
+        <div class="grid-2col" style="display:grid; grid-template-columns:1fr 1fr; gap:64px; align-items:center;">
+
+            <!-- LEFT TEXT -->
+            <div>
+                <div style="display:inline-flex; align-items:center; gap:8px; background:rgba(26,92,255,0.08); border:1px solid rgba(26,92,255,0.2); padding:8px 18px; border-radius:100px; margin-bottom:28px;">
+                    <span style="width:7px;height:7px;border-radius:50%;background:#22C55E;animation:pulse2 1.5s infinite;display:block;"></span>
+                    <span style="font-family:'DM Mono',monospace; font-size:11px; letter-spacing:2px; color:var(--blue); text-transform:uppercase;">In Stock — Ships Today</span>
                 </div>
-                <span class="font-semibold text-xl tracking-tight">NEXUS</span>
-            </div>
-            
-            <div class="hidden md:flex items-center gap-8 text-sm font-medium">
-                <a href="#specs" class="hover:text-electric-blue transition-colors">Specs</a>
-                <a href="#compare" class="hover:text-electric-blue transition-colors">Compare</a>
-                <a href="#reviews" class="hover:text-electric-blue transition-colors">Reviews</a>
-                <button onclick="toggleDarkMode()" class="p-2 rounded-full hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors" aria-label="Toggle dark mode">
-                    <svg id="sun-icon" class="w-5 h-5 hidden dark:block" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"></path>
-                    </svg>
-                    <svg id="moon-icon" class="w-5 h-5 block dark:hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"></path>
-                    </svg>
-                </button>
-                <button class="bg-electric-blue text-white px-6 py-2 rounded-full text-sm font-medium hover:bg-electric-blue-light transition-all transform hover:scale-105">
-                    Pre-order
-                </button>
-            </div>
 
-            <button class="md:hidden p-2" onclick="toggleMobileMenu()">
-                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
-                </svg>
-            </button>
-        </div>
-    </nav>
+                <h1 style="font-family:'Playfair Display',serif; font-size:clamp(52px,7vw,96px); line-height:0.9; font-weight:800; color:var(--navy); margin-bottom:28px;">
+                    NEXUS<br><em style="font-style:italic; color:var(--blue);">Pro X</em>
+                </h1>
 
-    <!-- Mobile Menu -->
-    <div id="mobile-menu" class="fixed inset-0 z-40 bg-white dark:bg-charcoal transform translate-x-full transition-transform duration-300 md:hidden pt-24 px-6">
-        <div class="flex flex-col gap-6 text-lg font-medium">
-            <a href="#specs" onclick="toggleMobileMenu()" class="border-b border-gray-200 dark:border-gray-700 pb-4">Specifications</a>
-            <a href="#compare" onclick="toggleMobileMenu()" class="border-b border-gray-200 dark:border-gray-700 pb-4">Compare</a>
-            <a href="#reviews" onclick="toggleMobileMenu()" class="border-b border-gray-200 dark:border-gray-700 pb-4">Reviews</a>
-            <button onclick="toggleDarkMode()" class="flex items-center gap-3 border-b border-gray-200 dark:border-gray-700 pb-4">
-                <span>Dark Mode</span>
-                <div class="w-12 h-6 bg-gray-300 dark:bg-electric-blue rounded-full relative transition-colors">
-                    <div class="w-4 h-4 bg-white rounded-full absolute top-1 left-1 dark:left-7 transition-all"></div>
+                <p style="font-size:17px; color:var(--muted); line-height:1.75; max-width:440px; font-weight:300; margin-bottom:36px;">
+                    Titanium build. 200MP camera. 48-hour battery. The most powerful phone ever made — available now in four stunning finishes.
+                </p>
+
+                <div style="display:flex; gap:14px; flex-wrap:wrap; margin-bottom:40px;">
+                    <button class="btn-blue" onclick="document.getElementById('vModal').classList.add('active')">▶ &nbsp;Watch Film</button>
+                    <button class="btn-outline" onclick="document.getElementById('compare').scrollIntoView({behavior:'smooth'})">Buy Now →</button>
                 </div>
-            </button>
+
+                <!-- Quick stats -->
+                <div style="display:flex; gap:28px; flex-wrap:wrap; padding-bottom:8px;">
+                    <div>
+                        <div style="font-family:'Playfair Display',serif; font-size:34px; font-weight:800; color:var(--navy);" class="counter" data-target="200">0</div>
+                        <div style="font-family:'DM Mono',monospace; font-size:10px; letter-spacing:2px; color:var(--muted); text-transform:uppercase; margin-top:2px;">MP Camera</div>
+                    </div>
+                    <div style="width:1px; background:var(--border);"></div>
+                    <div>
+                        <div style="font-family:'Playfair Display',serif; font-size:34px; font-weight:800; color:var(--navy);" class="counter" data-target="48">0</div>
+                        <div style="font-family:'DM Mono',monospace; font-size:10px; letter-spacing:2px; color:var(--muted); text-transform:uppercase; margin-top:2px;">Hr Battery</div>
+                    </div>
+                    <div style="width:1px; background:var(--border);"></div>
+                    <div>
+                        <div style="font-family:'Playfair Display',serif; font-size:34px; font-weight:800; color:var(--navy);">3<span style="font-size:18px; color:var(--blue);">nm</span></div>
+                        <div style="font-family:'DM Mono',monospace; font-size:10px; letter-spacing:2px; color:var(--muted); text-transform:uppercase; margin-top:2px;">Chip</div>
+                    </div>
+                </div>
+
+                <div style="display:flex; gap:20px; margin-top:28px; flex-wrap:wrap;">
+                    <span style="display:flex;align-items:center;gap:6px;font-size:13px;color:var(--muted);"><span style="color:#22C55E;font-size:16px;">✓</span>Free Shipping</span>
+                    <span style="display:flex;align-items:center;gap:6px;font-size:13px;color:var(--muted);"><span style="color:#22C55E;font-size:16px;">✓</span>2-Year Warranty</span>
+                    <span style="display:flex;align-items:center;gap:6px;font-size:13px;color:var(--muted);"><span style="color:#22C55E;font-size:16px;">✓</span>30-Day Returns</span>
+                </div>
+            </div>
+
+            <!-- RIGHT PHONE -->
+            <div style="position:relative; display:flex; justify-content:center; padding:40px 0;">
+                <div style="position:absolute;width:340px;height:340px;border-radius:50%;background:radial-gradient(circle,rgba(26,92,255,0.15) 0%,transparent 70%);top:50%;left:50%;transform:translate(-50%,-50%);filter:blur(20px);"></div>
+                <img src="https://images.unsplash.com/photo-1695048133142-1a20484bce71?w=500&h=750&fit=crop"
+                     alt="NEXUS Pro X"
+                     style="width:290px; border-radius:40px; box-shadow:0 40px 80px rgba(26,92,255,0.18), 0 8px 24px rgba(0,0,0,0.08); position:relative; z-index:2; animation:phoneFloat 6s ease-in-out infinite;">
+
+                <!-- Badge Battery -->
+                <div class="card float-a" style="position:absolute;left:0;top:28%;padding:14px 18px;display:flex;align-items:center;gap:12px;z-index:3;">
+                    <div style="width:38px;height:38px;border-radius:12px;background:var(--sky);display:flex;align-items:center;justify-content:center;font-size:18px;">⚡</div>
+                    <div>
+                        <div style="font-family:'DM Mono',monospace;font-size:10px;color:var(--muted);letter-spacing:1px;">Battery</div>
+                        <div style="font-size:14px;font-weight:600;color:var(--navy);">48h Life</div>
+                    </div>
+                </div>
+
+                <!-- Badge Camera -->
+                <div class="card float-b" style="position:absolute;right:0;top:20%;padding:14px 18px;display:flex;align-items:center;gap:12px;z-index:3;">
+                    <div style="width:38px;height:38px;border-radius:12px;background:var(--blush);display:flex;align-items:center;justify-content:center;font-size:18px;">📷</div>
+                    <div>
+                        <div style="font-family:'DM Mono',monospace;font-size:10px;color:var(--muted);letter-spacing:1px;">Camera</div>
+                        <div style="font-size:14px;font-weight:600;color:var(--navy);">200 MP</div>
+                    </div>
+                </div>
+
+                <!-- Badge Stars -->
+                <div class="card float-c" style="position:absolute;right:8px;bottom:22%;padding:12px 18px;z-index:3;">
+                    <div style="font-family:'DM Mono',monospace;font-size:10px;color:var(--muted);letter-spacing:1px;margin-bottom:4px;">Rating</div>
+                    <div style="color:#F59E0B;font-size:15px;letter-spacing:2px;">★★★★★</div>
+                    <div style="font-size:11px;color:var(--muted);margin-top:3px;">42k+ reviews</div>
+                </div>
+            </div>
         </div>
     </div>
 
-    <!-- Hero Section -->
-    <section class="relative min-h-screen flex items-center justify-center pt-20 overflow-hidden">
-        <!-- Background Elements -->
-        <div class="absolute inset-0 overflow-hidden pointer-events-none">
-            <div class="absolute top-1/4 left-1/4 w-96 h-96 bg-electric-blue/20 rounded-full blur-3xl animate-pulse-slow"></div>
-            <div class="absolute bottom-1/4 right-1/4 w-96 h-96 bg-purple-500/20 rounded-full blur-3xl animate-pulse-slow" style="animation-delay: 2s;"></div>
-        </div>
+    <!-- Scroll hint -->
+    <div style="position:absolute;bottom:28px;left:50%;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:6px;">
+        <div style="font-family:'DM Mono',monospace;font-size:10px;letter-spacing:2px;color:var(--muted);text-transform:uppercase;">Scroll</div>
+        <div style="width:1px;height:40px;background:linear-gradient(to bottom,var(--blue),transparent);animation:pulse2 2s infinite;"></div>
+    </div>
+</section>
 
-        <div class="max-w-7xl mx-auto px-6 grid md:grid-cols-2 gap-12 items-center relative z-10">
-            <!-- Text Content -->
-            <div class="text-center md:text-left space-y-8 animate-slide-up">
-                <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gray-100 dark:bg-gray-800 text-sm font-medium mb-4">
-                    <span class="w-2 h-2 bg-green-500 rounded-full animate-pulse"></span>
-                    Now Available
+<!-- TICKER -->
+<div class="ticker-wrap">
+    <div class="ticker">
+        <span style="font-family:'DM Mono',monospace;font-size:12px;color:rgba(255,255,255,0.6);letter-spacing:2px;text-transform:uppercase;">✦ Quantum 3nm Chip</span>
+        <span style="font-family:'DM Mono',monospace;font-size:12px;color:#7EB8FF;letter-spacing:2px;text-transform:uppercase;">✦ 200MP Triple Camera</span>
+        <span style="font-family:'DM Mono',monospace;font-size:12px;color:rgba(255,255,255,0.6);letter-spacing:2px;text-transform:uppercase;">✦ Titanium Grade 5</span>
+        <span style="font-family:'DM Mono',monospace;font-size:12px;color:rgba(255,255,255,0.6);letter-spacing:2px;text-transform:uppercase;">✦ 48-Hour Battery</span>
+        <span style="font-family:'DM Mono',monospace;font-size:12px;color:rgba(255,255,255,0.6);letter-spacing:2px;text-transform:uppercase;">✦ IP68 Water Resistant</span>
+        <span style="font-family:'DM Mono',monospace;font-size:12px;color:rgba(255,255,255,0.6);letter-spacing:2px;text-transform:uppercase;">✦ 5G Ultra-Wideband</span>
+        <span style="font-family:'DM Mono',monospace;font-size:12px;color:#FFB2A0;letter-spacing:2px;text-transform:uppercase;">✦ 6.9" Pro XDR Display</span>
+        <span style="font-family:'DM Mono',monospace;font-size:12px;color:rgba(255,255,255,0.6);letter-spacing:2px;text-transform:uppercase;">✦ Quantum 3nm Chip</span>
+        <span style="font-family:'DM Mono',monospace;font-size:12px;color:#7EB8FF;letter-spacing:2px;text-transform:uppercase;">✦ 200MP Triple Camera</span>
+        <span style="font-family:'DM Mono',monospace;font-size:12px;color:rgba(255,255,255,0.6);letter-spacing:2px;text-transform:uppercase;">✦ Titanium Grade 5</span>
+        <span style="font-family:'DM Mono',monospace;font-size:12px;color:rgba(255,255,255,0.6);letter-spacing:2px;text-transform:uppercase;">✦ 48-Hour Battery</span>
+        <span style="font-family:'DM Mono',monospace;font-size:12px;color:rgba(255,255,255,0.6);letter-spacing:2px;text-transform:uppercase;">✦ IP68 Water Resistant</span>
+        <span style="font-family:'DM Mono',monospace;font-size:12px;color:rgba(255,255,255,0.6);letter-spacing:2px;text-transform:uppercase;">✦ 5G Ultra-Wideband</span>
+        <span style="font-family:'DM Mono',monospace;font-size:12px;color:#FFB2A0;letter-spacing:2px;text-transform:uppercase;">✦ 6.9" Pro XDR Display</span>
+    </div>
+</div>
+
+<!-- ═══ STORY ═══ -->
+<section id="story" style="padding:96px 0; background:var(--cream);">
+    <div style="max-width:1280px; margin:0 auto; padding:0 48px;">
+        <div class="grid-2col" style="display:grid; grid-template-columns:1fr 1fr; gap:72px; align-items:center;">
+            <div class="gallery-grid reveal-l">
+                <div class="g-img span-2">
+                    <img src="https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?w=600&h=700&fit=crop" alt="Phone build">
+                    <div class="g-img-label">Titanium Build</div>
                 </div>
-                
-                <h1 class="text-5xl md:text-7xl font-bold leading-tight tracking-tight">
-                    NEXUS <span class="text-gradient">Pro X</span>
-                </h1>
-                
-                <p class="text-xl md:text-2xl text-gray-600 dark:text-gray-300 font-light leading-relaxed max-w-lg">
-                    Experience the future of mobile technology. Titanium design, quantum processing, and camera capabilities that redefine possibility.
+                <div class="g-img">
+                    <img src="https://images.unsplash.com/photo-1592750475338-74b7b21085ab?w=400&h=300&fit=crop" alt="Side view">
+                    <div class="g-img-label">0.7mm Bezels</div>
+                </div>
+                <div class="g-img">
+                    <img src="https://images.unsplash.com/photo-1580910051074-3eb694886505?w=400&h=300&fit=crop" alt="Back">
+                    <div class="g-img-label">Ceramic Shield</div>
+                </div>
+            </div>
+            <div class="reveal-r">
+                <span class="label">// Our Story</span>
+                <h2 style="font-family:'Playfair Display',serif; font-size:clamp(36px,4vw,60px); font-weight:800; color:var(--navy); line-height:1.05; margin-bottom:24px;">
+                    Designed for<br><em style="color:var(--blue);">those who</em><br>push limits.
+                </h2>
+                <p style="color:var(--muted); line-height:1.75; margin-bottom:36px; font-weight:300;">
+                    We didn't build another smartphone. We built the device that makes your camera obsolete, your laptop optional, and your imagination unlimited. Three years of R&D — distilled into 171 grams.
                 </p>
-
-                <div class="flex flex-col sm:flex-row gap-4 justify-center md:justify-start pt-4">
-                    <button class="glass-btn px-8 py-4 rounded-full text-lg font-semibold text-electric-blue dark:text-white transition-all flex items-center justify-center gap-2 group">
-                        Buy Now
-                        <svg class="w-5 h-5 transform group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
-                        </svg>
-                    </button>
-                    <button class="px-8 py-4 rounded-full text-lg font-medium border border-gray-300 dark:border-gray-600 hover:border-electric-blue dark:hover:border-electric-blue transition-colors">
-                        Watch Film
-                    </button>
-                </div>
-
-                <div class="flex items-center gap-8 pt-8 justify-center md:justify-start text-sm text-gray-500 dark:text-gray-400">
-                    <div class="flex items-center gap-2">
-                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
-                        </svg>
-                        Free Shipping
-                    </div>
-                    <div class="flex items-center gap-2">
-                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path>
-                        </svg>
-                        2-Year Warranty
-                    </div>
-                </div>
-            </div>
-
-            <!-- Phone Image -->
-            <div class="relative animate-float">
-                <div class="relative z-10 phone-shadow">
-                    <img src="https://images.unsplash.com/photo-1616348436168-de43ad0db179?w=600&h=800&fit=crop" 
-                         alt="NEXUS Pro X Smartphone" 
-                         class="w-full max-w-md mx-auto rounded-[3rem] shadow-2xl transform hover:scale-105 transition-transform duration-500">
-                    
-                    <!-- Floating UI Elements -->
-                    <div class="absolute -right-4 top-20 glass px-4 py-3 rounded-2xl animate-fade-in" style="animation-delay: 0.5s;">
-                        <div class="flex items-center gap-3">
-                            <div class="w-10 h-10 bg-electric-blue/20 rounded-full flex items-center justify-center">
-                                <svg class="w-5 h-5 text-electric-blue" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
-                                </svg>
-                            </div>
-                            <div>
-                                <p class="text-xs text-gray-500 dark:text-gray-400">Battery</p>
-                                <p class="font-semibold">48h Life</p>
-                            </div>
+                <div style="position:relative; padding-left:0;">
+                    <div class="timeline-line"></div>
+                    <div style="display:flex; flex-direction:column; gap:28px;">
+                        <div class="timeline-item">
+                            <div class="timeline-dot"></div>
+                            <div style="font-weight:600; font-size:14px; color:var(--navy); margin-bottom:4px;">2022 — Research Begins</div>
+                            <div style="font-size:13px; color:var(--muted);">Partnered with 12 materials labs to develop the quantum chip architecture.</div>
                         </div>
-                    </div>
-
-                    <div class="absolute -left-4 bottom-32 glass px-4 py-3 rounded-2xl animate-fade-in" style="animation-delay: 0.7s;">
-                        <div class="flex items-center gap-3">
-                            <div class="w-10 h-10 bg-purple-500/20 rounded-full flex items-center justify-center">
-                                <svg class="w-5 h-5 text-purple-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z"></path>
-                                </svg>
-                            </div>
-                            <div>
-                                <p class="text-xs text-gray-500 dark:text-gray-400">Camera</p>
-                                <p class="font-semibold">200MP</p>
-                            </div>
+                        <div class="timeline-item">
+                            <div class="timeline-dot"></div>
+                            <div style="font-weight:600; font-size:14px; color:var(--navy); margin-bottom:4px;">2023 — Prototype Testing</div>
+                            <div style="font-size:13px; color:var(--muted);">10,000+ drop tests, 5,000 thermal cycles, 3 years in development.</div>
+                        </div>
+                        <div class="timeline-item">
+                            <div class="timeline-dot"></div>
+                            <div style="font-weight:600; font-size:14px; color:var(--navy); margin-bottom:4px;">2024 — Launch</div>
+                            <div style="font-size:13px; color:var(--muted);">Available now. The most anticipated smartphone of the decade.</div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
+    </div>
+</section>
 
-        <!-- Scroll Indicator -->
-        <div class="absolute bottom-8 left-1/2 transform -translate-x-1/2 animate-bounce">
-            <svg class="w-6 h-6 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path>
-            </svg>
-        </div>
-    </section>
-
-    <!-- Specifications Section -->
-    <section id="specs" class="py-24 bg-gray-50 dark:bg-gray-900/50 transition-colors">
-        <div class="max-w-7xl mx-auto px-6">
-            <div class="text-center mb-16 space-y-4">
-                <h2 class="text-4xl md:text-5xl font-bold">Top Specifications</h2>
-                <p class="text-gray-600 dark:text-gray-400 text-lg max-w-2xl mx-auto">
-                    Engineered for excellence. Every component crafted to deliver unprecedented performance.
-                </p>
-            </div>
-
-            <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
-                <!-- Spec Card 1 -->
-                <div class="spec-card bg-white dark:bg-charcoal p-8 rounded-3xl shadow-lg dark:shadow-none border border-gray-100 dark:border-gray-800">
-                    <div class="w-14 h-14 bg-blue-100 dark:bg-blue-900/30 rounded-2xl flex items-center justify-center mb-6">
-                        <svg class="w-7 h-7 text-electric-blue" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 3v2m6-2v2M9 19v2m6-2v2M5 9H3m2 6H3m18-6h-2m2 6h-2M7 19h10a2 2 0 002-2V7a2 2 0 00-2-2H7a2 2 0 00-2 2v10a2 2 0 002 2zM9 9h6v6H9V9z"></path>
-                        </svg>
-                    </div>
-                    <h3 class="text-xl font-semibold mb-2">Quantum Chip</h3>
-                    <p class="text-gray-600 dark:text-gray-400 text-sm leading-relaxed">
-                        3nm architecture with 16-core neural engine for AI processing 50% faster than previous generation.
-                    </p>
-                </div>
-
-                <!-- Spec Card 2 -->
-                <div class="spec-card bg-white dark:bg-charcoal p-8 rounded-3xl shadow-lg dark:shadow-none border border-gray-100 dark:border-gray-800">
-                    <div class="w-14 h-14 bg-purple-100 dark:bg-purple-900/30 rounded-2xl flex items-center justify-center mb-6">
-                        <svg class="w-7 h-7 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z"></path>
-                        </svg>
-                    </div>
-                    <h3 class="text-xl font-semibold mb-2">Pro Camera</h3>
-                    <p class="text-gray-600 dark:text-gray-400 text-sm leading-relaxed">
-                        Triple-lens 200MP system with periscope zoom, night mode 3.0, and cinematic video stabilization.
-                    </p>
-                </div>
-
-                <!-- Spec Card 3 -->
-                <div class="spec-card bg-white dark:bg-charcoal p-8 rounded-3xl shadow-lg dark:shadow-none border border-gray-100 dark:border-gray-800">
-                    <div class="w-14 h-14 bg-green-100 dark:bg-green-900/30 rounded-2xl flex items-center justify-center mb-6">
-                        <svg class="w-7 h-7 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z"></path>
-                        </svg>
-                    </div>
-                    <h3 class="text-xl font-semibold mb-2">Ceramic Shield</h3>
-                    <p class="text-gray-600 dark:text-gray-400 text-sm leading-relaxed">
-                        Aerospace-grade titanium frame with ceramic shield front. 4x better drop performance.
-                    </p>
-                </div>
-
-                <!-- Spec Card 4 -->
-                <div class="spec-card bg-white dark:bg-charcoal p-8 rounded-3xl shadow-lg dark:shadow-none border border-gray-100 dark:border-gray-800">
-                    <div class="w-14 h-14 bg-orange-100 dark:bg-orange-900/30 rounded-2xl flex items-center justify-center mb-6">
-                        <svg class="w-7 h-7 text-orange-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
-                        </svg>
-                    </div>
-                    <h3 class="text-xl font-semibold mb-2">All-Day Battery</h3>
-                    <p class="text-gray-600 dark:text-gray-400 text-sm leading-relaxed">
-                        5000mAh with 65W fast charging. 0-50% in 15 minutes. Wireless charging 2.0 compatible.
-                    </p>
-                </div>
-            </div>
-
-            <!-- Additional Specs Grid -->
-            <div class="mt-12 grid grid-cols-2 md:grid-cols-4 gap-4 text-center">
-                <div class="p-4">
-                    <p class="text-3xl font-bold text-electric-blue">6.9"</p>
-                    <p class="text-sm text-gray-600 dark:text-gray-400 mt-1">Super Retina XDR</p>
-                </div>
-                <div class="p-4">
-                    <p class="text-3xl font-bold text-electric-blue">1TB</p>
-                    <p class="text-sm text-gray-600 dark:text-gray-400 mt-1">Max Storage</p>
-                </div>
-                <div class="p-4">
-                    <p class="text-3xl font-bold text-electric-blue">5G</p>
-                    <p class="text-sm text-gray-600 dark:text-gray-400 mt-1">Ultra-Wideband</p>
-                </div>
-                <div class="p-4">
-                    <p class="text-3xl font-bold text-electric-blue">IP68</p>
-                    <p class="text-sm text-gray-600 dark:text-gray-400 mt-1">Water Resistant</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Price Comparison Section -->
-    <section id="compare" class="py-24 relative overflow-hidden">
-        <div class="absolute inset-0 bg-gradient-to-b from-transparent via-electric-blue/5 to-transparent pointer-events-none"></div>
-        
-        <div class="max-w-5xl mx-auto px-6 relative z-10">
-            <div class="text-center mb-16 space-y-4">
-                <h2 class="text-4xl md:text-5xl font-bold">Choose Your Model</h2>
-                <p class="text-gray-600 dark:text-gray-400 text-lg">
-                    Compare storage options and find your perfect match.
-                </p>
-            </div>
-
-            <div class="glass rounded-3xl overflow-hidden shadow-2xl">
-                <div class="overflow-x-auto">
-                    <table class="w-full">
-                        <thead>
-                            <tr class="border-b border-gray-200 dark:border-gray-700">
-                                <th class="text-left p-6 font-semibold text-lg">Model</th>
-                                <th class="text-center p-6 font-semibold text-lg">Storage</th>
-                                <th class="text-center p-6 font-semibold text-lg">Display</th>
-                                <th class="text-right p-6 font-semibold text-lg">Price</th>
-                                <th class="p-6"></th>
-                            </tr>
-                        </thead>
-                        <tbody class="divide-y divide-gray-200 dark:divide-gray-700">
-                            <tr class="hover:bg-white/50 dark:hover:bg-white/5 transition-colors group">
-                                <td class="p-6">
-                                    <div class="flex items-center gap-4">
-                                        <div class="w-12 h-12 bg-gray-200 dark:bg-gray-700 rounded-xl flex items-center justify-center text-2xl">📱</div>
-                                        <div>
-                                            <p class="font-semibold text-lg">NEXUS Pro X</p>
-                                            <p class="text-sm text-gray-500 dark:text-gray-400">Standard Edition</p>
-                                        </div>
-                                    </div>
-                                </td>
-                                <td class="text-center p-6 text-gray-600 dark:text-gray-300">256GB</td>
-                                <td class="text-center p-6 text-gray-600 dark:text-gray-300">6.7" OLED</td>
-                                <td class="text-right p-6">
-                                    <p class="text-2xl font-bold">$999</p>
-                                </td>
-                                <td class="p-6">
-                                    <button class="opacity-0 group-hover:opacity-100 transition-opacity bg-electric-blue text-white px-6 py-2 rounded-full text-sm font-medium hover:bg-electric-blue-light transform hover:scale-105 transition-all">
-                                        Select
-                                    </button>
-                                </td>
-                            </tr>
-                            <tr class="hover:bg-white/50 dark:hover:bg-white/5 transition-colors group bg-electric-blue/5 dark:bg-electric-blue/10">
-                                <td class="p-6">
-                                    <div class="flex items-center gap-4">
-                                        <div class="w-12 h-12 bg-electric-blue/20 rounded-xl flex items-center justify-center text-2xl relative">
-                                            📱
-                                            <span class="absolute -top-2 -right-2 bg-electric-blue text-white text-xs px-2 py-1 rounded-full">Popular</span>
-                                        </div>
-                                        <div>
-                                            <p class="font-semibold text-lg">NEXUS Pro X</p>
-                                            <p class="text-sm text-gray-500 dark:text-gray-400">Pro Edition</p>
-                                        </div>
-                                    </div>
-                                </td>
-                                <td class="text-center p-6 text-gray-600 dark:text-gray-300">512GB</td>
-                                <td class="text-center p-6 text-gray-600 dark:text-gray-300">6.9" XDR</td>
-                                <td class="text-right p-6">
-                                    <p class="text-2xl font-bold text-electric-blue">$1,199</p>
-                                </td>
-                                <td class="p-6">
-                                    <button class="bg-electric-blue text-white px-6 py-2 rounded-full text-sm font-medium hover:bg-electric-blue-light transform hover:scale-105 transition-all shadow-lg shadow-electric-blue/30">
-                                        Select
-                                    </button>
-                                </td>
-                            </tr>
-                            <tr class="hover:bg-white/50 dark:hover:bg-white/5 transition-colors group">
-                                <td class="p-6">
-                                    <div class="flex items-center gap-4">
-                                        <div class="w-12 h-12 bg-purple-100 dark:bg-purple-900/30 rounded-xl flex items-center justify-center text-2xl">📱</div>
-                                        <div>
-                                            <p class="font-semibold text-lg">NEXUS Pro X</p>
-                                            <p class="text-sm text-gray-500 dark:text-gray-400">Ultra Edition</p>
-                                        </div>
-                                    </div>
-                                </td>
-                                <td class="text-center p-6 text-gray-600 dark:text-gray-300">1TB</td>
-                                <td class="text-center p-6 text-gray-600 dark:text-gray-300">6.9" Pro XDR</td>
-                                <td class="text-right p-6">
-                                    <p class="text-2xl font-bold">$1,399</p>
-                                </td>
-                                <td class="p-6">
-                                    <button class="opacity-0 group-hover:opacity-100 transition-opacity bg-electric-blue text-white px-6 py-2 rounded-full text-sm font-medium hover:bg-electric-blue-light transform hover:scale-105 transition-all">
-                                        Select
-                                    </button>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-
-            <div class="mt-8 flex flex-wrap justify-center gap-4 text-sm text-gray-500 dark:text-gray-400">
-                <span class="flex items-center gap-2">
-                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-                    </svg>
-                    Trade-in available
-                </span>
-                <span class="flex items-center gap-2">
-                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-                    </svg>
-                    0% financing options
-                </span>
-                <span class="flex items-center gap-2">
-                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-                    </svg>
-                    30-day returns
-                </span>
-            </div>
-        </div>
-    </section>
-
-    <!-- Reviews Carousel Section -->
-    <section id="reviews" class="py-24 bg-gray-50 dark:bg-gray-900/50">
-        <div class="max-w-7xl mx-auto px-6">
-            <div class="flex justify-between items-end mb-12">
-                <div>
-                    <h2 class="text-4xl md:text-5xl font-bold mb-4">Customer Reviews</h2>
-                    <p class="text-gray-600 dark:text-gray-400 text-lg">See what tech enthusiasts are saying.</p>
-                </div>
-                <div class="flex gap-2">
-                    <button onclick="moveCarousel(-1)" class="w-12 h-12 rounded-full border border-gray-300 dark:border-gray-600 flex items-center justify-center hover:bg-electric-blue hover:border-electric-blue hover:text-white transition-all">
-                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
-                        </svg>
-                    </button>
-                    <button onclick="moveCarousel(1)" class="w-12 h-12 rounded-full border border-gray-300 dark:border-gray-600 flex items-center justify-center hover:bg-electric-blue hover:border-electric-blue hover:text-white transition-all">
-                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
-                        </svg>
-                    </button>
-                </div>
-            </div>
-
-            <div class="overflow-hidden">
-                <div id="carousel" class="flex gap-6 transition-transform duration-500 ease-out">
-                    <!-- Review 1 -->
-                    <div class="min-w-[100%] md:min-w-[calc(50%-12px)] lg:min-w-[calc(33.333%-16px)] bg-white dark:bg-charcoal p-8 rounded-3xl shadow-lg dark:shadow-none border border-gray-100 dark:border-gray-800">
-                        <div class="flex items-center gap-4 mb-6">
-                            <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100&h=100&fit=crop&crop=face" alt="User" class="w-14 h-14 rounded-full object-cover">
-                            <div>
-                                <p class="font-semibold">Marcus Chen</p>
-                                <p class="text-sm text-gray-500 dark:text-gray-400">Tech Reviewer</p>
-                            </div>
-                            <div class="ml-auto flex gap-1">
-                                <svg class="w-5 h-5 text-yellow-400 fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
-                                <svg class="w-5 h-5 text-yellow-400 fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
-                                <svg class="w-5 h-5 text-yellow-400 fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
-                                <svg class="w-5 h-5 text-yellow-400 fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
-                                <svg class="w-5 h-5 text-yellow-400 fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
-                            </div>
-                        </div>
-                        <p class="text-gray-600 dark:text-gray-300 leading-relaxed mb-4">
-                            "The camera system is absolutely revolutionary. I've replaced my professional DSLR with this phone for most shoots. The low-light performance is unmatched."
-                        </p>
-                        <p class="text-sm text-electric-blue font-medium">Verified Purchase</p>
-                    </div>
-
-                    <!-- Review 2 -->
-                    <div class="min-w-[100%] md:min-w-[calc(50%-12px)] lg:min-w-[calc(33.333%-16px)] bg-white dark:bg-charcoal p-8 rounded-3xl shadow-lg dark:shadow-none border border-gray-100 dark:border-gray-800">
-                        <div class="flex items-center gap-4 mb-6">
-                            <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=100&h=100&fit=crop&crop=face" alt="User" class="w-14 h-14 rounded-full object-cover">
-                            <div>
-                                <p class="font-semibold">Sarah Williams</p>
-                                <p class="text-sm text-gray-500 dark:text-gray-400">Product Designer</p>
-                            </div>
-                            <div class="ml-auto flex gap-1">
-                                <svg class="w-5 h-5 text-yellow-400 fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
-                                <svg class="w-5 h-5 text-yellow-400 fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
-                                <svg class="w-5 h-5 text-yellow-400 fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
-                                <svg class="w-5 h-5 text-yellow-400 fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
-                                <svg class="w-5 h-5 text-yellow-400 fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
-                            </div>
-                        </div>
-                        <p class="text-gray-600 dark:text-gray-300 leading-relaxed mb-4">
-                            "The build quality is exquisite. The titanium frame feels incredibly premium, and the ceramic shield has already saved me from several drops. Worth every penny."
-                        </p>
-                        <p class="text-sm text-electric-blue font-medium">Verified Purchase</p>
-                    </div>
-
-                    <!-- Review 3 -->
-                    <div class="min-w-[100%] md:min-w-[calc(50%-12px)] lg:min-w-[calc(33.333%-16px)] bg-white dark:bg-charcoal p-8 rounded-3xl shadow-lg dark:shadow-none border border-gray-100 dark:border-gray-800">
-                        <div class="flex items-center gap-4 mb-6">
-                            <img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=100&h=100&fit=crop&crop=face" alt="User" class="w-14 h-14 rounded-full object-cover">
-                            <div>
-                                <p class="font-semibold">James Rodriguez</p>
-                                <p class="text-sm text-gray-500 dark:text-gray-400">Software Engineer</p>
-                            </div>
-                            <div class="ml-auto flex gap-1">
-                                <svg class="w-5 h-5 text-yellow-400 fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
-                                <svg class="w-5 h-5 text-yellow-400 fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
-                                <svg class="w-5 h-5 text-yellow-400 fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
-                                <svg class="w-5 h-5 text-yellow-400 fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
-                                <svg class="w-5 h-5 text-gray-300 dark:text-gray-600 fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
-                            </div>
-                        </div>
-                        <p class="text-gray-600 dark:text-gray-300 leading-relaxed mb-4">
-                            "Performance is blazing fast. As a developer, I appreciate the raw power for compiling and testing apps. Battery life easily gets me through heavy usage days."
-                        </p>
-                        <p class="text-sm text-electric-blue font-medium">Verified Purchase</p>
-                    </div>
-
-                    <!-- Review 4 -->
-                    <div class="min-w-[100%] md:min-w-[calc(50%-12px)] lg:min-w-[calc(33.333%-16px)] bg-white dark:bg-charcoal p-8 rounded-3xl shadow-lg dark:shadow-none border border-gray-100 dark:border-gray-800">
-                        <div class="flex items-center gap-4 mb-6">
-                            <img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=100&h=100&fit=crop&crop=face" alt="User" class="w-14 h-14 rounded-full object-cover">
-                            <div>
-                                <p class="font-semibold">Emma Thompson</p>
-                                <p class="text-sm text-gray-500 dark:text-gray-400">Photographer</p>
-                            </div>
-                            <div class="ml-auto flex gap-1">
-                                <svg class="w-5 h-5 text-yellow-400 fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
-                                <svg class="w-5 h-5 text-yellow-400 fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
-                                <svg class="w-5 h-5 text-yellow-400 fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
-                                <svg class="w-5 h-5 text-yellow-400 fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
-                                <svg class="w-5 h-5 text-yellow-400 fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
-                            </div>
-                        </div>
-                        <p class="text-gray-600 dark:text-gray-300 leading-relaxed mb-4">
-                            "The display is stunning for editing photos on the go. Color accuracy is professional-grade. This phone has become an essential part of my workflow."
-                        </p>
-                        <p class="text-sm text-electric-blue font-medium">Verified Purchase</p>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Carousel Indicators -->
-            <div class="flex justify-center gap-2 mt-8">
-                <button onclick="goToSlide(0)" class="carousel-dot w-2 h-2 rounded-full bg-electric-blue transition-all"></button>
-                <button onclick="goToSlide(1)" class="carousel-dot w-2 h-2 rounded-full bg-gray-300 dark:bg-gray-600 transition-all"></button>
-                <button onclick="goToSlide(2)" class="carousel-dot w-2 h-2 rounded-full bg-gray-300 dark:bg-gray-600 transition-all"></button>
-            </div>
-        </div>
-    </section>
-
-    <!-- CTA Section -->
-    <section class="py-24 relative overflow-hidden">
-        <div class="absolute inset-0 bg-gradient-to-r from-electric-blue/20 to-purple-500/20 pointer-events-none"></div>
-        <div class="max-w-4xl mx-auto px-6 text-center relative z-10">
-            <h2 class="text-4xl md:text-6xl font-bold mb-6">Ready to upgrade?</h2>
-            <p class="text-xl text-gray-600 dark:text-gray-300 mb-8 max-w-2xl mx-auto">
-                Join millions who have already made the switch. Free shipping on all orders over $500.
-            </p>
-            <button class="bg-electric-blue text-white px-12 py-4 rounded-full text-lg font-semibold hover:bg-electric-blue-light transform hover:scale-105 transition-all shadow-2xl shadow-electric-blue/30">
-                Shop Now
+<!-- FULLSCREEN VIDEO -->
+<div class="fs-video reveal">
+    <video autoplay muted loop playsinline id="fsVid" style="opacity:0.85;">
+        <source src="https://www.w3schools.com/html/movie.mp4" type="video/mp4">
+    </video>
+    <div class="fs-video-overlay">
+        <div style="max-width:520px;">
+            <span class="label" style="color:rgba(255,255,255,0.55);">// NEXUS Film</span>
+            <h2 style="font-family:'Playfair Display',serif; font-size:clamp(36px,5vw,72px); font-weight:800; color:#fff; line-height:0.95; margin-bottom:24px;">
+                See what only<br><em style="color:#7EB8FF;">we can build.</em>
+            </h2>
+            <button class="btn-outline" style="border-color:rgba(255,255,255,0.35);color:#fff;" onclick="toggleFsVid(this)">
+                ⏸ &nbsp;Playing
             </button>
         </div>
-    </section>
+    </div>
+</div>
 
-    <!-- Footer -->
-    <footer class="bg-gray-100 dark:bg-gray-900 pt-16 pb-8 transition-colors">
-        <div class="max-w-7xl mx-auto px-6">
-            <div class="grid md:grid-cols-4 gap-12 mb-12">
+<!-- ═══ CAMERA ═══ -->
+<section id="camera" style="padding:96px 0; background:linear-gradient(180deg, var(--cream) 0%, #EEF4FF 100%);">
+    <div style="max-width:1280px; margin:0 auto; padding:0 48px;">
+        <div style="text-align:center; margin-bottom:64px;" class="reveal">
+            <span class="label" style="display:block; text-align:center;">// Pro Camera System</span>
+            <h2 style="font-family:'Playfair Display',serif; font-size:clamp(40px,6vw,80px); font-weight:800; color:var(--navy); line-height:0.9;">
+                Shoot like a <em style="color:var(--blue);">studio.</em>
+            </h2>
+            <p style="color:var(--muted); margin-top:16px; max-width:520px; margin-left:auto; margin-right:auto; font-weight:300;">
+                200MP triple-lens · f/1.4 aperture · 10× periscope zoom · Night Vision 3.0
+            </p>
+        </div>
+
+        <div class="video-wrap reveal" style="margin-bottom:20px;">
+            <video autoplay muted loop playsinline id="camVid">
+                <source src="https://www.w3schools.com/html/mov_bbb.mp4" type="video/mp4">
+            </video>
+            <div class="video-overlay-bar">
                 <div>
-                    <div class="flex items-center gap-2 mb-4">
-                        <div class="w-8 h-8 bg-electric-blue rounded-lg flex items-center justify-center">
-                            <span class="text-white font-bold">N</span>
-                        </div>
-                        <span class="font-semibold text-xl">NEXUS</span>
+                    <div style="font-family:'DM Mono',monospace;font-size:10px;color:rgba(255,255,255,0.5);letter-spacing:2px;text-transform:uppercase;margin-bottom:4px;">Live Demo</div>
+                    <div style="font-size:16px;font-weight:600;color:#fff;">Night Mode 3.0 — Shot on NEXUS Pro X</div>
+                </div>
+            </div>
+            <div class="play-btn" onclick="toggleCamVid(this)">
+                <svg width="22" height="22" fill="white" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+            </div>
+        </div>
+
+        <div class="grid-4col reveal" style="display:grid; grid-template-columns:repeat(3,1fr); gap:12px;">
+            <div class="g-img" style="height:260px; border-radius:20px;">
+                <img src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=600&h=400&fit=crop" alt="Landscape">
+                <div class="g-img-label">Ultra Wide · 12mm</div>
+            </div>
+            <div class="g-img" style="height:260px; border-radius:20px;">
+                <img src="https://images.unsplash.com/photo-1531266752426-aad472b7bbf4?w=600&h=400&fit=crop" alt="Portrait">
+                <div class="g-img-label">Portrait · Natural Bokeh</div>
+            </div>
+            <div class="g-img" style="height:260px; border-radius:20px;">
+                <img src="https://images.unsplash.com/photo-1542359649-31e03cd4d909?w=600&h=400&fit=crop" alt="Night">
+                <div class="g-img-label">Night Vision 3.0</div>
+            </div>
+        </div>
+
+        <div style="display:flex; flex-wrap:wrap; gap:10px; justify-content:center; margin-top:28px;" class="reveal">
+            <div style="padding:10px 22px;border-radius:100px;background:#fff;border:1px solid var(--border);font-family:'DM Mono',monospace;font-size:12px;color:var(--muted);">200MP Main</div>
+            <div style="padding:10px 22px;border-radius:100px;background:#fff;border:1px solid var(--border);font-family:'DM Mono',monospace;font-size:12px;color:var(--muted);">10× Periscope Zoom</div>
+            <div style="padding:10px 22px;border-radius:100px;background:#fff;border:1px solid var(--border);font-family:'DM Mono',monospace;font-size:12px;color:var(--muted);">f/1.4 Aperture</div>
+            <div style="padding:10px 22px;border-radius:100px;background:#fff;border:1px solid var(--border);font-family:'DM Mono',monospace;font-size:12px;color:var(--muted);">8K 60fps Video</div>
+            <div style="padding:10px 22px;border-radius:100px;background:#fff;border:1px solid var(--border);font-family:'DM Mono',monospace;font-size:12px;color:var(--muted);">RAW 16-bit</div>
+            <div style="padding:10px 22px;border-radius:100px;background:var(--sky);border:1px solid rgba(26,92,255,0.15);font-family:'DM Mono',monospace;font-size:12px;color:var(--blue);">Night Vision 3.0</div>
+        </div>
+    </div>
+</section>
+
+<!-- ═══ SPECS ═══ -->
+<section id="specs" style="padding:96px 0; background:var(--ivory);">
+    <div style="max-width:1280px; margin:0 auto; padding:0 48px;">
+        <div style="text-align:center; margin-bottom:60px;" class="reveal">
+            <span class="label" style="display:block; text-align:center;">// Engineering</span>
+            <h2 style="font-family:'Playfair Display',serif; font-size:clamp(40px,6vw,80px); font-weight:800; color:var(--navy); line-height:0.9;">
+                The specs <em style="color:var(--blue);">speak.</em>
+            </h2>
+        </div>
+
+        <div class="grid-4col reveal" style="display:grid; grid-template-columns:repeat(4,1fr); gap:16px; margin-bottom:20px;">
+            <div class="spec-card" style="background:linear-gradient(135deg,#EEF4FF,#fff);">
+                <div style="font-size:32px;margin-bottom:16px;">🧠</div>
+                <div style="font-family:'DM Mono',monospace;font-size:10px;letter-spacing:2px;color:var(--blue);text-transform:uppercase;margin-bottom:8px;">Processor</div>
+                <div style="font-family:'Playfair Display',serif;font-size:20px;font-weight:700;color:var(--navy);margin-bottom:10px;">Quantum X1</div>
+                <p style="font-size:13px;color:var(--muted);line-height:1.6;">3nm architecture. 16-core neural engine. 50% faster than any competitor.</p>
+                <div style="margin-top:20px;padding-top:16px;border-top:1px solid var(--border);font-family:'Playfair Display',serif;font-size:28px;font-weight:800;color:var(--navy);">3<span style="color:var(--blue);font-size:18px;">nm</span></div>
+            </div>
+            <div class="spec-card" style="background:linear-gradient(135deg,#FDE8E0,#fff);">
+                <div style="font-size:32px;margin-bottom:16px;">📷</div>
+                <div style="font-family:'DM Mono',monospace;font-size:10px;letter-spacing:2px;color:var(--coral);text-transform:uppercase;margin-bottom:8px;">Camera</div>
+                <div style="font-family:'Playfair Display',serif;font-size:20px;font-weight:700;color:var(--navy);margin-bottom:10px;">Triple Lens Pro</div>
+                <p style="font-size:13px;color:var(--muted);line-height:1.6;">200MP · 10× zoom · Night Vision 3.0 · 8K video.</p>
+                <div style="margin-top:20px;padding-top:16px;border-top:1px solid var(--border);font-family:'Playfair Display',serif;font-size:28px;font-weight:800;color:var(--navy);">200<span style="color:var(--coral);font-size:18px;">MP</span></div>
+            </div>
+            <div class="spec-card" style="background:linear-gradient(135deg,#FFFBE0,#fff);">
+                <div style="font-size:32px;margin-bottom:16px;">⚡</div>
+                <div style="font-family:'DM Mono',monospace;font-size:10px;letter-spacing:2px;color:#D97706;text-transform:uppercase;margin-bottom:8px;">Battery</div>
+                <div style="font-family:'Playfair Display',serif;font-size:20px;font-weight:700;color:var(--navy);margin-bottom:10px;">PowerCell Pro</div>
+                <p style="font-size:13px;color:var(--muted);line-height:1.6;">5000mAh. 65W wired. 50W wireless. 0–50% in 15 min.</p>
+                <div style="margin-top:20px;padding-top:16px;border-top:1px solid var(--border);font-family:'Playfair Display',serif;font-size:28px;font-weight:800;color:var(--navy);">48<span style="color:#D97706;font-size:18px;">hr</span></div>
+            </div>
+            <div class="spec-card" style="background:linear-gradient(135deg,#E0F5F0,#fff);">
+                <div style="font-size:32px;margin-bottom:16px;">🔒</div>
+                <div style="font-family:'DM Mono',monospace;font-size:10px;letter-spacing:2px;color:var(--teal);text-transform:uppercase;margin-bottom:8px;">Build</div>
+                <div style="font-family:'Playfair Display',serif;font-size:20px;font-weight:700;color:var(--navy);margin-bottom:10px;">Titanium Grade 5</div>
+                <p style="font-size:13px;color:var(--muted);line-height:1.6;">Aerospace titanium. Ceramic Shield front. IP68 rated.</p>
+                <div style="margin-top:20px;padding-top:16px;border-top:1px solid var(--border);font-family:'Playfair Display',serif;font-size:28px;font-weight:800;color:var(--navy);">IP<span style="color:var(--teal);font-size:18px;">68</span></div>
+            </div>
+        </div>
+
+        <div class="stat-bar reveal">
+            <div class="stat-item">
+                <div style="font-family:'Playfair Display',serif;font-size:44px;font-weight:800;" class="counter" data-target="69">0</div>
+                <div style="font-family:'DM Mono',monospace;font-size:10px;letter-spacing:2px;color:rgba(255,255,255,0.4);text-transform:uppercase;margin-top:6px;">" Display</div>
+            </div>
+            <div class="stat-item">
+                <div style="font-family:'Playfair Display',serif;font-size:44px;font-weight:800;color:#7EB8FF;">1<span style="font-size:22px;">TB</span></div>
+                <div style="font-family:'DM Mono',monospace;font-size:10px;letter-spacing:2px;color:rgba(255,255,255,0.4);text-transform:uppercase;margin-top:6px;">Max Storage</div>
+            </div>
+            <div class="stat-item">
+                <div style="font-family:'Playfair Display',serif;font-size:44px;font-weight:800;color:#7EB8FF;">5G</div>
+                <div style="font-family:'DM Mono',monospace;font-size:10px;letter-spacing:2px;color:rgba(255,255,255,0.4);text-transform:uppercase;margin-top:6px;">Ultra-Wideband</div>
+            </div>
+            <div class="stat-item">
+                <div style="font-family:'Playfair Display',serif;font-size:44px;font-weight:800;" class="counter" data-target="171">0</div>
+                <div style="font-family:'DM Mono',monospace;font-size:10px;letter-spacing:2px;color:rgba(255,255,255,0.4);text-transform:uppercase;margin-top:6px;">Grams</div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ═══ COLOURS ═══ -->
+<section style="padding:96px 0; background:var(--cream); overflow:hidden;">
+    <div style="max-width:1280px;margin:0 auto;padding:0 48px;margin-bottom:32px;" class="reveal">
+        <span class="label">// Finishes</span>
+        <h2 style="font-family:'Playfair Display',serif;font-size:clamp(36px,5vw,64px);font-weight:800;color:var(--navy);line-height:0.95;">
+            Made to be <em style="color:var(--blue);">seen.</em>
+        </h2>
+    </div>
+    <div class="colour-strip" style="padding:0 48px 16px;">
+        <div class="colour-swatch"><img src="https://images.unsplash.com/photo-1565849904461-04a58ad377e0?w=400&h=500&fit=crop" alt="Space Black"><div class="colour-swatch-label">Space Black</div></div>
+        <div class="colour-swatch"><img src="https://images.unsplash.com/photo-1567581935884-3349723552ca?w=400&h=500&fit=crop" alt="Natural Titanium"><div class="colour-swatch-label">Natural Titanium</div></div>
+        <div class="colour-swatch"><img src="https://images.unsplash.com/photo-1601784551446-20c9e07cdbdb?w=400&h=500&fit=crop" alt="Desert Storm"><div class="colour-swatch-label">Desert Storm</div></div>
+        <div class="colour-swatch"><img src="https://images.unsplash.com/photo-1585060544812-6b45742d762f?w=400&h=500&fit=crop" alt="Deep Blue"><div class="colour-swatch-label">Deep Blue</div></div>
+    </div>
+    <div style="display:flex;gap:20px;padding:16px 48px 0;flex-wrap:wrap;">
+        <div style="display:flex;align-items:center;gap:8px;cursor:pointer;"><div style="width:18px;height:18px;border-radius:50%;background:#1a1a1a;border:2px solid rgba(0,0,0,0.15);"></div><span style="font-family:'DM Mono',monospace;font-size:11px;color:var(--muted);">Space Black</span></div>
+        <div style="display:flex;align-items:center;gap:8px;cursor:pointer;"><div style="width:18px;height:18px;border-radius:50%;background:#b0bec5;border:2px solid rgba(0,0,0,0.15);"></div><span style="font-family:'DM Mono',monospace;font-size:11px;color:var(--muted);">Natural Titanium</span></div>
+        <div style="display:flex;align-items:center;gap:8px;cursor:pointer;"><div style="width:18px;height:18px;border-radius:50%;background:#c5a882;border:2px solid rgba(0,0,0,0.15);"></div><span style="font-family:'DM Mono',monospace;font-size:11px;color:var(--muted);">Desert Storm</span></div>
+        <div style="display:flex;align-items:center;gap:8px;cursor:pointer;"><div style="width:18px;height:18px;border-radius:50%;background:#1565c0;border:2px solid rgba(0,0,0,0.15);"></div><span style="font-family:'DM Mono',monospace;font-size:11px;color:var(--muted);">Deep Blue</span></div>
+    </div>
+</section>
+
+<!-- ═══ COMPARE ═══ -->
+<section id="compare" style="padding:96px 0; background:linear-gradient(180deg,var(--ivory) 0%,#EEF4FF 100%);">
+    <div style="max-width:1080px; margin:0 auto; padding:0 48px;">
+        <div style="text-align:center; margin-bottom:56px;" class="reveal">
+            <span class="label" style="display:block; text-align:center;">// Pricing</span>
+            <h2 style="font-family:'Playfair Display',serif;font-size:clamp(40px,6vw,72px);font-weight:800;color:var(--navy);line-height:0.95;">
+                Choose your <em style="color:var(--blue);">model.</em>
+            </h2>
+        </div>
+        <div class="compare-table reveal">
+            <table style="width:100%;border-collapse:collapse;">
+                <thead>
+                    <tr>
+                        <th>Model</th>
+                        <th style="text-align:center;">Storage</th>
+                        <th style="text-align:center;">Display</th>
+                        <th style="text-align:right;">Price</th>
+                        <th style="padding:22px 28px;"></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><div style="font-weight:600;color:var(--navy);margin-bottom:3px;">NEXUS Pro X</div><div style="font-family:'DM Mono',monospace;font-size:11px;color:var(--muted);">Standard Edition</div></td>
+                        <td style="text-align:center;font-family:'DM Mono',monospace;font-size:13px;color:var(--muted);">256GB</td>
+                        <td style="text-align:center;font-family:'DM Mono',monospace;font-size:13px;color:var(--muted);">6.7" OLED</td>
+                        <td style="text-align:right;font-family:'Playfair Display',serif;font-size:26px;font-weight:800;color:var(--navy);">$999</td>
+                        <td style="padding:22px 28px;"><button class="btn-outline" style="padding:10px 22px;font-size:13px;">Select</button></td>
+                    </tr>
+                    <tr class="popular">
+                        <td>
+                            <div style="display:flex;align-items:center;gap:10px;margin-bottom:3px;">
+                                <span style="font-weight:600;color:var(--navy);">NEXUS Pro X</span>
+                                <span style="font-family:'DM Mono',monospace;font-size:10px;letter-spacing:1px;color:var(--blue);background:rgba(26,92,255,0.12);padding:3px 10px;border-radius:100px;border:1px solid rgba(26,92,255,0.2);">POPULAR</span>
+                            </div>
+                            <div style="font-family:'DM Mono',monospace;font-size:11px;color:var(--muted);">Pro Edition</div>
+                        </td>
+                        <td style="text-align:center;font-family:'DM Mono',monospace;font-size:13px;color:var(--muted);">512GB</td>
+                        <td style="text-align:center;font-family:'DM Mono',monospace;font-size:13px;color:var(--muted);">6.9" XDR</td>
+                        <td style="text-align:right;font-family:'Playfair Display',serif;font-size:26px;font-weight:800;color:var(--blue);">$1,199</td>
+                        <td style="padding:22px 28px;"><button class="btn-blue" style="padding:10px 22px;font-size:13px;">Select</button></td>
+                    </tr>
+                    <tr>
+                        <td><div style="font-weight:600;color:var(--navy);margin-bottom:3px;">NEXUS Pro X</div><div style="font-family:'DM Mono',monospace;font-size:11px;color:var(--muted);">Ultra Edition</div></td>
+                        <td style="text-align:center;font-family:'DM Mono',monospace;font-size:13px;color:var(--muted);">1TB</td>
+                        <td style="text-align:center;font-family:'DM Mono',monospace;font-size:13px;color:var(--muted);">6.9" Pro XDR</td>
+                        <td style="text-align:right;font-family:'Playfair Display',serif;font-size:26px;font-weight:800;color:var(--navy);">$1,399</td>
+                        <td style="padding:22px 28px;"><button class="btn-outline" style="padding:10px 22px;font-size:13px;">Select</button></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div style="display:flex;flex-wrap:wrap;gap:20px;justify-content:center;margin-top:24px;font-size:13px;color:var(--muted);" class="reveal">
+            <span>✓ Trade-in accepted</span>
+            <span>✓ 0% financing available</span>
+            <span>✓ 30-day returns</span>
+            <span>✓ Free worldwide shipping</span>
+        </div>
+    </div>
+</section>
+
+<!-- ═══ REVIEWS ═══ -->
+<section id="reviews" style="padding:96px 0; background:var(--cream); overflow:hidden;">
+    <div style="max-width:1280px; margin:0 auto; padding:0 48px;">
+        <div style="display:flex;align-items:flex-end;justify-content:space-between;margin-bottom:48px;" class="reveal">
+            <div>
+                <span class="label">// Reviews</span>
+                <h2 style="font-family:'Playfair Display',serif;font-size:clamp(36px,5vw,64px);font-weight:800;color:var(--navy);line-height:0.95;">
+                    People <em style="color:var(--blue);">love</em> NEXUS.
+                </h2>
+            </div>
+            <div style="display:flex;gap:10px;">
+                <button onclick="slideRevs(-1)" style="width:48px;height:48px;border-radius:50%;background:#fff;border:1.5px solid var(--border);font-size:16px;cursor:pointer;transition:all 0.2s;" onmouseenter="this.style.borderColor='var(--blue)';this.style.color='var(--blue)'" onmouseleave="this.style.borderColor='var(--border)';this.style.color='inherit'">←</button>
+                <button onclick="slideRevs(1)"  style="width:48px;height:48px;border-radius:50%;background:#fff;border:1.5px solid var(--border);font-size:16px;cursor:pointer;transition:all 0.2s;" onmouseenter="this.style.borderColor='var(--blue)';this.style.color='var(--blue)'" onmouseleave="this.style.borderColor='var(--border)';this.style.color='inherit'">→</button>
+            </div>
+        </div>
+        <div style="overflow:hidden;" class="reveal">
+            <div id="revTrack" style="display:flex;gap:20px;transition:transform 0.5s cubic-bezier(0.16,1,0.3,1);">
+                <div class="review-card">
+                    <div style="display:flex;align-items:center;gap:12px;margin-bottom:18px;">
+                        <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=80&h=80&fit=crop&crop=face" style="width:48px;height:48px;border-radius:50%;object-fit:cover;border:2px solid var(--sky);" alt="Marcus">
+                        <div><div style="font-weight:600;font-size:14px;color:var(--navy);">Marcus Chen</div><div style="font-size:12px;color:var(--muted);">Tech Reviewer</div></div>
+                        <div style="margin-left:auto;color:#F59E0B;font-size:14px;">★★★★★</div>
                     </div>
-                    <p class="text-gray-600 dark:text-gray-400 text-sm leading-relaxed">
-                        Redefining mobile technology through innovation and design excellence.
-                    </p>
+                    <p style="font-size:14px;color:var(--muted);line-height:1.7;">"The camera system is absolutely revolutionary. I've replaced my DSLR for most shoots. Low-light performance is unmatched by anything."</p>
+                    <div style="margin-top:14px;font-family:'DM Mono',monospace;font-size:11px;color:var(--blue);">Verified Purchase</div>
                 </div>
-                <div>
-                    <h4 class="font-semibold mb-4">Products</h4>
-                    <ul class="space-y-2 text-sm text-gray-600 dark:text-gray-400">
-                        <li><a href="#" class="hover:text-electric-blue transition-colors">NEXUS Pro X</a></li>
-                        <li><a href="#" class="hover:text-electric-blue transition-colors">NEXUS Watch</a></li>
-                        <li><a href="#" class="hover:text-electric-blue transition-colors">Accessories</a></li>
-                        <li><a href="#" class="hover:text-electric-blue transition-colors">Trade In</a></li>
-                    </ul>
+                <div class="review-card">
+                    <div style="display:flex;align-items:center;gap:12px;margin-bottom:18px;">
+                        <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=80&h=80&fit=crop&crop=face" style="width:48px;height:48px;border-radius:50%;object-fit:cover;border:2px solid var(--blush);" alt="Sarah">
+                        <div><div style="font-weight:600;font-size:14px;color:var(--navy);">Sarah Williams</div><div style="font-size:12px;color:var(--muted);">Product Designer</div></div>
+                        <div style="margin-left:auto;color:#F59E0B;font-size:14px;">★★★★★</div>
+                    </div>
+                    <p style="font-size:14px;color:var(--muted);line-height:1.7;">"The build quality is exquisite. Titanium frame feels incredibly premium and the ceramic shield has already saved me from several drops."</p>
+                    <div style="margin-top:14px;font-family:'DM Mono',monospace;font-size:11px;color:var(--blue);">Verified Purchase</div>
                 </div>
-                <div>
-                    <h4 class="font-semibold mb-4">Support</h4>
-                    <ul class="space-y-2 text-sm text-gray-600 dark:text-gray-400">
-                        <li><a href="#" class="hover:text-electric-blue transition-colors">Help Center</a></li>
-                        <li><a href="#" class="hover:text-electric-blue transition-colors">Contact Us</a></li>
-                        <li><a href="#" class="hover:text-electric-blue transition-colors">Warranty</a></li>
-                        <li><a href="#" class="hover:text-electric-blue transition-colors">Status</a></li>
-                    </ul>
+                <div class="review-card">
+                    <div style="display:flex;align-items:center;gap:12px;margin-bottom:18px;">
+                        <img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=80&h=80&fit=crop&crop=face" style="width:48px;height:48px;border-radius:50%;object-fit:cover;border:2px solid var(--mint);" alt="James">
+                        <div><div style="font-weight:600;font-size:14px;color:var(--navy);">James Rodriguez</div><div style="font-size:12px;color:var(--muted);">Software Engineer</div></div>
+                        <div style="margin-left:auto;color:#F59E0B;font-size:14px;">★★★★☆</div>
+                    </div>
+                    <p style="font-size:14px;color:var(--muted);line-height:1.7;">"Performance is blazing fast. As a developer I appreciate the raw power. Battery easily gets me through long heavy usage days."</p>
+                    <div style="margin-top:14px;font-family:'DM Mono',monospace;font-size:11px;color:var(--blue);">Verified Purchase</div>
                 </div>
-                <div>
-                    <h4 class="font-semibold mb-4">Connect</h4>
-                    <div class="flex gap-4">
-                        <a href="#" class="w-10 h-10 rounded-full bg-gray-200 dark:bg-gray-800 flex items-center justify-center hover:bg-electric-blue hover:text-white transition-all">
-                            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M24 4.557c-.883.392-1.832.656-2.828.775 1.017-.609 1.798-1.574 2.165-2.724-.951.564-2.005.974-3.127 1.195-.897-.957-2.178-1.555-3.594-1.555-3.179 0-5.515 2.966-4.797 6.045-4.091-.205-7.719-2.165-10.148-5.144-1.29 2.213-.669 5.108 1.523 6.574-.806-.026-1.566-.247-2.229-.616-.054 2.281 1.581 4.415 3.949 4.89-.693.188-1.452.232-2.224.084.626 1.956 2.444 3.379 4.6 3.419-2.07 1.623-4.678 2.348-7.29 2.04 2.179 1.397 4.768 2.212 7.548 2.212 9.142 0 14.307-7.721 13.995-14.646.962-.695 1.797-1.562 2.457-2.549z"/></svg>
-                        </a>
-                        <a href="#" class="w-10 h-10 rounded-full bg-gray-200 dark:bg-gray-800 flex items-center justify-center hover:bg-electric-blue hover:text-white transition-all">
-                            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-
+                <div class="review-card">
+                    <div style="display:flex;align-items:center;gap:12px;margin-bottom:18px;">
+                        <img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=80&h=80&fit=crop&crop=face" style="width:48px;height:48px;border-radius:50%;object-fit:cover;border:2px solid var(--lavender);" alt="Emma">
+                        <div><div style="font-weight:600;font-size:14px;color:var(--navy);">Emma Thompson</div><div style="font-size:12px;color:var(--muted);">Photographer</div></div>
+                        <div style="margin-left:auto;color:#F59E0B;font-size:14px;">★★★★★</div>
+                    </div>
+                    <p style="font-size:14px;color:var(--muted);line-height:1.7;">"The display is stunning for editing photos on the go. Color accuracy is professional-grade. This is now essential to my daily workflow."</p>
+                    <div style="margin-top:14px;font-family:'DM Mono',monospace;font-size:11px;color:var(--blue);">Verified Purchase</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ═══ CTA ═══ -->
+<section style="padding:40px 0 80px;">
+    <div class="cta-section">
+        <div style="position:absolute;width:500px;height:500px;border-radius:50%;background:rgba(26,92,255,0.3);top:-150px;right:-100px;filter:blur(80px);pointer-events:none;"></div>
+        <div style="position:absolute;width:400px;height:400px;border-radius:50%;background:rgba(255,92,58,0.15);bottom:-100px;left:-80px;filter:blur(80px);pointer-events:none;"></div>
+        <div style="padding:80px 60px;text-align:center;position:relative;z-index:2;" class="reveal">
+            <span style="font-family:'DM Mono',monospace;font-size:11px;letter-spacing:3px;text-transform:uppercase;color:rgba(255,255,255,0.45);display:block;margin-bottom:20px;">// Get Yours</span>
+            <h2 style="font-family:'Playfair Display',serif;font-size:clamp(44px,7vw,96px);font-weight:800;color:#fff;line-height:0.9;margin-bottom:24px;">
+                Ready to<br><em style="color:#7EB8FF;">upgrade?</em>
+            </h2>
+            <p style="color:rgba(255,255,255,0.45);margin-bottom:36px;max-width:480px;margin-left:auto;margin-right:auto;">
+                Join 2 million+ NEXUS users worldwide. Free shipping. 2-year warranty. 30-day returns.
+            </p>
+            <div style="display:flex;gap:14px;justify-content:center;flex-wrap:wrap;">
+                <button class="btn-blue" style="background:rgba(255,255,255,0.92);color:var(--navy);" onmouseenter="this.style.background='#fff'" onmouseleave="this.style.background='rgba(255,255,255,0.92)'">Order Now — From $999</button>
+                <button class="btn-outline" style="border-color:rgba(255,255,255,0.3);color:#fff;">Find a Store</button>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ═══ FOOTER ═══ -->
+<footer style="background:var(--navy);padding:64px 48px 32px;">
+    <div style="max-width:1280px;margin:0 auto;">
+        <div class="grid-4col" style="display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:48px;margin-bottom:48px;">
+            <div>
+                <div style="font-family:'Playfair Display',serif;font-size:28px;font-weight:800;color:#fff;letter-spacing:2px;margin-bottom:16px;">NEXUS</div>
+                <p style="font-size:13px;color:rgba(255,255,255,0.3);line-height:1.7;max-width:280px;">Redefining mobile technology through radical innovation and obsessive design excellence.</p>
+            </div>
+            <div>
+                <div style="font-family:'DM Mono',monospace;font-size:10px;letter-spacing:2px;color:rgba(255,255,255,0.35);text-transform:uppercase;margin-bottom:20px;">Products</div>
+                <div style="display:flex;flex-direction:column;gap:12px;">
+                    <a href="#" style="font-size:13px;color:rgba(255,255,255,0.45);text-decoration:none;" onmouseenter="this.style.color='#fff'" onmouseleave="this.style.color='rgba(255,255,255,0.45)'">NEXUS Pro X</a>
+                    <a href="#" style="font-size:13px;color:rgba(255,255,255,0.45);text-decoration:none;" onmouseenter="this.style.color='#fff'" onmouseleave="this.style.color='rgba(255,255,255,0.45)'">NEXUS Watch</a>
+                    <a href="#" style="font-size:13px;color:rgba(255,255,255,0.45);text-decoration:none;" onmouseenter="this.style.color='#fff'" onmouseleave="this.style.color='rgba(255,255,255,0.45)'">Accessories</a>
+                    <a href="#" style="font-size:13px;color:rgba(255,255,255,0.45);text-decoration:none;" onmouseenter="this.style.color='#fff'" onmouseleave="this.style.color='rgba(255,255,255,0.45)'">Trade In</a>
+                </div>
+            </div>
+            <div>
+                <div style="font-family:'DM Mono',monospace;font-size:10px;letter-spacing:2px;color:rgba(255,255,255,0.35);text-transform:uppercase;margin-bottom:20px;">Support</div>
+                <div style="display:flex;flex-direction:column;gap:12px;">
+                    <a href="#" style="font-size:13px;color:rgba(255,255,255,0.45);text-decoration:none;" onmouseenter="this.style.color='#fff'" onmouseleave="this.style.color='rgba(255,255,255,0.45)'">Help Center</a>
+                    <a href="#" style="font-size:13px;color:rgba(255,255,255,0.45);text-decoration:none;" onmouseenter="this.style.color='#fff'" onmouseleave="this.style.color='rgba(255,255,255,0.45)'">Contact Us</a>
+                    <a href="#" style="font-size:13px;color:rgba(255,255,255,0.45);text-decoration:none;" onmouseenter="this.style.color='#fff'" onmouseleave="this.style.color='rgba(255,255,255,0.45)'">Warranty</a>
+                    <a href="#" style="font-size:13px;color:rgba(255,255,255,0.45);text-decoration:none;" onmouseenter="this.style.color='#fff'" onmouseleave="this.style.color='rgba(255,255,255,0.45)'">Repairs</a>
+                </div>
+            </div>
+            <div>
+                <div style="font-family:'DM Mono',monospace;font-size:10px;letter-spacing:2px;color:rgba(255,255,255,0.35);text-transform:uppercase;margin-bottom:20px;">Connect</div>
+                <div style="display:flex;gap:10px;flex-wrap:wrap;">
+                    <a href="#" style="width:40px;height:40px;border-radius:50%;background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.12);display:flex;align-items:center;justify-content:center;font-size:11px;font-family:'DM Mono',monospace;color:rgba(255,255,255,0.45);text-decoration:none;transition:all 0.2s;" onmouseenter="this.style.background='rgba(26,92,255,0.5)';this.style.color='#fff'" onmouseleave="this.style.background='rgba(255,255,255,0.08)';this.style.color='rgba(255,255,255,0.45)'">TW</a>
+                    <a href="#" style="width:40px;height:40px;border-radius:50%;background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.12);display:flex;align-items:center;justify-content:center;font-size:11px;font-family:'DM Mono',monospace;color:rgba(255,255,255,0.45);text-decoration:none;transition:all 0.2s;" onmouseenter="this.style.background='rgba(26,92,255,0.5)';this.style.color='#fff'" onmouseleave="this.style.background='rgba(255,255,255,0.08)';this.style.color='rgba(255,255,255,0.45)'">IG</a>
+                    <a href="#" style="width:40px;height:40px;border-radius:50%;background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.12);display:flex;align-items:center;justify-content:center;font-size:11px;font-family:'DM Mono',monospace;color:rgba(255,255,255,0.45);text-decoration:none;transition:all 0.2s;" onmouseenter="this.style.background='rgba(26,92,255,0.5)';this.style.color='#fff'" onmouseleave="this.style.background='rgba(255,255,255,0.08)';this.style.color='rgba(255,255,255,0.45)'">YT</a>
+                </div>
+            </div>
+        </div>
+        <div style="border-top:1px solid rgba(255,255,255,0.07);padding-top:28px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;">
+            <div style="font-family:'DM Mono',monospace;font-size:11px;color:rgba(255,255,255,0.2);">© 2024 NEXUS Technologies. All rights reserved.</div>
+            <div style="display:flex;gap:24px;">
+                <a href="#" style="font-family:'DM Mono',monospace;font-size:11px;color:rgba(255,255,255,0.2);text-decoration:none;" onmouseenter="this.style.color='rgba(255,255,255,0.5)'" onmouseleave="this.style.color='rgba(255,255,255,0.2)'">Privacy</a>
+                <a href="#" style="font-family:'DM Mono',monospace;font-size:11px;color:rgba(255,255,255,0.2);text-decoration:none;" onmouseenter="this.style.color='rgba(255,255,255,0.5)'" onmouseleave="this.style.color='rgba(255,255,255,0.2)'">Terms</a>
+                <a href="#" style="font-family:'DM Mono',monospace;font-size:11px;color:rgba(255,255,255,0.2);text-decoration:none;" onmouseenter="this.style.color='rgba(255,255,255,0.5)'" onmouseleave="this.style.color='rgba(255,255,255,0.2)'">Cookies</a>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- VIDEO MODAL -->
+<div id="vModal" onclick="if(event.target===this)closeModal()">
+    <button class="modal-close" onclick="closeModal()">✕</button>
+    <div class="modal-inner">
+        <video id="modalVid" controls style="width:100%;display:block;">
+            <source src="https://www.w3schools.com/html/mov_bbb.mp4" type="video/mp4">
+        </video>
+    </div>
+</div>
+
+<script>
+    /* RESPONSIVE NAV */
+    function setNav() {
+        const w = window.innerWidth;
+        document.getElementById('navLinks').style.display = w >= 768 ? 'flex' : 'none';
+        document.getElementById('navBtns').style.display  = w >= 768 ? 'flex' : 'none';
+        document.getElementById('menuBtn').style.display  = w < 768  ? 'flex' : 'none';
+    }
+    setNav();
+    window.addEventListener('resize', setNav);
+
+    /* NAV SCROLL */
+    window.addEventListener('scroll', () => {
+        document.getElementById('navbar').classList.toggle('scrolled', window.scrollY > 40);
+    });
+
+    /* MOBILE MENU */
+    let menuOpen = false;
+    function toggleMenu() {
+        menuOpen = !menuOpen;
+        document.getElementById('mobile-menu').classList.toggle('open', menuOpen);
+        document.body.style.overflow = menuOpen ? 'hidden' : '';
+    }
+
+    /* SCROLL REVEAL */
+    const revObs = new IntersectionObserver(entries => {
+        entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+    }, { threshold: 0.1 });
+    document.querySelectorAll('.reveal, .reveal-l, .reveal-r').forEach(r => revObs.observe(r));
+
+    /* COUNTERS */
+    const cntObs = new IntersectionObserver(entries => {
+        entries.forEach(e => {
+            if (e.isIntersecting && !e.target.dataset.done) {
+                e.target.dataset.done = '1';
+                const target = +e.target.dataset.target;
+                let n = 0;
+                const step = Math.ceil(target / 55);
+                const t = setInterval(() => {
+                    n = Math.min(n + step, target);
+                    e.target.textContent = n;
+                    if (n >= target) clearInterval(t);
+                }, 25);
+            }
+        });
+    }, { threshold: 0.5 });
+    document.querySelectorAll('.counter').forEach(c => cntObs.observe(c));
+
+    /* REVIEWS CAROUSEL */
+    let revIdx = 0;
+    function slideRevs(dir) {
+        const track = document.getElementById('revTrack');
+        const total = track.children.length;
+        const vis = window.innerWidth >= 1024 ? 3 : window.innerWidth >= 640 ? 2 : 1;
+        revIdx = Math.max(0, Math.min(revIdx + dir, total - vis));
+        const cardW = track.children[0].offsetWidth + 20;
+        track.style.transform = `translateX(-${revIdx * cardW}px)`;
+    }
+
+    /* VIDEO MODAL */
+    function closeModal() {
+        document.getElementById('vModal').classList.remove('active');
+        document.getElementById('modalVid').pause();
+    }
+
+    /* FULLSCREEN VIDEO TOGGLE */
+    function toggleFsVid(btn) {
+        const v = document.getElementById('fsVid');
+        if (v.paused) { v.play(); btn.innerHTML = '⏸ &nbsp;Playing'; }
+        else { v.pause(); btn.innerHTML = '▶ &nbsp;Paused'; }
+    }
+
+    /* CAMERA VIDEO TOGGLE */
+    function toggleCamVid(btn) {
+        const v = document.getElementById('camVid');
+        if (v.paused) {
+            v.play();
+            btn.innerHTML = '<svg width="22" height="22" fill="white" viewBox="0 0 24 24"><rect x="6" y="4" width="4" height="16"/><rect x="14" y="4" width="4" height="16"/></svg>';
+        } else {
+            v.pause();
+            btn.innerHTML = '<svg width="22" height="22" fill="white" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>';
+        }
+    }
+</script>
+</body>
+</html>

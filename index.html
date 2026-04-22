@@ -9,12 +9,10 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300&family=Inter:wght@300;400;500;600&family=Space+Grotesk:wght@300;400;500;700&display=swap" rel="stylesheet">
     <style>
-        /* Custom scrollbar */
         ::-webkit-scrollbar { width: 6px; }
         ::-webkit-scrollbar-track { background: #0a0a0a; }
         ::-webkit-scrollbar-thumb { background: #333; border-radius: 3px; }
         
-        /* Video overlay gradients */
         .overlay-nature { background: linear-gradient(180deg, rgba(0,20,10,0.2) 0%, rgba(0,10,5,0.4) 50%, rgba(0,15,10,0.7) 100%); }
         .overlay-still { background: linear-gradient(180deg, rgba(20,15,10,0.3) 0%, rgba(30,20,15,0.2) 50%, rgba(15,10,5,0.6) 100%); }
         .overlay-material { background: linear-gradient(180deg, rgba(40,30,20,0.4) 0%, rgba(50,35,25,0.3) 50%, rgba(30,20,15,0.7) 100%); }
@@ -24,7 +22,6 @@
         .overlay-liquid { background: linear-gradient(180deg, rgba(10,20,30,0.4) 0%, rgba(15,25,35,0.3) 50%, rgba(5,10,20,0.8) 100%); }
         .overlay-light { background: linear-gradient(180deg, rgba(40,20,10,0.3) 0%, rgba(30,15,5,0.2) 50%, rgba(20,10,0,0.7) 100%); }
         
-        /* Text reveal animation */
         @keyframes revealUp {
             from { opacity: 0; transform: translateY(40px); filter: blur(10px); }
             to { opacity: 1; transform: translateY(0); filter: blur(0); }
@@ -73,15 +70,21 @@
         html { scroll-behavior: smooth; scroll-snap-type: y mandatory; }
         
         .video-loading {
-            background: linear-gradient(135deg, #1a1a1a 0%, #2a2a2a 50%, #1a1a1a 100%);
-            background-size: 200% 200%;
-            animation: loadingPulse 1.5s ease infinite;
+            background-size: cover;
+            background-position: center;
         }
-        @keyframes loadingPulse {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
+        .video-loading::after {
+            content: '';
+            position: absolute;
+            top: 50%; left: 50%;
+            width: 40px; height: 40px;
+            margin: -20px 0 0 -20px;
+            border: 2px solid rgba(255,255,255,0.1);
+            border-top-color: rgba(255,255,255,0.5);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
         }
+        @keyframes spin { to { transform: rotate(360deg); } }
         
         .font-nature { font-family: 'Cormorant Garamond', serif; }
         .font-still { font-family: 'Cormorant Garamond', serif; }
@@ -89,6 +92,18 @@
         .font-metal { font-family: 'Space Grotesk', sans-serif; }
         .font-arch { font-family: 'Inter', sans-serif; font-weight: 300; letter-spacing: -0.02em; }
         .font-liquid { font-family: 'Cormorant Garamond', serif; }
+        
+        video {
+            object-fit: cover;
+            width: 100%;
+            height: 100%;
+            display: block;
+        }
+        
+        @media (max-width: 768px) {
+            html { scroll-snap-type: none; }
+            .hero-section { height: 100dvh; }
+        }
     </style>
 </head>
 <body class="bg-black text-white overflow-x-hidden">
@@ -118,10 +133,11 @@
         <div class="nav-dot" onclick="scrollToSection(7)"></div>
     </div>
 
+    <!-- 1. NATURE: Aerial Ocean Waves -->
     <section class="hero-section relative w-full h-screen overflow-hidden" id="nature">
-        <div class="absolute inset-0 video-loading" id="nature-video-container">
-            <video autoplay muted loop playsinline preload="auto" poster="https://images.unsplash.com/photo-1448375240586-dfd8d395ea6c?auto=format&fit=crop&w=1200" class="absolute inset-0 w-full h-full object-cover scale-105" id="nature-video">
-                <source src="https://videos.pexels.com/video-files/1536322/1536322-hd_1920_1080_30fps.mp4" type="video/mp4">
+        <div class="absolute inset-0 video-loading" id="nature-video-container" style="background-image: url('https://images.unsplash.com/photo-1505118380757-91f5f5632de0?auto=format&fit=crop&w=1200&q=80');">
+            <video autoplay muted loop playsinline preload="auto" poster="https://images.unsplash.com/photo-1505118380757-91f5f5632de0?auto=format&fit=crop&w=1200&q=80" class="absolute inset-0 w-full h-full object-cover scale-105" id="nature-video">
+                <source src="https://videos.pexels.com/video-files/31676903/31676903-uhd_2560_1440_30fps.mp4" type="video/mp4">
             </video>
         </div>
         <div class="absolute inset-0 overlay-nature grain"></div>
@@ -132,10 +148,11 @@
         </div>
     </section>
 
+    <!-- 2. STILL LIFE: Pottery Wheel Throwing -->
     <section class="hero-section relative w-full h-screen overflow-hidden" id="still">
-        <div class="absolute inset-0 video-loading" id="still-video-container">
-            <video autoplay muted loop playsinline preload="metadata" class="absolute inset-0 w-full h-full object-cover scale-105" id="still-video">
-                <source src="https://videos.pexels.com/video-files/4253350/4253350-hd_1920_1080_30fps.mp4" type="video/mp4">
+        <div class="absolute inset-0 video-loading" id="still-video-container" style="background-image: url('https://images.unsplash.com/photo-1565193566173-7a0ee3dbe261?auto=format&fit=crop&w=1200&q=80');">
+            <video autoplay muted loop playsinline preload="metadata" poster="https://images.unsplash.com/photo-1565193566173-7a0ee3dbe261?auto=format&fit=crop&w=1200&q=80" class="absolute inset-0 w-full h-full object-cover scale-105" id="still-video">
+                <source src="https://videos.pexels.com/video-files/9736574/9736574-hd_1920_1080_25fps.mp4" type="video/mp4">
             </video>
         </div>
         <div class="absolute inset-0 overlay-still grain"></div>
@@ -146,9 +163,10 @@
         </div>
     </section>
 
+    <!-- 3. MATERIALS: Leather Working/Close-up -->
     <section class="hero-section relative w-full h-screen overflow-hidden" id="materials">
-        <div class="absolute inset-0 video-loading" id="materials-video-container">
-            <video autoplay muted loop playsinline preload="metadata" class="absolute inset-0 w-full h-full object-cover scale-105" id="materials-video">
+        <div class="absolute inset-0 video-loading" id="materials-video-container" style="background-image: url('https://images.unsplash.com/photo-1558171813-4c088753af8f?auto=format&fit=crop&w=1200&q=80');">
+            <video autoplay muted loop playsinline preload="metadata" poster="https://images.unsplash.com/photo-1558171813-4c088753af8f?auto=format&fit=crop&w=1200&q=80" class="absolute inset-0 w-full h-full object-cover scale-105" id="materials-video">
                 <source src="https://videos.pexels.com/video-files/4043161/4043161-sd_960_540_30fps.mp4" type="video/mp4">
             </video>
         </div>
@@ -160,9 +178,10 @@
         </div>
     </section>
 
+    <!-- 4. METAL: Industrial Machinery/Gears -->
     <section class="hero-section relative w-full h-screen overflow-hidden" id="metal">
-        <div class="absolute inset-0 video-loading" id="metal-video-container">
-            <video autoplay muted loop playsinline preload="metadata" class="absolute inset-0 w-full h-full object-cover scale-105" id="metal-video">
+        <div class="absolute inset-0 video-loading" id="metal-video-container" style="background-image: url('https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?auto=format&fit=crop&w=1200&q=80');">
+            <video autoplay muted loop playsinline preload="metadata" poster="https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?auto=format&fit=crop&w=1200&q=80" class="absolute inset-0 w-full h-full object-cover scale-105" id="metal-video">
                 <source src="https://videos.pexels.com/video-files/2796220/2796220-hd_1920_1080_25fps.mp4" type="video/mp4">
             </video>
         </div>
@@ -174,10 +193,11 @@
         </div>
     </section>
 
+    <!-- 5. TEXTILES: Black Silk Flowing -->
     <section class="hero-section relative w-full h-screen overflow-hidden" id="textiles">
-        <div class="absolute inset-0 video-loading" id="textiles-video-container">
-            <video autoplay muted loop playsinline preload="metadata" class="absolute inset-0 w-full h-full object-cover scale-105" id="textiles-video">
-                <source src="https://videos.pexels.com/video-files/5211247/5211247-hd_1920_1080_25fps.mp4" type="video/mp4">
+        <div class="absolute inset-0 video-loading" id="textiles-video-container" style="background-image: url('https://images.unsplash.com/photo-1620799140408-edc6dcb6d633?auto=format&fit=crop&w=1200&q=80');">
+            <video autoplay muted loop playsinline preload="metadata" poster="https://images.unsplash.com/photo-1620799140408-edc6dcb6d633?auto=format&fit=crop&w=1200&q=80" class="absolute inset-0 w-full h-full object-cover scale-105" id="textiles-video">
+                <source src="https://videos.pexels.com/video-files/7677322/7677322-hd_1920_1080_30fps.mp4" type="video/mp4">
             </video>
         </div>
         <div class="absolute inset-0 overlay-textile grain"></div>
@@ -188,9 +208,10 @@
         </div>
     </section>
 
+    <!-- 6. ARCHITECTURE: Modern Concrete Building -->
     <section class="hero-section relative w-full h-screen overflow-hidden" id="arch">
-        <div class="absolute inset-0 video-loading" id="arch-video-container">
-            <video autoplay muted loop playsinline preload="metadata" class="absolute inset-0 w-full h-full object-cover scale-105" id="arch-video">
+        <div class="absolute inset-0 video-loading" id="arch-video-container" style="background-image: url('https://images.unsplash.com/photo-1486718448742-163732cd1544?auto=format&fit=crop&w=1200&q=80');">
+            <video autoplay muted loop playsinline preload="metadata" poster="https://images.unsplash.com/photo-1486718448742-163732cd1544?auto=format&fit=crop&w=1200&q=80" class="absolute inset-0 w-full h-full object-cover scale-105" id="arch-video">
                 <source src="https://videos.pexels.com/video-files/3847253/3847253-hd_1920_1080_25fps.mp4" type="video/mp4">
             </video>
         </div>
@@ -202,10 +223,11 @@
         </div>
     </section>
 
+    <!-- 7. LIQUID: Colorful Ink in Water -->
     <section class="hero-section relative w-full h-screen overflow-hidden" id="liquid">
-        <div class="absolute inset-0 video-loading" id="liquid-video-container">
-            <video autoplay muted loop playsinline preload="metadata" class="absolute inset-0 w-full h-full object-cover scale-105" id="liquid-video">
-                <source src="https://videos.pexels.com/video-files/3125907/3125907-hd_1920_1080_25fps.mp4" type="video/mp4">
+        <div class="absolute inset-0 video-loading" id="liquid-video-container" style="background-image: url('https://images.unsplash.com/photo-1541701494587-cb58502866ab?auto=format&fit=crop&w=1200&q=80');">
+            <video autoplay muted loop playsinline preload="metadata" poster="https://images.unsplash.com/photo-1541701494587-cb58502866ab?auto=format&fit=crop&w=1200&q=80" class="absolute inset-0 w-full h-full object-cover scale-105" id="liquid-video">
+                <source src="https://videos.pexels.com/video-files/5593572/5593572-hd_1920_1080_30fps.mp4" type="video/mp4">
             </video>
         </div>
         <div class="absolute inset-0 overlay-liquid grain"></div>
@@ -216,10 +238,11 @@
         </div>
     </section>
 
+    <!-- 8. LIGHT: Warm Golden Light Rays -->
     <section class="hero-section relative w-full h-screen overflow-hidden" id="light">
-        <div class="absolute inset-0 video-loading" id="light-video-container">
-            <video autoplay muted loop playsinline preload="metadata" class="absolute inset-0 w-full h-full object-cover scale-105" id="light-video">
-                <source src="https://videos.pexels.com/video-files/5192131/5192131-hd_1920_1080_30fps.mp4" type="video/mp4">
+        <div class="absolute inset-0 video-loading" id="light-video-container" style="background-image: url('https://images.unsplash.com/photo-1507400492013-162706c8c05e?auto=format&fit=crop&w=1200&q=80');">
+            <video autoplay muted loop playsinline preload="metadata" poster="https://images.unsplash.com/photo-1507400492013-162706c8c05e?auto=format&fit=crop&w=1200&q=80" class="absolute inset-0 w-full h-full object-cover scale-105" id="light-video">
+                <source src="https://videos.pexels.com/video-files/3129671/3129671-hd_1920_1080_30fps.mp4" type="video/mp4">
             </video>
         </div>
         <div class="absolute inset-0 overlay-light grain"></div>
@@ -239,12 +262,27 @@
         const dots = document.querySelectorAll('.nav-dot');
         let currentSection = 0;
 
-        // Optimized video loading
+        // Video loading management
         sections.forEach((id) => {
             const video = document.getElementById(`${id}-video`);
             const container = document.getElementById(`${id}-video-container`);
-            if (video) {
-                video.addEventListener('canplay', () => container.classList.remove('video-loading'));
+            
+            if (video && container) {
+                video.addEventListener('canplay', () => {
+                    container.classList.remove('video-loading');
+                    container.style.backgroundImage = 'none';
+                });
+                
+                video.addEventListener('error', () => {
+                    console.log(`Video failed for ${id}, using poster`);
+                    container.classList.remove('video-loading');
+                });
+                
+                video.play().catch(err => {
+                    console.log(`Autoplay blocked for ${id}:`, err);
+                    document.addEventListener('click', () => video.play(), { once: true });
+                    document.addEventListener('scroll', () => video.play(), { once: true });
+                });
             }
         });
 
@@ -252,13 +290,20 @@
         const videoObserver = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 const video = entry.target.querySelector('video');
-                if (video) entry.isIntersecting ? video.play() : video.pause();
+                if (video) {
+                    if (entry.isIntersecting) {
+                        video.play().catch(e => console.log('Play error:', e));
+                    } else {
+                        video.pause();
+                    }
+                }
             });
-        }, { threshold: 0.1 });
+        }, { threshold: 0.15 });
 
-        document.querySelectorAll('.hero-section').forEach(section => videoObserver.observe(section));
+        document.querySelectorAll('.hero-section').forEach(section => {
+            videoObserver.observe(section);
+        });
 
-        // Scroll functionality
         function scrollToSection(index) {
             const element = document.getElementById(sections[index]);
             if (element) {
@@ -272,29 +317,63 @@
             currentSection = index;
         }
 
-        // Scroll spy for Dots and Animations
         const sectionObserver = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
                     const index = sections.indexOf(entry.target.id);
                     if (index !== -1) updateDots(index);
                     
-                    // Re-trigger animations
                     entry.target.querySelectorAll('.reveal-text').forEach(text => {
                         text.style.animation = 'none';
-                        text.offsetHeight; 
+                        text.offsetHeight;
                         text.style.animation = null;
                     });
                 }
             });
         }, { threshold: 0.5 });
 
-        sections.forEach(id => sectionObserver.observe(document.getElementById(id)));
+        sections.forEach(id => {
+            const el = document.getElementById(id);
+            if (el) sectionObserver.observe(el);
+        });
 
-        // Keyboard Nav
         document.addEventListener('keydown', (e) => {
-            if (e.key === 'ArrowDown' && currentSection < sections.length - 1) scrollToSection(currentSection + 1);
-            if (e.key === 'ArrowUp' && currentSection > 0) scrollToSection(currentSection - 1);
+            if (e.key === 'ArrowDown' && currentSection < sections.length - 1) {
+                e.preventDefault();
+                scrollToSection(currentSection + 1);
+            }
+            if (e.key === 'ArrowUp' && currentSection > 0) {
+                e.preventDefault();
+                scrollToSection(currentSection - 1);
+            }
+        });
+
+        let touchStartY = 0;
+        let touchStartTime = 0;
+        
+        document.addEventListener('touchstart', e => {
+            touchStartY = e.touches[0].clientY;
+            touchStartTime = Date.now();
+        }, { passive: true });
+        
+        document.addEventListener('touchend', e => {
+            const touchEndY = e.changedTouches[0].clientY;
+            const diff = touchStartY - touchEndY;
+            const timeDiff = Date.now() - touchStartTime;
+            
+            if (Math.abs(diff) > 80 && timeDiff < 800) {
+                if (diff > 0 && currentSection < sections.length - 1) {
+                    scrollToSection(currentSection + 1);
+                } else if (diff < 0 && currentSection > 0) {
+                    scrollToSection(currentSection - 1);
+                }
+            }
+        }, { passive: true });
+
+        window.addEventListener('load', () => {
+            document.querySelectorAll('video').forEach(video => {
+                video.play().catch(e => console.log('Load play error:', e));
+            });
         });
     </script>
 </body>

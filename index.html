@@ -38,6 +38,8 @@
         .btn-blue:hover { background:#0047e0; transform:translateY(-3px); box-shadow:0 16px 40px rgba(26,92,255,0.3); }
         .btn-outline { background:transparent; color:var(--text); padding:14px 36px; border-radius:100px; font-size:14px; font-weight:500; border:1.5px solid rgba(0,0,0,0.14); cursor:pointer; transition:all 0.3s; display:inline-flex; align-items:center; gap:8px; font-family:'Outfit',sans-serif; }
         .btn-outline:hover { border-color:var(--blue); color:var(--blue); }
+
+        /* ── NAV ── */
         nav { position:fixed; top:0; left:0; right:0; z-index:100; padding:18px 48px; display:flex; align-items:center; justify-content:space-between; transition:all 0.4s; }
         nav.scrolled { background:rgba(250,248,244,0.94); backdrop-filter:blur(20px); border-bottom:1px solid rgba(0,0,0,0.06); padding:12px 48px; }
         .nav-logo { font-family:'Playfair Display',serif; font-size:24px; font-weight:800; color:var(--navy); letter-spacing:2px; }
@@ -45,9 +47,28 @@
         .nav-links { display:flex; align-items:center; gap:36px; }
         .nav-links a { font-size:13px; font-weight:500; color:var(--muted); text-decoration:none; transition:color 0.2s; }
         .nav-links a:hover { color:var(--blue); }
-        #mobile-menu { position:fixed; inset:0; background:var(--cream); z-index:99; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:28px; transform:translateY(-100%); transition:transform 0.4s cubic-bezier(0.16,1,0.3,1); }
-        #mobile-menu.open { transform:translateY(0); }
+
+        /* ── MOBILE MENU ── */
+        #mobile-menu {
+            position:fixed; inset:0; background:var(--cream); z-index:99;
+            display:flex; flex-direction:column; align-items:center; justify-content:center; gap:28px;
+            transform:translateY(-100%); transition:transform 0.4s cubic-bezier(0.16,1,0.3,1);
+            pointer-events:none;
+        }
+        #mobile-menu.open { transform:translateY(0); pointer-events:all; }
         #mobile-menu a { font-family:'Playfair Display',serif; font-size:36px; font-weight:700; color:var(--navy); text-decoration:none; }
+
+        /* ── NAV RESPONSIVE ── */
+        #navLinks, #navBtns { display:flex; }
+        #menuBtn { display:none; }
+        @media (max-width:768px) {
+            nav { padding:16px 20px; }
+            nav.scrolled { padding:12px 20px; }
+            #navLinks, #navBtns { display:none !important; }
+            #menuBtn { display:flex !important; }
+        }
+
+        /* ── MISC ── */
         .blob { position:absolute; border-radius:50%; filter:blur(70px); pointer-events:none; }
         .ticker-wrap { overflow:hidden; background:var(--navy); padding:14px 0; }
         .ticker { display:flex; gap:60px; white-space:nowrap; animation:ticker 22s linear infinite; }
@@ -57,72 +78,112 @@
         .float-b { animation:floatUp 5s ease-in-out 1.8s infinite; }
         .float-c { animation:floatUp 5s ease-in-out 0.9s infinite; }
         @keyframes phoneFloat { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-16px)} }
+        @keyframes pulse2 { 0%,100%{opacity:1} 50%{opacity:0.4} }
+
+        /* ── GALLERY ── */
         .gallery-grid { display:grid; grid-template-columns:2fr 1fr; grid-template-rows:1fr 1fr; gap:10px; height:500px; }
         .gallery-grid .span-2 { grid-row:span 2; }
         .g-img { border-radius:20px; overflow:hidden; position:relative; }
         .g-img img { width:100%; height:100%; object-fit:cover; transition:transform 0.5s ease; display:block; }
         .g-img:hover img { transform:scale(1.06); }
         .g-img-label { position:absolute; bottom:12px; left:12px; background:rgba(255,255,255,0.88); backdrop-filter:blur(8px); border-radius:100px; padding:5px 14px; font-size:11px; font-family:'DM Mono',monospace; color:var(--navy); }
+
+        /* ── SPEC CARDS ── */
         .spec-card { padding:32px; border-radius:24px; background:#fff; border:1px solid var(--border); box-shadow:0 2px 20px rgba(0,0,0,0.04); transition:all 0.3s; }
         .spec-card:hover { transform:translateY(-6px); box-shadow:0 20px 48px rgba(0,0,0,0.1); }
+
+        /* ── STAT BAR ── */
         .stat-bar { background:var(--navy); border-radius:24px; display:grid; grid-template-columns:repeat(4,1fr); overflow:hidden; }
         .stat-item { padding:32px 24px; text-align:center; border-right:1px solid rgba(255,255,255,0.08); color:#fff; }
         .stat-item:last-child { border-right:none; }
-        .review-card { background:#fff; border:1px solid var(--border); border-radius:24px; padding:28px; box-shadow:0 2px 16px rgba(0,0,0,0.04); transition:all 0.3s; min-width:calc(33.333% - 14px); }
+
+        /* ── REVIEWS ── */
+        .review-card { background:#fff; border:1px solid var(--border); border-radius:24px; padding:28px; box-shadow:0 2px 16px rgba(0,0,0,0.04); transition:all 0.3s; flex:0 0 calc(33.333% - 14px); }
         .review-card:hover { transform:translateY(-4px); box-shadow:0 12px 36px rgba(0,0,0,0.09); }
+
+        /* ── COMPARE TABLE ── */
         .compare-table { background:#fff; border-radius:24px; overflow:hidden; border:1px solid var(--border); box-shadow:0 4px 32px rgba(0,0,0,0.06); }
         .compare-table th { font-size:11px; font-family:'DM Mono',monospace; letter-spacing:2px; text-transform:uppercase; color:var(--muted); padding:22px 28px; font-weight:400; background:var(--ivory); border-bottom:1px solid var(--border); text-align:left; }
         .compare-table td { padding:22px 28px; border-bottom:1px solid var(--border); }
         .compare-table tr:last-child td { border-bottom:none; }
         .compare-table tr.popular td { background:var(--sky); }
         .compare-table tr:not(.popular):hover td { background:var(--ivory); transition:background 0.2s; }
+
+        /* ── CTA ── */
         .cta-section { background:var(--navy); position:relative; overflow:hidden; border-radius:32px; margin:0 24px; }
+
+        /* ── REVEAL ANIMATIONS ── */
         .reveal { opacity:0; transform:translateY(36px); transition:opacity 0.8s ease, transform 0.8s ease; }
         .reveal.visible { opacity:1; transform:translateY(0); }
         .reveal-l { opacity:0; transform:translateX(-36px); transition:opacity 0.8s ease, transform 0.8s ease; }
         .reveal-l.visible { opacity:1; transform:translateX(0); }
         .reveal-r { opacity:0; transform:translateX(36px); transition:opacity 0.8s ease, transform 0.8s ease; }
         .reveal-r.visible { opacity:1; transform:translateX(0); }
+
+        /* ── VIDEO ── */
         .video-wrap { border-radius:24px; overflow:hidden; position:relative; box-shadow:0 24px 64px rgba(0,0,0,0.15); }
         .video-wrap video { width:100%; display:block; max-height:450px; object-fit:cover; }
         .video-overlay-bar { position:absolute; bottom:0; left:0; right:0; background:linear-gradient(to top,rgba(10,15,40,0.85) 0%,transparent 100%); padding:28px; display:flex; align-items:flex-end; justify-content:space-between; }
         .play-btn { position:absolute; top:50%; left:50%; transform:translate(-50%,-50%); width:68px; height:68px; background:rgba(255,255,255,0.22); backdrop-filter:blur(12px); border-radius:50%; display:flex; align-items:center; justify-content:center; cursor:pointer; border:1.5px solid rgba(255,255,255,0.5); transition:all 0.3s; }
         .play-btn:hover { background:var(--blue); border-color:var(--blue); transform:translate(-50%,-50%) scale(1.1); }
+
+        /* ── COLOUR STRIP ── */
         .colour-strip { display:flex; gap:12px; overflow-x:auto; padding-bottom:8px; -ms-overflow-style:none; scrollbar-width:none; }
         .colour-strip::-webkit-scrollbar { display:none; }
         .colour-swatch { flex-shrink:0; border-radius:20px; overflow:hidden; width:280px; height:360px; position:relative; cursor:pointer; transition:transform 0.3s; }
         .colour-swatch:hover { transform:scale(1.02); }
         .colour-swatch img { width:100%; height:100%; object-fit:cover; display:block; }
         .colour-swatch-label { position:absolute; bottom:14px; left:14px; background:rgba(255,255,255,0.88); backdrop-filter:blur(8px); border-radius:100px; padding:6px 16px; font-size:12px; font-family:'DM Mono',monospace; color:var(--navy); }
+
+        /* ── TIMELINE ── */
         .timeline-line { position:absolute; left:20px; top:0; bottom:0; width:1.5px; background:linear-gradient(to bottom,var(--blue),rgba(26,92,255,0.1)); }
         .timeline-item { position:relative; padding-left:52px; }
         .timeline-dot { position:absolute; left:12px; top:6px; width:16px; height:16px; border-radius:50%; background:var(--blue); border:3px solid var(--cream); box-shadow:0 0 0 2px var(--blue); }
+
+        /* ── FULLSCREEN VIDEO ── */
         .fs-video { position:relative; height:70vh; overflow:hidden; border-radius:28px; margin:0 24px; }
         .fs-video video { width:100%; height:100%; object-fit:cover; }
         .fs-video-overlay { position:absolute; inset:0; background:linear-gradient(135deg,rgba(13,27,75,0.78) 0%,rgba(13,27,75,0.2) 55%,transparent 100%); display:flex; align-items:center; padding:60px; }
-        #vModal { display:none; position:fixed; inset:0; z-index:500; background:rgba(0,0,0,0.88); align-items:center; justify-content:center; backdrop-filter:blur(12px); }
+
+        /* ── MODAL ── */
+        #vModal {
+            display:none; position:fixed; inset:0; z-index:500;
+            background:rgba(0,0,0,0.88); align-items:center; justify-content:center;
+            backdrop-filter:blur(12px);
+        }
         #vModal.active { display:flex; }
         .modal-inner { width:90%; max-width:860px; border-radius:20px; overflow:hidden; box-shadow:0 40px 100px rgba(0,0,0,0.5); }
-        .modal-close { position:absolute; top:20px; right:20px; width:44px; height:44px; border-radius:50%; background:rgba(255,255,255,0.12); border:1px solid rgba(255,255,255,0.2); color:#fff; font-size:18px; cursor:pointer; display:flex; align-items:center; justify-content:center; transition:background 0.2s; font-family:'Outfit',sans-serif; }
+        .modal-close {
+            position:fixed; top:20px; right:20px; width:44px; height:44px; border-radius:50%;
+            background:rgba(255,255,255,0.12); border:1px solid rgba(255,255,255,0.2); color:#fff;
+            font-size:18px; cursor:pointer; display:flex; align-items:center; justify-content:center;
+            transition:background 0.2s; font-family:'Outfit',sans-serif; z-index:501;
+        }
         .modal-close:hover { background:rgba(255,255,255,0.22); }
+
+        /* ── SCROLLBAR ── */
         ::-webkit-scrollbar { width:5px; }
         ::-webkit-scrollbar-track { background:var(--cream); }
         ::-webkit-scrollbar-thumb { background:rgba(26,92,255,0.3); border-radius:10px; }
+
+        /* ── RESPONSIVE ── */
         @media (max-width:768px) {
-            nav { padding:16px 20px; }
-            nav.scrolled { padding:12px 20px; }
             .gallery-grid { grid-template-columns:1fr; grid-template-rows:auto; height:auto; }
             .gallery-grid .span-2 { grid-row:span 1; height:260px; }
             .stat-bar { grid-template-columns:repeat(2,1fr); }
             .stat-item { border-right:none; border-bottom:1px solid rgba(255,255,255,0.08); }
-            .review-card { min-width:85vw; }
+            .review-card { flex:0 0 85vw; }
             .fs-video { margin:0 12px; height:50vh; }
             .fs-video-overlay { padding:32px 24px; }
             .cta-section { margin:0 12px; border-radius:24px; }
             .grid-2col { grid-template-columns:1fr !important; }
             .grid-4col { grid-template-columns:repeat(2,1fr) !important; }
+            .hero-phone { display:none; }
         }
-        @keyframes pulse2 { 0%,100%{opacity:1} 50%{opacity:0.4} }
+        @media (max-width:480px) {
+            .grid-4col { grid-template-columns:1fr !important; }
+            .compare-table th, .compare-table td { padding:14px 16px; }
+        }
     </style>
 </head>
 <body>
@@ -141,10 +202,10 @@
         <button class="btn-outline" style="padding:10px 24px; font-size:13px;">Learn More</button>
         <button class="btn-blue" style="padding:10px 24px; font-size:13px;">Pre-order</button>
     </div>
-    <button id="menuBtn" onclick="toggleMenu()" style="display:none; flex-direction:column; gap:5px; background:none; border:none; cursor:pointer; padding:6px;">
-        <span style="display:block;width:24px;height:2px;background:var(--navy);border-radius:2px;"></span>
-        <span style="display:block;width:24px;height:2px;background:var(--navy);border-radius:2px;"></span>
-        <span style="display:block;width:18px;height:2px;background:var(--navy);border-radius:2px;"></span>
+    <button id="menuBtn" onclick="toggleMenu()" style="flex-direction:column; gap:5px; background:none; border:none; cursor:pointer; padding:6px;">
+        <span style="display:block;width:24px;height:2px;background:var(--navy);border-radius:2px;transition:all 0.3s;" id="bar1"></span>
+        <span style="display:block;width:24px;height:2px;background:var(--navy);border-radius:2px;transition:all 0.3s;" id="bar2"></span>
+        <span style="display:block;width:18px;height:2px;background:var(--navy);border-radius:2px;transition:all 0.3s;" id="bar3"></span>
     </button>
 </nav>
 
@@ -183,7 +244,7 @@
                 </p>
 
                 <div style="display:flex; gap:14px; flex-wrap:wrap; margin-bottom:40px;">
-                    <button class="btn-blue" onclick="document.getElementById('vModal').classList.add('active')">▶ &nbsp;Watch Film</button>
+                    <button class="btn-blue" onclick="openModal()">▶ &nbsp;Watch Film</button>
                     <button class="btn-outline" onclick="document.getElementById('compare').scrollIntoView({behavior:'smooth'})">Buy Now →</button>
                 </div>
 
@@ -213,7 +274,7 @@
             </div>
 
             <!-- RIGHT PHONE -->
-            <div style="position:relative; display:flex; justify-content:center; padding:40px 0;">
+            <div class="hero-phone" style="position:relative; display:flex; justify-content:center; padding:40px 0;">
                 <div style="position:absolute;width:340px;height:340px;border-radius:50%;background:radial-gradient(circle,rgba(26,92,255,0.15) 0%,transparent 70%);top:50%;left:50%;transform:translate(-50%,-50%);filter:blur(20px);"></div>
                 <img src="https://images.unsplash.com/photo-1695048133142-1a20484bce71?w=500&h=750&fit=crop"
                      alt="NEXUS Pro X"
@@ -336,7 +397,7 @@
             <h2 style="font-family:'Playfair Display',serif; font-size:clamp(36px,5vw,72px); font-weight:800; color:#fff; line-height:0.95; margin-bottom:24px;">
                 See what only<br><em style="color:#7EB8FF;">we can build.</em>
             </h2>
-            <button class="btn-outline" style="border-color:rgba(255,255,255,0.35);color:#fff;" onclick="toggleFsVid(this)">
+            <button class="btn-outline" id="fsVidBtn" style="border-color:rgba(255,255,255,0.35);color:#fff;" onclick="toggleFsVid(this)">
                 ⏸ &nbsp;Playing
             </button>
         </div>
@@ -366,7 +427,7 @@
                     <div style="font-size:16px;font-weight:600;color:#fff;">Night Mode 3.0 — Shot on NEXUS Pro X</div>
                 </div>
             </div>
-            <div class="play-btn" onclick="toggleCamVid(this)">
+            <div class="play-btn" id="camPlayBtn" onclick="toggleCamVid(this)">
                 <svg width="22" height="22" fill="white" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
             </div>
         </div>
@@ -490,8 +551,8 @@
                 Choose your <em style="color:var(--blue);">model.</em>
             </h2>
         </div>
-        <div class="compare-table reveal">
-            <table style="width:100%;border-collapse:collapse;">
+        <div class="compare-table reveal" style="overflow-x:auto;">
+            <table style="width:100%;border-collapse:collapse;min-width:560px;">
                 <thead>
                     <tr>
                         <th>Model</th>
@@ -507,7 +568,7 @@
                         <td style="text-align:center;font-family:'DM Mono',monospace;font-size:13px;color:var(--muted);">256GB</td>
                         <td style="text-align:center;font-family:'DM Mono',monospace;font-size:13px;color:var(--muted);">6.7" OLED</td>
                         <td style="text-align:right;font-family:'Playfair Display',serif;font-size:26px;font-weight:800;color:var(--navy);">$999</td>
-                        <td style="padding:22px 28px;"><button class="btn-outline" style="padding:10px 22px;font-size:13px;">Select</button></td>
+                        <td style="padding:22px 28px;"><button class="btn-outline" style="padding:10px 22px;font-size:13px;" onclick="selectModel(this,'Standard')">Select</button></td>
                     </tr>
                     <tr class="popular">
                         <td>
@@ -520,18 +581,22 @@
                         <td style="text-align:center;font-family:'DM Mono',monospace;font-size:13px;color:var(--muted);">512GB</td>
                         <td style="text-align:center;font-family:'DM Mono',monospace;font-size:13px;color:var(--muted);">6.9" XDR</td>
                         <td style="text-align:right;font-family:'Playfair Display',serif;font-size:26px;font-weight:800;color:var(--blue);">$1,199</td>
-                        <td style="padding:22px 28px;"><button class="btn-blue" style="padding:10px 22px;font-size:13px;">Select</button></td>
+                        <td style="padding:22px 28px;"><button class="btn-blue" style="padding:10px 22px;font-size:13px;" onclick="selectModel(this,'Pro')">Select</button></td>
                     </tr>
                     <tr>
                         <td><div style="font-weight:600;color:var(--navy);margin-bottom:3px;">NEXUS Pro X</div><div style="font-family:'DM Mono',monospace;font-size:11px;color:var(--muted);">Ultra Edition</div></td>
                         <td style="text-align:center;font-family:'DM Mono',monospace;font-size:13px;color:var(--muted);">1TB</td>
                         <td style="text-align:center;font-family:'DM Mono',monospace;font-size:13px;color:var(--muted);">6.9" Pro XDR</td>
                         <td style="text-align:right;font-family:'Playfair Display',serif;font-size:26px;font-weight:800;color:var(--navy);">$1,399</td>
-                        <td style="padding:22px 28px;"><button class="btn-outline" style="padding:10px 22px;font-size:13px;">Select</button></td>
+                        <td style="padding:22px 28px;"><button class="btn-outline" style="padding:10px 22px;font-size:13px;" onclick="selectModel(this,'Ultra')">Select</button></td>
                     </tr>
                 </tbody>
             </table>
         </div>
+
+        <!-- Toast notification -->
+        <div id="modelToast" style="display:none;text-align:center;margin-top:20px;padding:14px 28px;background:var(--navy);color:#fff;border-radius:100px;font-family:'DM Mono',monospace;font-size:13px;letter-spacing:1px;animation:fadeIn 0.3s ease;max-width:400px;margin-left:auto;margin-right:auto;"></div>
+
         <div style="display:flex;flex-wrap:wrap;gap:20px;justify-content:center;margin-top:24px;font-size:13px;color:var(--muted);" class="reveal">
             <span>✓ Trade-in accepted</span>
             <span>✓ 0% financing available</span>
@@ -552,8 +617,8 @@
                 </h2>
             </div>
             <div style="display:flex;gap:10px;">
-                <button onclick="slideRevs(-1)" style="width:48px;height:48px;border-radius:50%;background:#fff;border:1.5px solid var(--border);font-size:16px;cursor:pointer;transition:all 0.2s;" onmouseenter="this.style.borderColor='var(--blue)';this.style.color='var(--blue)'" onmouseleave="this.style.borderColor='var(--border)';this.style.color='inherit'">←</button>
-                <button onclick="slideRevs(1)"  style="width:48px;height:48px;border-radius:50%;background:#fff;border:1.5px solid var(--border);font-size:16px;cursor:pointer;transition:all 0.2s;" onmouseenter="this.style.borderColor='var(--blue)';this.style.color='var(--blue)'" onmouseleave="this.style.borderColor='var(--border)';this.style.color='inherit'">→</button>
+                <button id="revPrev" onclick="slideRevs(-1)" style="width:48px;height:48px;border-radius:50%;background:#fff;border:1.5px solid var(--border);font-size:16px;cursor:pointer;transition:all 0.2s;" onmouseenter="this.style.borderColor='var(--blue)';this.style.color='var(--blue)'" onmouseleave="this.style.borderColor='var(--border)';this.style.color='inherit'">←</button>
+                <button id="revNext" onclick="slideRevs(1)"  style="width:48px;height:48px;border-radius:50%;background:#fff;border:1.5px solid var(--border);font-size:16px;cursor:pointer;transition:all 0.2s;" onmouseenter="this.style.borderColor='var(--blue)';this.style.color='var(--blue)'" onmouseleave="this.style.borderColor='var(--border)';this.style.color='inherit'">→</button>
             </div>
         </div>
         <div style="overflow:hidden;" class="reveal">
@@ -613,8 +678,8 @@
                 Join 2 million+ NEXUS users worldwide. Free shipping. 2-year warranty. 30-day returns.
             </p>
             <div style="display:flex;gap:14px;justify-content:center;flex-wrap:wrap;">
-                <button class="btn-blue" style="background:rgba(255,255,255,0.92);color:var(--navy);" onmouseenter="this.style.background='#fff'" onmouseleave="this.style.background='rgba(255,255,255,0.92)'">Order Now — From $999</button>
-                <button class="btn-outline" style="border-color:rgba(255,255,255,0.3);color:#fff;">Find a Store</button>
+                <button class="btn-blue" style="background:rgba(255,255,255,0.92);color:var(--navy);" onclick="document.getElementById('compare').scrollIntoView({behavior:'smooth'})">Order Now — From $999</button>
+                <button class="btn-outline" style="border-color:rgba(255,255,255,0.3);color:#fff;" onclick="showToast('Store locator coming soon!')">Find a Store</button>
             </div>
         </div>
     </div>
@@ -676,89 +741,162 @@
     </div>
 </div>
 
+<!-- GLOBAL TOAST -->
+<div id="globalToast" style="
+    position:fixed; bottom:32px; left:50%; transform:translateX(-50%) translateY(120px);
+    background:var(--navy); color:#fff; padding:14px 28px; border-radius:100px;
+    font-family:'DM Mono',monospace; font-size:13px; letter-spacing:1px;
+    z-index:9998; transition:transform 0.4s cubic-bezier(0.16,1,0.3,1);
+    white-space:nowrap; pointer-events:none;
+"></div>
+
+<style>
+@keyframes fadeIn { from{opacity:0;transform:translateY(8px)} to{opacity:1;transform:translateY(0)} }
+</style>
+
 <script>
-    /* RESPONSIVE NAV */
-    function setNav() {
-        const w = window.innerWidth;
-        document.getElementById('navLinks').style.display = w >= 768 ? 'flex' : 'none';
-        document.getElementById('navBtns').style.display  = w >= 768 ? 'flex' : 'none';
-        document.getElementById('menuBtn').style.display  = w < 768  ? 'flex' : 'none';
-    }
-    setNav();
-    window.addEventListener('resize', setNav);
+/* ───── NAV SCROLL ───── */
+window.addEventListener('scroll', function() {
+    document.getElementById('navbar').classList.toggle('scrolled', window.scrollY > 40);
+});
 
-    /* NAV SCROLL */
-    window.addEventListener('scroll', () => {
-        document.getElementById('navbar').classList.toggle('scrolled', window.scrollY > 40);
+/* ───── MOBILE MENU ───── */
+var menuOpen = false;
+function toggleMenu() {
+    menuOpen = !menuOpen;
+    var menu = document.getElementById('mobile-menu');
+    menu.classList.toggle('open', menuOpen);
+    document.body.style.overflow = menuOpen ? 'hidden' : '';
+    // Animate hamburger bars
+    var b1 = document.getElementById('bar1');
+    var b2 = document.getElementById('bar2');
+    var b3 = document.getElementById('bar3');
+    if (menuOpen) {
+        b1.style.transform = 'translateY(7px) rotate(45deg)';
+        b2.style.opacity = '0';
+        b3.style.transform = 'translateY(-7px) rotate(-45deg)';
+        b3.style.width = '24px';
+    } else {
+        b1.style.transform = '';
+        b2.style.opacity = '1';
+        b3.style.transform = '';
+        b3.style.width = '18px';
+    }
+}
+
+/* ───── SCROLL REVEAL ───── */
+var revObs = new IntersectionObserver(function(entries) {
+    entries.forEach(function(e) {
+        if (e.isIntersecting) e.target.classList.add('visible');
     });
+}, { threshold: 0.08 });
+document.querySelectorAll('.reveal, .reveal-l, .reveal-r').forEach(function(r) { revObs.observe(r); });
 
-    /* MOBILE MENU */
-    let menuOpen = false;
-    function toggleMenu() {
-        menuOpen = !menuOpen;
-        document.getElementById('mobile-menu').classList.toggle('open', menuOpen);
-        document.body.style.overflow = menuOpen ? 'hidden' : '';
-    }
-
-    /* SCROLL REVEAL */
-    const revObs = new IntersectionObserver(entries => {
-        entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
-    }, { threshold: 0.1 });
-    document.querySelectorAll('.reveal, .reveal-l, .reveal-r').forEach(r => revObs.observe(r));
-
-    /* COUNTERS */
-    const cntObs = new IntersectionObserver(entries => {
-        entries.forEach(e => {
-            if (e.isIntersecting && !e.target.dataset.done) {
-                e.target.dataset.done = '1';
-                const target = +e.target.dataset.target;
-                let n = 0;
-                const step = Math.ceil(target / 55);
-                const t = setInterval(() => {
-                    n = Math.min(n + step, target);
-                    e.target.textContent = n;
-                    if (n >= target) clearInterval(t);
-                }, 25);
-            }
-        });
-    }, { threshold: 0.5 });
-    document.querySelectorAll('.counter').forEach(c => cntObs.observe(c));
-
-    /* REVIEWS CAROUSEL */
-    let revIdx = 0;
-    function slideRevs(dir) {
-        const track = document.getElementById('revTrack');
-        const total = track.children.length;
-        const vis = window.innerWidth >= 1024 ? 3 : window.innerWidth >= 640 ? 2 : 1;
-        revIdx = Math.max(0, Math.min(revIdx + dir, total - vis));
-        const cardW = track.children[0].offsetWidth + 20;
-        track.style.transform = `translateX(-${revIdx * cardW}px)`;
-    }
-
-    /* VIDEO MODAL */
-    function closeModal() {
-        document.getElementById('vModal').classList.remove('active');
-        document.getElementById('modalVid').pause();
-    }
-
-    /* FULLSCREEN VIDEO TOGGLE */
-    function toggleFsVid(btn) {
-        const v = document.getElementById('fsVid');
-        if (v.paused) { v.play(); btn.innerHTML = '⏸ &nbsp;Playing'; }
-        else { v.pause(); btn.innerHTML = '▶ &nbsp;Paused'; }
-    }
-
-    /* CAMERA VIDEO TOGGLE */
-    function toggleCamVid(btn) {
-        const v = document.getElementById('camVid');
-        if (v.paused) {
-            v.play();
-            btn.innerHTML = '<svg width="22" height="22" fill="white" viewBox="0 0 24 24"><rect x="6" y="4" width="4" height="16"/><rect x="14" y="4" width="4" height="16"/></svg>';
-        } else {
-            v.pause();
-            btn.innerHTML = '<svg width="22" height="22" fill="white" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>';
+/* ───── COUNTERS ───── */
+var cntObs = new IntersectionObserver(function(entries) {
+    entries.forEach(function(e) {
+        if (e.isIntersecting && !e.target.dataset.done) {
+            e.target.dataset.done = '1';
+            var target = parseInt(e.target.dataset.target, 10);
+            var n = 0;
+            var step = Math.ceil(target / 55);
+            var t = setInterval(function() {
+                n = Math.min(n + step, target);
+                e.target.textContent = n;
+                if (n >= target) clearInterval(t);
+            }, 25);
         }
+    });
+}, { threshold: 0.5 });
+document.querySelectorAll('.counter').forEach(function(c) { cntObs.observe(c); });
+
+/* ───── REVIEWS CAROUSEL ───── */
+var revIdx = 0;
+function slideRevs(dir) {
+    var track = document.getElementById('revTrack');
+    var cards = track.children;
+    var total = cards.length;
+    var w = window.innerWidth;
+    var vis = w >= 1024 ? 3 : w >= 640 ? 2 : 1;
+    var max = Math.max(0, total - vis);
+    revIdx = Math.max(0, Math.min(revIdx + dir, max));
+    // Use actual rendered card width
+    var cardW = cards[0].getBoundingClientRect().width + 20;
+    track.style.transform = 'translateX(-' + (revIdx * cardW) + 'px)';
+    // Update button states
+    document.getElementById('revPrev').style.opacity = revIdx === 0 ? '0.4' : '1';
+    document.getElementById('revNext').style.opacity = revIdx >= max ? '0.4' : '1';
+}
+// Update arrow states on resize
+window.addEventListener('resize', function() { slideRevs(0); });
+
+/* ───── VIDEO MODAL ───── */
+function openModal() {
+    document.getElementById('vModal').classList.add('active');
+    document.body.style.overflow = 'hidden';
+}
+function closeModal() {
+    document.getElementById('vModal').classList.remove('active');
+    document.getElementById('modalVid').pause();
+    if (!menuOpen) document.body.style.overflow = '';
+}
+// Close modal on ESC key
+document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') closeModal();
+});
+
+/* ───── FULLSCREEN VIDEO TOGGLE ───── */
+function toggleFsVid(btn) {
+    var v = document.getElementById('fsVid');
+    if (v.paused) {
+        v.play();
+        btn.innerHTML = '⏸ &nbsp;Playing';
+    } else {
+        v.pause();
+        btn.innerHTML = '▶ &nbsp;Paused';
     }
+}
+
+/* ───── CAMERA VIDEO TOGGLE ───── */
+function toggleCamVid(btn) {
+    var v = document.getElementById('camVid');
+    if (v.paused) {
+        v.play();
+        btn.innerHTML = '<svg width="22" height="22" fill="white" viewBox="0 0 24 24"><rect x="6" y="4" width="4" height="16"/><rect x="14" y="4" width="4" height="16"/></svg>';
+    } else {
+        v.pause();
+        btn.innerHTML = '<svg width="22" height="22" fill="white" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>';
+    }
+}
+
+/* ───── MODEL SELECT ───── */
+function selectModel(btn, name) {
+    showToast('✓ NEXUS Pro X ' + name + ' added to cart!');
+}
+
+/* ───── GLOBAL TOAST ───── */
+var toastTimer;
+function showToast(msg) {
+    var toast = document.getElementById('globalToast');
+    toast.textContent = msg;
+    toast.style.transform = 'translateX(-50%) translateY(0)';
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(function() {
+        toast.style.transform = 'translateX(-50%) translateY(120px)';
+    }, 3000);
+}
+
+/* ───── TOAST for compare section ───── */
+function modelToast(msg) {
+    var t = document.getElementById('modelToast');
+    t.textContent = msg;
+    t.style.display = 'block';
+    setTimeout(function() { t.style.display = 'none'; }, 2500);
+}
+
+/* ───── INIT ───── */
+// Set initial arrow states
+document.getElementById('revPrev').style.opacity = '0.4';
 </script>
 </body>
 </html>

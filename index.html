@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Video Hero Showcase Collection</title>
+    <title>Video Hero Showcase Collection | 8 Series</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -19,6 +19,10 @@
         .overlay-still { background: linear-gradient(180deg, rgba(20,15,10,0.3) 0%, rgba(30,20,15,0.2) 50%, rgba(15,10,5,0.6) 100%); }
         .overlay-material { background: linear-gradient(180deg, rgba(40,30,20,0.4) 0%, rgba(50,35,25,0.3) 50%, rgba(30,20,15,0.7) 100%); }
         .overlay-metal { background: linear-gradient(180deg, rgba(5,5,8,0.5) 0%, rgba(10,10,15,0.3) 50%, rgba(5,5,10,0.8) 100%); }
+        .overlay-textile { background: linear-gradient(180deg, rgba(30,20,20,0.4) 0%, rgba(40,25,25,0.3) 50%, rgba(20,10,10,0.7) 100%); }
+        .overlay-arch { background: linear-gradient(180deg, rgba(15,15,15,0.4) 0%, rgba(25,25,25,0.2) 50%, rgba(10,10,10,0.8) 100%); }
+        .overlay-liquid { background: linear-gradient(180deg, rgba(10,20,30,0.4) 0%, rgba(15,25,35,0.3) 50%, rgba(5,10,20,0.8) 100%); }
+        .overlay-light { background: linear-gradient(180deg, rgba(40,20,10,0.3) 0%, rgba(30,15,5,0.2) 50%, rgba(20,10,0,0.7) 100%); }
         
         /* Text reveal animation */
         @keyframes revealUp {
@@ -31,7 +35,6 @@
         .delay-300 { animation-delay: 0.5s; }
         .delay-400 { animation-delay: 0.7s; }
         
-        /* Subtle grain texture */
         .grain::before {
             content: "";
             position: absolute;
@@ -41,7 +44,6 @@
             z-index: 2;
         }
         
-        /* Button hover effects */
         .btn-hover {
             transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
             position: relative;
@@ -58,7 +60,6 @@
         .btn-hover:hover::before { left: 100%; }
         .btn-hover:hover { transform: translateY(-2px); box-shadow: 0 10px 30px rgba(0,0,0,0.3); }
         
-        /* Navigation dots */
         .nav-dot {
             width: 8px; height: 8px;
             border-radius: 50%;
@@ -67,16 +68,10 @@
             cursor: pointer;
         }
         .nav-dot.active { background: white; transform: scale(1.3); }
-        .nav-dot:hover { background: rgba(255,255,255,0.7); }
         
-        /* Smooth section transition */
-        .hero-section {
-            scroll-snap-align: start;
-            scroll-snap-stop: always;
-        }
+        .hero-section { scroll-snap-align: start; scroll-snap-stop: always; }
         html { scroll-behavior: smooth; scroll-snap-type: y mandatory; }
         
-        /* Loading state */
         .video-loading {
             background: linear-gradient(135deg, #1a1a1a 0%, #2a2a2a 50%, #1a1a1a 100%);
             background-size: 200% 200%;
@@ -88,300 +83,182 @@
             100% { background-position: 0% 50%; }
         }
         
-        /* Typography refinements */
         .font-nature { font-family: 'Cormorant Garamond', serif; }
         .font-still { font-family: 'Cormorant Garamond', serif; }
         .font-material { font-family: 'Inter', sans-serif; }
         .font-metal { font-family: 'Space Grotesk', sans-serif; }
-        
-        /* Glass morphism for UI elements */
-        .glass {
-            background: rgba(255,255,255,0.05);
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255,255,255,0.1);
-        }
+        .font-arch { font-family: 'Inter', sans-serif; font-weight: 300; letter-spacing: -0.02em; }
+        .font-liquid { font-family: 'Cormorant Garamond', serif; }
     </style>
-<base target="_blank">
 </head>
 <body class="bg-black text-white overflow-x-hidden">
 
-    <!-- Fixed Navigation -->
     <nav class="fixed top-0 left-0 w-full z-50 px-6 py-6 flex justify-between items-center mix-blend-difference">
         <div class="text-sm tracking-[0.3em] uppercase font-light opacity-80">Showcase</div>
-        <div class="flex gap-8 text-xs tracking-widest uppercase font-light">
+        <div class="hidden lg:flex gap-6 text-[10px] tracking-widest uppercase font-light">
             <button onclick="scrollToSection(0)" class="hover:opacity-100 opacity-60 transition-opacity">Nature</button>
             <button onclick="scrollToSection(1)" class="hover:opacity-100 opacity-60 transition-opacity">Still Life</button>
             <button onclick="scrollToSection(2)" class="hover:opacity-100 opacity-60 transition-opacity">Materials</button>
             <button onclick="scrollToSection(3)" class="hover:opacity-100 opacity-60 transition-opacity">Metal</button>
+            <button onclick="scrollToSection(4)" class="hover:opacity-100 opacity-60 transition-opacity">Textiles</button>
+            <button onclick="scrollToSection(5)" class="hover:opacity-100 opacity-60 transition-opacity">Arch</button>
+            <button onclick="scrollToSection(6)" class="hover:opacity-100 opacity-60 transition-opacity">Liquid</button>
+            <button onclick="scrollToSection(7)" class="hover:opacity-100 opacity-60 transition-opacity">Light</button>
         </div>
     </nav>
 
-    <!-- Side Navigation Dots -->
     <div class="fixed right-6 top-1/2 -translate-y-1/2 z-50 flex flex-col gap-4">
-        <div class="nav-dot active" onclick="scrollToSection(0)" title="Nature"></div>
-        <div class="nav-dot" onclick="scrollToSection(1)" title="Still Life"></div>
-        <div class="nav-dot" onclick="scrollToSection(2)" title="Materials"></div>
-        <div class="nav-dot" onclick="scrollToSection(3)" title="Metal Parts"></div>
+        <div class="nav-dot active" onclick="scrollToSection(0)"></div>
+        <div class="nav-dot" onclick="scrollToSection(1)"></div>
+        <div class="nav-dot" onclick="scrollToSection(2)"></div>
+        <div class="nav-dot" onclick="scrollToSection(3)"></div>
+        <div class="nav-dot" onclick="scrollToSection(4)"></div>
+        <div class="nav-dot" onclick="scrollToSection(5)"></div>
+        <div class="nav-dot" onclick="scrollToSection(6)"></div>
+        <div class="nav-dot" onclick="scrollToSection(7)"></div>
     </div>
 
-    <!-- 1. NATURE: Forest & Ocean -->
     <section class="hero-section relative w-full h-screen overflow-hidden" id="nature">
-        <!-- Video Background -->
         <div class="absolute inset-0 video-loading" id="nature-video-container">
-            <video 
-                autoplay 
-                muted 
-                loop 
-                playsinline
-                preload="auto"
-                poster="https://images.unsplash.com/photo-1448375240586-dfd8d395ea6c?q=80&w=2070&auto=format&fit=crop"
-                class="absolute inset-0 w-full h-full object-cover scale-105"
-                id="nature-video"
-            >
+            <video autoplay muted loop playsinline preload="auto" poster="https://images.unsplash.com/photo-1448375240586-dfd8d395ea6c?auto=format&fit=crop&w=1200" class="absolute inset-0 w-full h-full object-cover scale-105" id="nature-video">
                 <source src="https://videos.pexels.com/video-files/1536322/1536322-hd_1920_1080_30fps.mp4" type="video/mp4">
-                <!-- Fallback: Forest stream from Pexels -->
             </video>
         </div>
-        
-        <!-- Overlay -->
         <div class="absolute inset-0 overlay-nature grain"></div>
-        
-        <!-- Content -->
-        <div class="relative z-10 h-full flex flex-col justify-center px-8 md:px-16 lg:px-24 max-w-5xl">
-            <p class="reveal-text delay-100 text-emerald-200/70 text-xs md:text-sm tracking-[0.4em] uppercase mb-6 font-inter font-light">
-                Organic Textures
-            </p>
-            <h1 class="reveal-text delay-200 font-nature text-5xl md:text-7xl lg:text-8xl font-light leading-[0.9] mb-8 text-white/95">
-                Where Forest<br>
-                <em class="italic font-light text-emerald-100/80">Meets Ocean</em>
-            </h1>
-            <p class="reveal-text delay-300 text-white/50 text-sm md:text-base max-w-md leading-relaxed font-light mb-10 font-inter">
-                Experience the raw beauty of natural elements. From ancient woodland canopies to the rhythmic pulse of tidal waters.
-            </p>
-            <div class="reveal-text delay-400 flex gap-4">
-                <button class="btn-hover px-8 py-4 bg-white/10 backdrop-blur-sm border border-white/20 text-white text-xs tracking-[0.2em] uppercase font-medium rounded-none hover:bg-white/20">
-                    Explore Collection
-                </button>
-                <button class="btn-hover px-8 py-4 border border-white/30 text-white/80 text-xs tracking-[0.2em] uppercase font-medium rounded-none hover:border-white/60 hover:text-white">
-                    View Film
-                </button>
-            </div>
-        </div>
-        
-        <!-- Bottom Info -->
-        <div class="absolute bottom-8 left-8 md:left-16 z-10 flex items-end gap-8 text-[10px] tracking-[0.2em] uppercase text-white/40 font-inter">
-            <div>
-                <span class="block text-white/60 mb-1">Location</span>
-                Pacific Northwest
-            </div>
-            <div class="hidden md:block w-px h-8 bg-white/20"></div>
-            <div class="hidden md:block">
-                <span class="block text-white/60 mb-1">Duration</span>
-                4K Loop
-            </div>
+        <div class="relative z-10 h-full flex flex-col justify-center px-8 md:px-24 max-w-5xl">
+            <p class="reveal-text delay-100 text-emerald-200/70 text-xs tracking-[0.4em] uppercase mb-6 font-light">Organic Textures</p>
+            <h1 class="reveal-text delay-200 font-nature text-5xl md:text-8xl font-light leading-[0.9] mb-8">Where Forest<br><em class="italic font-light text-emerald-100/80">Meets Ocean</em></h1>
+            <button class="reveal-text delay-400 btn-hover w-fit px-8 py-4 bg-white/10 backdrop-blur-sm border border-white/20 text-xs tracking-widest uppercase">Explore Nature</button>
         </div>
     </section>
 
-    <!-- 2. STILL LIFE: Ceramics & Glassware -->
     <section class="hero-section relative w-full h-screen overflow-hidden" id="still">
         <div class="absolute inset-0 video-loading" id="still-video-container">
-            <video 
-                autoplay 
-                muted 
-                loop 
-                playsinline
-                preload="metadata"
-                poster="https://images.unsplash.com/photo-1610701596007-11502861dcfa?q=80&w=2070&auto=format&fit=crop"
-                class="absolute inset-0 w-full h-full object-cover scale-105"
-                id="still-video"
-            >
+            <video autoplay muted loop playsinline preload="metadata" class="absolute inset-0 w-full h-full object-cover scale-105" id="still-video">
                 <source src="https://videos.pexels.com/video-files/4253350/4253350-hd_1920_1080_30fps.mp4" type="video/mp4">
-                <!-- Ceramic/Pottery workspace from Pexels -->
             </video>
         </div>
-        
         <div class="absolute inset-0 overlay-still grain"></div>
-        
-        <div class="relative z-10 h-full flex flex-col justify-center items-end text-right px-8 md:px-16 lg:px-24">
-            <div class="max-w-2xl">
-                <p class="reveal-text delay-100 text-amber-200/60 text-xs md:text-sm tracking-[0.4em] uppercase mb-6 font-inter font-light">
-                    Artisan Collection
-                </p>
-                <h1 class="reveal-text delay-200 font-still text-5xl md:text-7xl lg:text-8xl font-light leading-[0.9] mb-8 text-white/95">
-                    Form &<br>
-                    <em class="italic font-light text-amber-100/70">Transparency</em>
-                </h1>
-                <p class="reveal-text delay-300 text-white/50 text-sm md:text-base max-w-md ml-auto leading-relaxed font-light mb-10 font-inter">
-                    Handcrafted ceramics and crystalline glassware. Where light refracts through tradition and modernity converges.
-                </p>
-                <div class="reveal-text delay-400 flex gap-4 justify-end">
-                    <button class="btn-hover px-8 py-4 bg-amber-950/30 backdrop-blur-sm border border-amber-200/20 text-amber-50 text-xs tracking-[0.2em] uppercase font-medium rounded-none hover:bg-amber-900/40">
-                        Shop Collection
-                    </button>
-                </div>
-            </div>
-        </div>
-        
-        <div class="absolute bottom-8 right-8 md:right-16 z-10 text-[10px] tracking-[0.2em] uppercase text-white/40 font-inter text-right">
-            <div>
-                <span class="block text-white/60 mb-1">Craft</span>
-                Studio Pottery
-            </div>
+        <div class="relative z-10 h-full flex flex-col justify-center items-end text-right px-8 md:px-24">
+            <p class="reveal-text delay-100 text-amber-200/60 text-xs tracking-[0.4em] uppercase mb-6">Artisan Collection</p>
+            <h1 class="reveal-text delay-200 font-still text-5xl md:text-8xl font-light leading-[0.9] mb-8">Form &<br><em class="italic font-light text-amber-100/70">Transparency</em></h1>
+            <button class="reveal-text delay-400 btn-hover px-8 py-4 bg-amber-950/30 border border-amber-200/20 text-xs tracking-widest uppercase">Shop Still Life</button>
         </div>
     </section>
 
-    <!-- 3. MATERIALS: Leather & Fabric -->
     <section class="hero-section relative w-full h-screen overflow-hidden" id="materials">
         <div class="absolute inset-0 video-loading" id="materials-video-container">
-            <video 
-                autoplay 
-                muted 
-                loop 
-                playsinline
-                preload="metadata"
-                poster="https://images.unsplash.com/photo-1558171813-4c088753af8f?q=80&w=2070&auto=format&fit=crop"
-                class="absolute inset-0 w-full h-full object-cover scale-105"
-                id="materials-video"
-            >
+            <video autoplay muted loop playsinline preload="metadata" class="absolute inset-0 w-full h-full object-cover scale-105" id="materials-video">
                 <source src="https://videos.pexels.com/video-files/4043161/4043161-sd_960_540_30fps.mp4" type="video/mp4">
-                <!-- Leather/fabric texture from Pexels -->
             </video>
         </div>
-        
         <div class="absolute inset-0 overlay-material grain"></div>
-        
         <div class="relative z-10 h-full flex flex-col justify-center items-center text-center px-8">
-            <p class="reveal-text delay-100 text-stone-300/60 text-xs md:text-sm tracking-[0.4em] uppercase mb-6 font-inter font-light">
-                Tactile Surfaces
-            </p>
-            <h1 class="reveal-text delay-200 font-material text-5xl md:text-7xl lg:text-8xl font-light leading-[0.95] mb-8 text-white/95 tracking-tight">
-                Leather &<br>
-                <span class="font-extralight text-stone-200/80">Woven Texture</span>
-            </h1>
-            <p class="reveal-text delay-300 text-white/50 text-sm md:text-base max-w-lg mx-auto leading-relaxed font-light mb-12 font-inter">
-                Macro perspectives on organic materials. Every grain, weave, and patina tells a story of touch and time.
-            </p>
-            <div class="reveal-text delay-400">
-                <button class="btn-hover px-10 py-4 bg-stone-800/40 backdrop-blur-md border border-stone-400/30 text-stone-100 text-xs tracking-[0.25em] uppercase font-medium rounded-none hover:bg-stone-700/50">
-                    Discover Textures
-                </button>
-            </div>
-        </div>
-        
-        <div class="absolute bottom-8 left-1/2 -translate-x-1/2 z-10 text-[10px] tracking-[0.2em] uppercase text-white/40 font-inter text-center">
-            <span class="text-white/60">Material Study</span> &mdash; Full Grain Leather
+            <p class="reveal-text delay-100 text-stone-300/60 text-xs tracking-[0.4em] uppercase mb-6">Tactile Surfaces</p>
+            <h1 class="reveal-text delay-200 font-material text-5xl md:text-8xl font-light mb-8">Leather &<br><span class="font-extralight text-stone-200/80">Woven Texture</span></h1>
+            <button class="reveal-text delay-400 btn-hover px-10 py-4 bg-stone-800/40 border border-stone-400/30 text-xs tracking-widest uppercase">Discover Textures</button>
         </div>
     </section>
 
-    <!-- 4. METAL PARTS: Mechanical Gears -->
     <section class="hero-section relative w-full h-screen overflow-hidden" id="metal">
         <div class="absolute inset-0 video-loading" id="metal-video-container">
-            <video 
-                autoplay 
-                muted 
-                loop 
-                playsinline
-                preload="metadata"
-                poster="https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?q=80&w=2070&auto=format&fit=crop"
-                class="absolute inset-0 w-full h-full object-cover scale-105"
-                id="metal-video"
-            >
+            <video autoplay muted loop playsinline preload="metadata" class="absolute inset-0 w-full h-full object-cover scale-105" id="metal-video">
                 <source src="https://videos.pexels.com/video-files/2796220/2796220-hd_1920_1080_25fps.mp4" type="video/mp4">
-                <!-- Industrial/Metal from Pexels -->
             </video>
         </div>
-        
         <div class="absolute inset-0 overlay-metal grain"></div>
-        
-        <div class="relative z-10 h-full flex flex-col justify-end pb-24 md:pb-32 px-8 md:px-16 lg:px-24">
-            <p class="reveal-text delay-100 text-blue-200/50 text-xs md:text-sm tracking-[0.4em] uppercase mb-6 font-inter font-light">
-                Precision Engineering
-            </p>
-            <h1 class="reveal-text delay-200 font-metal text-5xl md:text-7xl lg:text-8xl font-light leading-[0.9] mb-8 text-white/95 tracking-tight">
-                Mechanical<br>
-                <span class="font-bold text-blue-100/40">Harmony</span>
-            </h1>
-            <p class="reveal-text delay-300 text-white/50 text-sm md:text-base max-w-md leading-relaxed font-light mb-10 font-inter">
-                The poetry of precision. Interlocking gears, brushed steel, and the industrial ballet of machined components.
-            </p>
-            <div class="reveal-text delay-400 flex gap-4">
-                <button class="btn-hover px-8 py-4 bg-blue-950/30 backdrop-blur-sm border border-blue-300/20 text-blue-50 text-xs tracking-[0.2em] uppercase font-medium rounded-none hover:bg-blue-900/40">
-                    View Components
-                </button>
-                <button class="btn-hover px-8 py-4 border border-white/20 text-white/60 text-xs tracking-[0.2em] uppercase font-medium rounded-none hover:border-white/40 hover:text-white/90">
-                    Technical Specs
-                </button>
-            </div>
-        </div>
-        
-        <div class="absolute top-8 right-8 md:right-16 z-10 text-[10px] tracking-[0.2em] uppercase text-white/40 font-inter text-right">
-            <div>
-                <span class="block text-white/60 mb-1">Precision</span>
-                CNC Machined
-            </div>
+        <div class="relative z-10 h-full flex flex-col justify-end pb-32 px-8 md:px-24">
+            <p class="reveal-text delay-100 text-blue-200/50 text-xs tracking-[0.4em] uppercase mb-6">Precision Engineering</p>
+            <h1 class="reveal-text delay-200 font-metal text-5xl md:text-8xl font-light mb-8">Mechanical<br><span class="font-bold text-blue-100/40">Harmony</span></h1>
+            <button class="reveal-text delay-400 btn-hover w-fit px-8 py-4 border border-white/20 text-xs tracking-widest uppercase">Technical Specs</button>
         </div>
     </section>
 
-    <!-- Footer -->
+    <section class="hero-section relative w-full h-screen overflow-hidden" id="textiles">
+        <div class="absolute inset-0 video-loading" id="textiles-video-container">
+            <video autoplay muted loop playsinline preload="metadata" class="absolute inset-0 w-full h-full object-cover scale-105" id="textiles-video">
+                <source src="https://videos.pexels.com/video-files/5211247/5211247-hd_1920_1080_25fps.mp4" type="video/mp4">
+            </video>
+        </div>
+        <div class="absolute inset-0 overlay-textile grain"></div>
+        <div class="relative z-10 h-full flex flex-col justify-center px-8 md:px-24">
+            <p class="reveal-text delay-100 text-rose-200/50 text-xs tracking-[0.4em] uppercase mb-6">Woven Narrative</p>
+            <h1 class="reveal-text delay-200 font-nature text-5xl md:text-8xl font-light leading-none mb-8">Raw Silk &<br><em class="italic text-rose-100/60">Linen</em></h1>
+            <button class="reveal-text delay-400 btn-hover w-fit px-10 py-4 border border-rose-200/20 text-xs tracking-widest uppercase">View Weaves</button>
+        </div>
+    </section>
+
+    <section class="hero-section relative w-full h-screen overflow-hidden" id="arch">
+        <div class="absolute inset-0 video-loading" id="arch-video-container">
+            <video autoplay muted loop playsinline preload="metadata" class="absolute inset-0 w-full h-full object-cover scale-105" id="arch-video">
+                <source src="https://videos.pexels.com/video-files/3847253/3847253-hd_1920_1080_25fps.mp4" type="video/mp4">
+            </video>
+        </div>
+        <div class="absolute inset-0 overlay-arch grain"></div>
+        <div class="relative z-10 h-full flex flex-col justify-center items-end text-right px-8 md:px-24">
+            <p class="reveal-text delay-100 text-stone-400 text-xs tracking-[0.4em] uppercase mb-6">Brutalist Form</p>
+            <h1 class="reveal-text delay-200 font-arch text-5xl md:text-8xl mb-8 uppercase">Monolith<br>Shadows</h1>
+            <button class="reveal-text delay-400 btn-hover px-10 py-4 bg-white text-black text-xs tracking-widest uppercase">Explore Space</button>
+        </div>
+    </section>
+
+    <section class="hero-section relative w-full h-screen overflow-hidden" id="liquid">
+        <div class="absolute inset-0 video-loading" id="liquid-video-container">
+            <video autoplay muted loop playsinline preload="metadata" class="absolute inset-0 w-full h-full object-cover scale-105" id="liquid-video">
+                <source src="https://videos.pexels.com/video-files/3125907/3125907-hd_1920_1080_25fps.mp4" type="video/mp4">
+            </video>
+        </div>
+        <div class="absolute inset-0 overlay-liquid grain"></div>
+        <div class="relative z-10 h-full flex flex-col justify-center items-center text-center px-8">
+            <p class="reveal-text delay-100 text-blue-300/60 text-xs tracking-[0.4em] uppercase mb-6">Fluid Dynamics</p>
+            <h1 class="reveal-text delay-200 font-liquid text-6xl md:text-9xl font-light mb-8">Aqueous</h1>
+            <button class="reveal-text delay-400 btn-hover px-10 py-4 border border-blue-400/30 text-xs tracking-widest uppercase">Watch Flow</button>
+        </div>
+    </section>
+
+    <section class="hero-section relative w-full h-screen overflow-hidden" id="light">
+        <div class="absolute inset-0 video-loading" id="light-video-container">
+            <video autoplay muted loop playsinline preload="metadata" class="absolute inset-0 w-full h-full object-cover scale-105" id="light-video">
+                <source src="https://videos.pexels.com/video-files/5192131/5192131-hd_1920_1080_30fps.mp4" type="video/mp4">
+            </video>
+        </div>
+        <div class="absolute inset-0 overlay-light grain"></div>
+        <div class="relative z-10 h-full flex flex-col justify-end pb-32 px-8 md:px-24">
+            <h1 class="reveal-text delay-200 font-metal text-6xl md:text-9xl font-bold mb-4 opacity-20">LUMEN</h1>
+            <p class="reveal-text delay-300 text-orange-100/60 text-sm max-w-sm mb-8">The study of light hitting surface. A spectrum of warmth and digital interference.</p>
+            <button class="reveal-text delay-400 btn-hover w-fit px-10 py-4 bg-orange-500/20 border border-orange-500/50 text-xs tracking-widest uppercase">Begin Study</button>
+        </div>
+    </section>
+
     <footer class="bg-black py-12 px-8 text-center">
-        <p class="text-white/20 text-xs tracking-[0.3em] uppercase">Video Hero Showcase Collection</p>
+        <p class="text-white/20 text-xs tracking-[0.3em] uppercase">Showcase Complete Collection 2026</p>
     </footer>
 
     <script>
-        // Video loading optimization
-        const videos = [
-            { id: 'nature-video', container: 'nature-video-container' },
-            { id: 'still-video', container: 'still-video-container' },
-            { id: 'materials-video', container: 'materials-video-container' },
-            { id: 'metal-video', container: 'metal-video-container' }
-        ];
+        const sections = ['nature', 'still', 'materials', 'metal', 'textiles', 'arch', 'liquid', 'light'];
+        const dots = document.querySelectorAll('.nav-dot');
+        let currentSection = 0;
 
-        // Remove loading state when video can play
-        videos.forEach(({ id, container }) => {
-            const video = document.getElementById(id);
-            const containerEl = document.getElementById(container);
-            
+        // Optimized video loading
+        sections.forEach((id) => {
+            const video = document.getElementById(`${id}-video`);
+            const container = document.getElementById(`${id}-video-container`);
             if (video) {
-                video.addEventListener('canplay', () => {
-                    containerEl.classList.remove('video-loading');
-                });
-                
-                // Fallback if video fails
-                video.addEventListener('error', () => {
-                    containerEl.style.background = `url('${video.poster}') center/cover`;
-                });
+                video.addEventListener('canplay', () => container.classList.remove('video-loading'));
             }
         });
 
-        // Intersection Observer for video optimization (pause off-screen)
-        const observerOptions = {
-            root: null,
-            rootMargin: '0px',
-            threshold: 0.1
-        };
-
+        // Intersection Observer for videos (Play only when visible)
         const videoObserver = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 const video = entry.target.querySelector('video');
-                if (video) {
-                    if (entry.isIntersecting) {
-                        video.play().catch(e => console.log('Autoplay prevented'));
-                    } else {
-                        video.pause();
-                    }
-                }
+                if (video) entry.isIntersecting ? video.play() : video.pause();
             });
-        }, observerOptions);
+        }, { threshold: 0.1 });
 
-        document.querySelectorAll('.hero-section').forEach(section => {
-            videoObserver.observe(section);
-        });
+        document.querySelectorAll('.hero-section').forEach(section => videoObserver.observe(section));
 
-        // Navigation functionality
-        let currentSection = 0;
-        const sections = ['nature', 'still', 'materials', 'metal'];
-        const dots = document.querySelectorAll('.nav-dot');
-
+        // Scroll functionality
         function scrollToSection(index) {
             const element = document.getElementById(sections[index]);
             if (element) {
@@ -391,71 +268,33 @@
         }
 
         function updateDots(index) {
-            dots.forEach((dot, i) => {
-                dot.classList.toggle('active', i === index);
-            });
+            dots.forEach((dot, i) => dot.classList.toggle('active', i === index));
             currentSection = index;
         }
 
-        // Scroll spy
+        // Scroll spy for Dots and Animations
         const sectionObserver = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
                     const index = sections.indexOf(entry.target.id);
                     if (index !== -1) updateDots(index);
-                }
-            });
-        }, { threshold: 0.5 });
-
-        sections.forEach(id => {
-            const el = document.getElementById(id);
-            if (el) sectionObserver.observe(el);
-        });
-
-        // Keyboard navigation
-        document.addEventListener('keydown', (e) => {
-            if (e.key === 'ArrowDown' && currentSection < 3) {
-                scrollToSection(currentSection + 1);
-            } else if (e.key === 'ArrowUp' && currentSection > 0) {
-                scrollToSection(currentSection - 1);
-            }
-        });
-
-        // Touch/swipe support
-        let touchStartY = 0;
-        document.addEventListener('touchstart', e => {
-            touchStartY = e.touches[0].clientY;
-        });
-        
-        document.addEventListener('touchend', e => {
-            const touchEndY = e.changedTouches[0].clientY;
-            const diff = touchStartY - touchEndY;
-            
-            if (Math.abs(diff) > 50) {
-                if (diff > 0 && currentSection < 3) {
-                    scrollToSection(currentSection + 1);
-                } else if (diff < 0 && currentSection > 0) {
-                    scrollToSection(currentSection - 1);
-                }
-            }
-        });
-
-        // Re-trigger animations on scroll
-        const textObserver = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                const texts = entry.target.querySelectorAll('.reveal-text');
-                if (entry.isIntersecting) {
-                    texts.forEach(text => {
+                    
+                    // Re-trigger animations
+                    entry.target.querySelectorAll('.reveal-text').forEach(text => {
                         text.style.animation = 'none';
-                        text.offsetHeight; // Trigger reflow
+                        text.offsetHeight; 
                         text.style.animation = null;
                     });
                 }
             });
-        }, { threshold: 0.3 });
+        }, { threshold: 0.5 });
 
-        document.querySelectorAll('.hero-section').forEach(section => {
-            textObserver.observe(section);
+        sections.forEach(id => sectionObserver.observe(document.getElementById(id)));
+
+        // Keyboard Nav
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowDown' && currentSection < sections.length - 1) scrollToSection(currentSection + 1);
+            if (e.key === 'ArrowUp' && currentSection > 0) scrollToSection(currentSection - 1);
         });
     </script>
 </body>

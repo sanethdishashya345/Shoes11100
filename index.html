@@ -1,380 +1,1301 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Video Hero Showcase Collection | 8 Series</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300&family=Inter:wght@300;400;500;600&family=Space+Grotesk:wght@300;400;500;700&display=swap" rel="stylesheet">
-    <style>
-        ::-webkit-scrollbar { width: 6px; }
-        ::-webkit-scrollbar-track { background: #0a0a0a; }
-        ::-webkit-scrollbar-thumb { background: #333; border-radius: 3px; }
-        
-        .overlay-nature { background: linear-gradient(180deg, rgba(0,20,10,0.2) 0%, rgba(0,10,5,0.4) 50%, rgba(0,15,10,0.7) 100%); }
-        .overlay-still { background: linear-gradient(180deg, rgba(20,15,10,0.3) 0%, rgba(30,20,15,0.2) 50%, rgba(15,10,5,0.6) 100%); }
-        .overlay-material { background: linear-gradient(180deg, rgba(40,30,20,0.4) 0%, rgba(50,35,25,0.3) 50%, rgba(30,20,15,0.7) 100%); }
-        .overlay-metal { background: linear-gradient(180deg, rgba(5,5,8,0.5) 0%, rgba(10,10,15,0.3) 50%, rgba(5,5,10,0.8) 100%); }
-        .overlay-textile { background: linear-gradient(180deg, rgba(30,20,20,0.4) 0%, rgba(40,25,25,0.3) 50%, rgba(20,10,10,0.7) 100%); }
-        .overlay-arch { background: linear-gradient(180deg, rgba(15,15,15,0.4) 0%, rgba(25,25,25,0.2) 50%, rgba(10,10,10,0.8) 100%); }
-        .overlay-liquid { background: linear-gradient(180deg, rgba(10,20,30,0.4) 0%, rgba(15,25,35,0.3) 50%, rgba(5,10,20,0.8) 100%); }
-        .overlay-light { background: linear-gradient(180deg, rgba(40,20,10,0.3) 0%, rgba(30,15,5,0.2) 50%, rgba(20,10,0,0.7) 100%); }
-        
-        @keyframes revealUp {
-            from { opacity: 0; transform: translateY(40px); filter: blur(10px); }
-            to { opacity: 1; transform: translateY(0); filter: blur(0); }
-        }
-        .reveal-text { animation: revealUp 1.2s cubic-bezier(0.16, 1, 0.3, 1) forwards; opacity: 0; }
-        .delay-100 { animation-delay: 0.1s; }
-        .delay-200 { animation-delay: 0.3s; }
-        .delay-300 { animation-delay: 0.5s; }
-        .delay-400 { animation-delay: 0.7s; }
-        
-        .grain::before {
-            content: "";
-            position: absolute;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.03'/%3E%3C/svg%3E");
-            pointer-events: none;
-            z-index: 2;
-        }
-        
-        .btn-hover {
-            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-            position: relative;
-            overflow: hidden;
-        }
-        .btn-hover::before {
-            content: '';
-            position: absolute;
-            top: 0; left: -100%;
-            width: 100%; height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
-            transition: left 0.6s;
-        }
-        .btn-hover:hover::before { left: 100%; }
-        .btn-hover:hover { transform: translateY(-2px); box-shadow: 0 10px 30px rgba(0,0,0,0.3); }
-        
-        .nav-dot {
-            width: 8px; height: 8px;
-            border-radius: 50%;
-            background: rgba(255,255,255,0.3);
-            transition: all 0.3s;
-            cursor: pointer;
-        }
-        .nav-dot.active { background: white; transform: scale(1.3); }
-        
-        .hero-section { scroll-snap-align: start; scroll-snap-stop: always; }
-        html { scroll-behavior: smooth; scroll-snap-type: y mandatory; }
-        
-        .video-loading {
-            background-size: cover;
-            background-position: center;
-        }
-        .video-loading::after {
-            content: '';
-            position: absolute;
-            top: 50%; left: 50%;
-            width: 40px; height: 40px;
-            margin: -20px 0 0 -20px;
-            border: 2px solid rgba(255,255,255,0.1);
-            border-top-color: rgba(255,255,255,0.5);
-            border-radius: 50%;
-            animation: spin 1s linear infinite;
-        }
-        @keyframes spin { to { transform: rotate(360deg); } }
-        
-        .font-nature { font-family: 'Cormorant Garamond', serif; }
-        .font-still { font-family: 'Cormorant Garamond', serif; }
-        .font-material { font-family: 'Inter', sans-serif; }
-        .font-metal { font-family: 'Space Grotesk', sans-serif; }
-        .font-arch { font-family: 'Inter', sans-serif; font-weight: 300; letter-spacing: -0.02em; }
-        .font-liquid { font-family: 'Cormorant Garamond', serif; }
-        
-        video {
-            object-fit: cover;
-            width: 100%;
-            height: 100%;
-            display: block;
-        }
-        
-        @media (max-width: 768px) {
-            html { scroll-snap-type: none; }
-            .hero-section { height: 100dvh; }
-        }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PhoneZone LK — Sri Lanka's Best Phone Store</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --black: #0a0a0a;
+    --white: #ffffff;
+    --accent: #e8ff47;
+    --accent2: #ff6b35;
+    --gray-100: #f5f5f3;
+    --gray-200: #e8e8e5;
+    --gray-400: #9b9b95;
+    --gray-700: #3a3a38;
+    --font-display: 'Syne', sans-serif;
+    --font-body: 'DM Sans', sans-serif;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: var(--font-body);
+    background: var(--black);
+    color: var(--white);
+    line-height: 1.6;
+    overflow-x: hidden;
+  }
+
+  /* NAV */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    background: rgba(10,10,10,0.95);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(255,255,255,0.08);
+    padding: 0 clamp(1rem, 4vw, 3rem);
+    height: 64px;
+    display: flex; align-items: center; justify-content: space-between;
+  }
+
+  .logo {
+    font-family: var(--font-display);
+    font-size: 22px;
+    font-weight: 800;
+    letter-spacing: -0.5px;
+    color: var(--white);
+    text-decoration: none;
+  }
+  .logo span { color: var(--accent); }
+
+  .nav-links {
+    display: flex; gap: 2rem; list-style: none;
+  }
+  .nav-links a {
+    color: rgba(255,255,255,0.6);
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 500;
+    transition: color 0.2s;
+  }
+  .nav-links a:hover { color: var(--white); }
+
+  .nav-actions { display: flex; align-items: center; gap: 1rem; }
+  .nav-btn {
+    background: var(--accent);
+    color: var(--black);
+    border: none;
+    padding: 8px 20px;
+    border-radius: 100px;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    font-family: var(--font-body);
+    transition: opacity 0.2s, transform 0.15s;
+  }
+  .nav-btn:hover { opacity: 0.88; transform: scale(0.98); }
+
+  /* HERO */
+  .hero {
+    min-height: 100vh;
+    padding: clamp(5rem, 10vw, 8rem) clamp(1rem, 4vw, 3rem) 4rem;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 3rem;
+    align-items: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero::before {
+    content: '';
+    position: absolute;
+    width: 600px; height: 600px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(232,255,71,0.12) 0%, transparent 70%);
+    top: -100px; right: -100px;
+    pointer-events: none;
+  }
+
+  .hero-tag {
+    display: inline-block;
+    background: rgba(232,255,71,0.12);
+    color: var(--accent);
+    border: 1px solid rgba(232,255,71,0.3);
+    padding: 5px 14px;
+    border-radius: 100px;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    margin-bottom: 1.5rem;
+  }
+
+  .hero h1 {
+    font-family: var(--font-display);
+    font-size: clamp(2.8rem, 5vw, 4.8rem);
+    font-weight: 800;
+    line-height: 1.0;
+    letter-spacing: -2px;
+    margin-bottom: 1.5rem;
+  }
+  .hero h1 em { color: var(--accent); font-style: normal; }
+
+  .hero p {
+    font-size: 17px;
+    color: rgba(255,255,255,0.55);
+    max-width: 460px;
+    margin-bottom: 2.5rem;
+    line-height: 1.7;
+  }
+
+  .hero-cta {
+    display: flex; gap: 1rem; flex-wrap: wrap;
+  }
+
+  .btn-primary {
+    background: var(--accent);
+    color: var(--black);
+    border: none;
+    padding: 14px 32px;
+    border-radius: 100px;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    font-family: var(--font-body);
+    transition: opacity 0.2s, transform 0.15s;
+    text-decoration: none;
+    display: inline-flex; align-items: center; gap: 8px;
+  }
+  .btn-primary:hover { opacity: 0.88; transform: translateY(-1px); }
+
+  .btn-secondary {
+    background: transparent;
+    color: var(--white);
+    border: 1px solid rgba(255,255,255,0.25);
+    padding: 14px 32px;
+    border-radius: 100px;
+    font-size: 15px;
+    font-weight: 500;
+    cursor: pointer;
+    font-family: var(--font-body);
+    transition: border-color 0.2s, background 0.2s;
+    text-decoration: none;
+    display: inline-flex; align-items: center; gap: 8px;
+  }
+  .btn-secondary:hover { border-color: rgba(255,255,255,0.6); background: rgba(255,255,255,0.05); }
+
+  .hero-stats {
+    display: flex; gap: 2.5rem; margin-top: 3rem; flex-wrap: wrap;
+  }
+  .stat-item { }
+  .stat-num {
+    font-family: var(--font-display);
+    font-size: 28px;
+    font-weight: 700;
+    color: var(--accent);
+  }
+  .stat-label {
+    font-size: 13px;
+    color: rgba(255,255,255,0.45);
+  }
+
+  /* Hero visual */
+  .hero-visual {
+    display: flex; justify-content: center; align-items: center;
+    position: relative;
+  }
+  .phone-showcase {
+    position: relative;
+    width: 280px; height: 560px;
+  }
+  .phone-frame {
+    width: 100%; height: 100%;
+    background: linear-gradient(160deg, #1a1a1a 0%, #0f0f0f 100%);
+    border: 1px solid rgba(255,255,255,0.12);
+    border-radius: 44px;
+    display: flex; flex-direction: column; align-items: center;
+    justify-content: center;
+    box-shadow:
+      0 0 0 6px rgba(255,255,255,0.04),
+      inset 0 1px 0 rgba(255,255,255,0.08);
+    overflow: hidden;
+    position: relative;
+  }
+  .phone-notch {
+    position: absolute; top: 16px;
+    width: 100px; height: 28px;
+    background: #0a0a0a;
+    border-radius: 100px;
+  }
+  .phone-screen-content {
+    text-align: center; padding: 2rem;
+  }
+  .phone-model-name {
+    font-family: var(--font-display);
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--white);
+    margin-bottom: 0.5rem;
+  }
+  .phone-price-tag {
+    font-size: 13px;
+    color: var(--accent);
+    font-weight: 600;
+  }
+  .phone-icon {
+    font-size: 80px;
+    margin-bottom: 1rem;
+    filter: grayscale(0.3);
+  }
+
+  .floating-badge {
+    position: absolute;
+    background: var(--black);
+    border: 1px solid rgba(255,255,255,0.15);
+    border-radius: 12px;
+    padding: 10px 14px;
+    font-size: 12px;
+    font-weight: 500;
+  }
+  .floating-badge.left {
+    left: -60px; top: 30%;
+  }
+  .floating-badge.right {
+    right: -60px; bottom: 35%;
+  }
+  .badge-val {
+    font-family: var(--font-display);
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--accent);
+  }
+
+  /* CATEGORIES */
+  .section {
+    padding: clamp(3rem, 8vw, 6rem) clamp(1rem, 4vw, 3rem);
+  }
+
+  .section-header {
+    display: flex; justify-content: space-between; align-items: flex-end;
+    margin-bottom: 2.5rem; flex-wrap: wrap; gap: 1rem;
+  }
+  .section-title {
+    font-family: var(--font-display);
+    font-size: clamp(1.8rem, 3vw, 2.8rem);
+    font-weight: 800;
+    letter-spacing: -1px;
+    line-height: 1.1;
+  }
+  .section-title span { color: var(--accent); }
+
+  .view-all {
+    color: rgba(255,255,255,0.5);
+    text-decoration: none;
+    font-size: 14px;
+    display: flex; align-items: center; gap: 6px;
+    transition: color 0.2s;
+  }
+  .view-all:hover { color: var(--white); }
+
+  .cat-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+    gap: 1rem;
+  }
+  .cat-card {
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 16px;
+    padding: 1.5rem 1rem;
+    text-align: center;
+    cursor: pointer;
+    transition: background 0.2s, border-color 0.2s, transform 0.2s;
+    text-decoration: none;
+    color: var(--white);
+  }
+  .cat-card:hover {
+    background: rgba(232,255,71,0.07);
+    border-color: rgba(232,255,71,0.3);
+    transform: translateY(-3px);
+  }
+  .cat-icon { font-size: 32px; margin-bottom: 0.75rem; display: block; }
+  .cat-name {
+    font-family: var(--font-display);
+    font-size: 14px;
+    font-weight: 600;
+  }
+  .cat-count { font-size: 12px; color: rgba(255,255,255,0.4); margin-top: 3px; }
+
+  /* PRODUCTS */
+  .products-section { background: rgba(255,255,255,0.02); }
+
+  .filter-bar {
+    display: flex; gap: 0.5rem; margin-bottom: 2rem; flex-wrap: wrap;
+  }
+  .filter-btn {
+    background: transparent;
+    border: 1px solid rgba(255,255,255,0.12);
+    color: rgba(255,255,255,0.55);
+    padding: 8px 18px;
+    border-radius: 100px;
+    font-size: 13px;
+    font-family: var(--font-body);
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  .filter-btn.active, .filter-btn:hover {
+    background: var(--accent);
+    color: var(--black);
+    border-color: var(--accent);
+    font-weight: 600;
+  }
+
+  .products-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 1.25rem;
+  }
+
+  .product-card {
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 20px;
+    overflow: hidden;
+    cursor: pointer;
+    transition: all 0.25s;
+    position: relative;
+  }
+  .product-card:hover {
+    border-color: rgba(232,255,71,0.25);
+    transform: translateY(-4px);
+    background: rgba(255,255,255,0.06);
+  }
+
+  .product-img {
+    width: 100%; height: 200px;
+    background: rgba(255,255,255,0.03);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 80px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .product-badge {
+    position: absolute;
+    top: 12px; left: 12px;
+    background: var(--accent);
+    color: var(--black);
+    font-size: 10px;
+    font-weight: 700;
+    padding: 3px 10px;
+    border-radius: 100px;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+  }
+  .product-badge.new { background: var(--accent2); color: white; }
+
+  .wishlist-btn {
+    position: absolute;
+    top: 12px; right: 12px;
+    width: 32px; height: 32px;
+    background: rgba(255,255,255,0.08);
+    border: none;
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 15px;
+    transition: background 0.2s;
+    color: rgba(255,255,255,0.6);
+  }
+  .wishlist-btn:hover { background: rgba(255,255,255,0.15); color: white; }
+
+  .product-info { padding: 1rem 1.25rem 1.25rem; }
+
+  .product-brand {
+    font-size: 11px;
+    color: rgba(255,255,255,0.4);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    font-weight: 600;
+    margin-bottom: 4px;
+  }
+  .product-name {
+    font-family: var(--font-display);
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--white);
+    line-height: 1.2;
+    margin-bottom: 8px;
+  }
+
+  .color-dots {
+    display: flex; gap: 5px; margin-bottom: 12px;
+  }
+  .color-dot {
+    width: 12px; height: 12px;
+    border-radius: 50%;
+    border: 1.5px solid rgba(255,255,255,0.2);
+  }
+
+  .product-footer {
+    display: flex; align-items: center; justify-content: space-between;
+  }
+  .product-price {
+    font-family: var(--font-display);
+    font-size: 18px;
+    font-weight: 700;
+  }
+  .product-price .currency {
+    font-size: 11px;
+    color: rgba(255,255,255,0.4);
+    font-weight: 400;
+    font-family: var(--font-body);
+  }
+  .product-price .old-price {
+    font-size: 12px;
+    color: rgba(255,255,255,0.3);
+    text-decoration: line-through;
+    font-weight: 400;
+    font-family: var(--font-body);
+    display: block;
+  }
+
+  .add-btn {
+    width: 36px; height: 36px;
+    background: var(--accent);
+    border: none;
+    border-radius: 50%;
+    font-size: 20px;
+    cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    color: var(--black);
+    font-weight: 700;
+    transition: opacity 0.2s, transform 0.15s;
+  }
+  .add-btn:hover { opacity: 0.85; transform: scale(1.05); }
+
+  /* PROMO BANNER */
+  .promo-banner {
+    background: var(--accent);
+    margin: 0 clamp(1rem, 4vw, 3rem);
+    border-radius: 24px;
+    padding: 3rem 3rem;
+    display: grid; grid-template-columns: 1fr auto;
+    align-items: center; gap: 2rem;
+    overflow: hidden;
+    position: relative;
+  }
+  .promo-banner::after {
+    content: '📱';
+    position: absolute;
+    right: -20px; bottom: -20px;
+    font-size: 140px;
+    opacity: 0.15;
+    transform: rotate(-15deg);
+  }
+  .promo-tag {
+    background: rgba(0,0,0,0.12);
+    color: var(--black);
+    padding: 4px 14px;
+    border-radius: 100px;
+    font-size: 11px;
+    font-weight: 700;
+    display: inline-block;
+    margin-bottom: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+  }
+  .promo-title {
+    font-family: var(--font-display);
+    font-size: clamp(1.8rem, 3vw, 2.5rem);
+    font-weight: 800;
+    color: var(--black);
+    line-height: 1.1;
+    letter-spacing: -1px;
+    margin-bottom: 1rem;
+  }
+  .promo-sub {
+    color: rgba(0,0,0,0.6);
+    font-size: 15px;
+    max-width: 400px;
+  }
+  .promo-btn {
+    background: var(--black);
+    color: var(--white);
+    border: none;
+    padding: 14px 28px;
+    border-radius: 100px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    font-family: var(--font-body);
+    white-space: nowrap;
+    transition: opacity 0.2s;
+  }
+  .promo-btn:hover { opacity: 0.85; }
+
+  /* BRANDS */
+  .brands-strip {
+    padding: 3rem clamp(1rem, 4vw, 3rem);
+    border-top: 1px solid rgba(255,255,255,0.06);
+    border-bottom: 1px solid rgba(255,255,255,0.06);
+    overflow: hidden;
+  }
+  .brands-label {
+    font-size: 11px;
+    color: rgba(255,255,255,0.3);
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    margin-bottom: 1.5rem;
+    font-weight: 600;
+  }
+  .brands-row {
+    display: flex; gap: 3rem; align-items: center; flex-wrap: wrap;
+  }
+  .brand-name {
+    font-family: var(--font-display);
+    font-size: 18px;
+    font-weight: 700;
+    color: rgba(255,255,255,0.2);
+    transition: color 0.2s;
+    cursor: default;
+    user-select: none;
+  }
+  .brand-name:hover { color: rgba(255,255,255,0.7); }
+
+  /* FEATURES */
+  .features-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 1.5rem;
+  }
+  .feature-card {
+    border: 1px solid rgba(255,255,255,0.07);
+    border-radius: 16px;
+    padding: 1.75rem;
+  }
+  .feature-icon {
+    font-size: 28px;
+    margin-bottom: 1rem;
+    display: block;
+    width: 52px; height: 52px;
+    background: rgba(232,255,71,0.1);
+    border-radius: 12px;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .feature-title {
+    font-family: var(--font-display);
+    font-size: 16px;
+    font-weight: 700;
+    margin-bottom: 6px;
+  }
+  .feature-desc {
+    font-size: 13px;
+    color: rgba(255,255,255,0.45);
+    line-height: 1.6;
+  }
+
+  /* TESTIMONIALS */
+  .testimonials-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 1.25rem;
+  }
+  .testimonial-card {
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 16px;
+    padding: 1.5rem;
+  }
+  .stars { color: var(--accent); font-size: 14px; margin-bottom: 0.75rem; }
+  .testimonial-text {
+    font-size: 14px;
+    color: rgba(255,255,255,0.7);
+    line-height: 1.7;
+    margin-bottom: 1rem;
+    font-style: italic;
+  }
+  .testimonial-author {
+    display: flex; align-items: center; gap: 10px;
+  }
+  .avatar {
+    width: 36px; height: 36px;
+    border-radius: 50%;
+    background: rgba(232,255,71,0.15);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--accent);
+    font-family: var(--font-display);
+  }
+  .author-name { font-size: 13px; font-weight: 600; }
+  .author-loc { font-size: 11px; color: rgba(255,255,255,0.35); }
+
+  /* FOOTER */
+  footer {
+    background: rgba(255,255,255,0.02);
+    border-top: 1px solid rgba(255,255,255,0.07);
+    padding: 4rem clamp(1rem, 4vw, 3rem) 2rem;
+  }
+  .footer-grid {
+    display: grid;
+    grid-template-columns: 2fr repeat(3, 1fr);
+    gap: 3rem;
+    margin-bottom: 3rem;
+  }
+  .footer-brand .logo { font-size: 24px; display: inline-block; margin-bottom: 1rem; }
+  .footer-desc {
+    font-size: 14px;
+    color: rgba(255,255,255,0.4);
+    max-width: 260px;
+    line-height: 1.7;
+    margin-bottom: 1.5rem;
+  }
+  .social-links { display: flex; gap: 0.75rem; }
+  .social-link {
+    width: 36px; height: 36px;
+    background: rgba(255,255,255,0.07);
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 16px;
+    text-decoration: none;
+    transition: background 0.2s;
+  }
+  .social-link:hover { background: rgba(255,255,255,0.15); }
+
+  .footer-col h4 {
+    font-family: var(--font-display);
+    font-size: 14px;
+    font-weight: 700;
+    margin-bottom: 1rem;
+    color: var(--white);
+  }
+  .footer-col ul { list-style: none; }
+  .footer-col li { margin-bottom: 0.6rem; }
+  .footer-col a {
+    color: rgba(255,255,255,0.4);
+    text-decoration: none;
+    font-size: 14px;
+    transition: color 0.2s;
+  }
+  .footer-col a:hover { color: var(--white); }
+
+  .footer-bottom {
+    border-top: 1px solid rgba(255,255,255,0.07);
+    padding-top: 1.5rem;
+    display: flex; justify-content: space-between; align-items: center;
+    flex-wrap: wrap; gap: 1rem;
+  }
+  .footer-bottom p { font-size: 13px; color: rgba(255,255,255,0.3); }
+
+  .payment-icons { display: flex; gap: 0.5rem; }
+  .pay-icon {
+    background: rgba(255,255,255,0.08);
+    border-radius: 6px;
+    padding: 4px 10px;
+    font-size: 11px;
+    font-weight: 700;
+    color: rgba(255,255,255,0.5);
+  }
+
+  /* Newsletter */
+  .newsletter-form { display: flex; gap: 0.75rem; max-width: 360px; }
+  .newsletter-input {
+    flex: 1;
+    background: rgba(255,255,255,0.07);
+    border: 1px solid rgba(255,255,255,0.12);
+    border-radius: 100px;
+    padding: 10px 18px;
+    color: var(--white);
+    font-size: 14px;
+    outline: none;
+    font-family: var(--font-body);
+    transition: border-color 0.2s;
+  }
+  .newsletter-input::placeholder { color: rgba(255,255,255,0.3); }
+  .newsletter-input:focus { border-color: rgba(232,255,71,0.5); }
+  .nl-btn {
+    background: var(--accent);
+    color: var(--black);
+    border: none;
+    border-radius: 100px;
+    padding: 10px 18px;
+    font-size: 13px;
+    font-weight: 700;
+    cursor: pointer;
+    font-family: var(--font-body);
+    white-space: nowrap;
+  }
+
+  /* MOBILE NAV */
+  .mobile-nav {
+    display: none;
+    position: fixed;
+    bottom: 0; left: 0; right: 0;
+    background: rgba(10,10,10,0.97);
+    border-top: 1px solid rgba(255,255,255,0.08);
+    padding: 12px;
+    z-index: 99;
+    justify-content: space-around;
+  }
+  .mob-nav-item {
+    display: flex; flex-direction: column; align-items: center; gap: 3px;
+    text-decoration: none; color: rgba(255,255,255,0.4);
+    font-size: 10px; font-weight: 600;
+    transition: color 0.2s;
+    padding: 4px 12px;
+    border-radius: 10px;
+  }
+  .mob-nav-item.active, .mob-nav-item:hover { color: var(--accent); }
+  .mob-nav-item span:first-child { font-size: 20px; }
+
+  /* CART TOAST */
+  .toast {
+    position: fixed;
+    bottom: 80px; right: 1.5rem;
+    background: var(--white);
+    color: var(--black);
+    padding: 12px 20px;
+    border-radius: 12px;
+    font-size: 14px;
+    font-weight: 600;
+    z-index: 200;
+    transform: translateY(100px);
+    opacity: 0;
+    transition: all 0.3s;
+    box-shadow: 0 8px 30px rgba(0,0,0,0.3);
+  }
+  .toast.show { transform: translateY(0); opacity: 1; }
+
+  @media (max-width: 900px) {
+    .hero { grid-template-columns: 1fr; text-align: center; }
+    .hero p { margin-left: auto; margin-right: auto; }
+    .hero-cta { justify-content: center; }
+    .hero-stats { justify-content: center; }
+    .hero-visual { display: none; }
+    .footer-grid { grid-template-columns: 1fr 1fr; }
+    .nav-links { display: none; }
+    .mobile-nav { display: flex; }
+    .promo-banner { grid-template-columns: 1fr; }
+  }
+  @media (max-width: 600px) {
+    .footer-grid { grid-template-columns: 1fr; }
+  }
+
+  /* Scroll animation */
+  .reveal {
+    opacity: 0; transform: translateY(24px);
+    transition: opacity 0.6s, transform 0.6s;
+  }
+  .reveal.visible { opacity: 1; transform: none; }
+</style>
 </head>
-<body class="bg-black text-white overflow-x-hidden">
+<body>
 
-    <nav class="fixed top-0 left-0 w-full z-50 px-6 py-6 flex justify-between items-center mix-blend-difference">
-        <div class="text-sm tracking-[0.3em] uppercase font-light opacity-80">Showcase</div>
-        <div class="hidden lg:flex gap-6 text-[10px] tracking-widest uppercase font-light">
-            <button onclick="scrollToSection(0)" class="hover:opacity-100 opacity-60 transition-opacity">Nature</button>
-            <button onclick="scrollToSection(1)" class="hover:opacity-100 opacity-60 transition-opacity">Still Life</button>
-            <button onclick="scrollToSection(2)" class="hover:opacity-100 opacity-60 transition-opacity">Materials</button>
-            <button onclick="scrollToSection(3)" class="hover:opacity-100 opacity-60 transition-opacity">Metal</button>
-            <button onclick="scrollToSection(4)" class="hover:opacity-100 opacity-60 transition-opacity">Textiles</button>
-            <button onclick="scrollToSection(5)" class="hover:opacity-100 opacity-60 transition-opacity">Arch</button>
-            <button onclick="scrollToSection(6)" class="hover:opacity-100 opacity-60 transition-opacity">Liquid</button>
-            <button onclick="scrollToSection(7)" class="hover:opacity-100 opacity-60 transition-opacity">Light</button>
+<!-- NAV -->
+<nav>
+  <a href="#" class="logo">Phone<span>Zone</span></a>
+  <ul class="nav-links">
+    <li><a href="#products">Phones</a></li>
+    <li><a href="#categories">Categories</a></li>
+    <li><a href="#brands">Brands</a></li>
+    <li><a href="#footer">Contact</a></li>
+  </ul>
+  <div class="nav-actions">
+    <button class="nav-btn" onclick="showToast('🛒 Cart opened!')">🛒 Cart (0)</button>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero" id="home">
+  <div class="hero-content">
+    <div class="hero-tag">🇱🇰 Sri Lanka's #1 Phone Store</div>
+    <h1>Latest Phones,<br><em>Best Prices</em></h1>
+    <p>Free delivery island-wide. Apple, Samsung, Google Pixel, OnePlus — all 100% original products.</p>
+    <div class="hero-cta">
+      <a href="#products" class="btn-primary">Shop Now →</a>
+      <a href="#categories" class="btn-secondary">Browse All</a>
+    </div>
+    <div class="hero-stats">
+      <div class="stat-item">
+        <div class="stat-num">500+</div>
+        <div class="stat-label">Products</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-num">50K+</div>
+        <div class="stat-label">Happy Customers</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-num">100%</div>
+        <div class="stat-label">Original</div>
+      </div>
+    </div>
+  </div>
+  <div class="hero-visual">
+    <div class="phone-showcase">
+      <div class="phone-frame">
+        <div class="phone-notch"></div>
+        <div class="phone-screen-content">
+          <div class="phone-icon">📱</div>
+          <div class="phone-model-name">iPhone 17 Pro</div>
+          <div class="phone-price-tag">Rs. 439,900</div>
         </div>
-    </nav>
+      </div>
+      <div class="floating-badge left">
+        <div class="badge-val">5G</div>
+        <div style="font-size:11px;color:rgba(255,255,255,0.4)">Ready</div>
+      </div>
+      <div class="floating-badge right">
+        <div class="badge-val">Free</div>
+        <div style="font-size:11px;color:rgba(255,255,255,0.4)">Delivery</div>
+      </div>
+    </div>
+  </div>
+</section>
 
-    <div class="fixed right-6 top-1/2 -translate-y-1/2 z-50 flex flex-col gap-4">
-        <div class="nav-dot active" onclick="scrollToSection(0)"></div>
-        <div class="nav-dot" onclick="scrollToSection(1)"></div>
-        <div class="nav-dot" onclick="scrollToSection(2)"></div>
-        <div class="nav-dot" onclick="scrollToSection(3)"></div>
-        <div class="nav-dot" onclick="scrollToSection(4)"></div>
-        <div class="nav-dot" onclick="scrollToSection(5)"></div>
-        <div class="nav-dot" onclick="scrollToSection(6)"></div>
-        <div class="nav-dot" onclick="scrollToSection(7)"></div>
+<!-- BRANDS STRIP -->
+<div class="brands-strip" id="brands">
+  <div class="brands-label">Official Brands</div>
+  <div class="brands-row">
+    <div class="brand-name">Apple</div>
+    <div class="brand-name">Samsung</div>
+    <div class="brand-name">Google</div>
+    <div class="brand-name">OnePlus</div>
+    <div class="brand-name">Xiaomi</div>
+    <div class="brand-name">Nothing</div>
+    <div class="brand-name">OPPO</div>
+    <div class="brand-name">Vivo</div>
+  </div>
+</div>
+
+<!-- CATEGORIES -->
+<section class="section reveal" id="categories">
+  <div class="section-header">
+    <div>
+      <div style="font-size:12px;color:rgba(255,255,255,0.35);text-transform:uppercase;letter-spacing:.12em;margin-bottom:.4rem;font-weight:600;">Browse By</div>
+      <h2 class="section-title">Shop by <span>Category</span></h2>
+    </div>
+    <a href="#" class="view-all">View All →</a>
+  </div>
+  <div class="cat-grid">
+    <a href="#" class="cat-card">
+      <span class="cat-icon">🍎</span>
+      <div class="cat-name">Apple</div>
+      <div class="cat-count">24 products</div>
+    </a>
+    <a href="#" class="cat-card">
+      <span class="cat-icon">📱</span>
+      <div class="cat-name">Android</div>
+      <div class="cat-count">48 products</div>
+    </a>
+    <a href="#" class="cat-card">
+      <span class="cat-icon">🎧</span>
+      <div class="cat-name">Earbuds</div>
+      <div class="cat-count">32 products</div>
+    </a>
+    <a href="#" class="cat-card">
+      <span class="cat-icon">💻</span>
+      <div class="cat-name">Laptops</div>
+      <div class="cat-count">18 products</div>
+    </a>
+    <a href="#" class="cat-card">
+      <span class="cat-icon">⌚</span>
+      <div class="cat-name">Smartwatch</div>
+      <div class="cat-count">15 products</div>
+    </a>
+    <a href="#" class="cat-card">
+      <span class="cat-icon">🎮</span>
+      <div class="cat-name">Gaming</div>
+      <div class="cat-count">22 products</div>
+    </a>
+    <a href="#" class="cat-card">
+      <span class="cat-icon">📷</span>
+      <div class="cat-name">Cameras</div>
+      <div class="cat-count">9 products</div>
+    </a>
+    <a href="#" class="cat-card">
+      <span class="cat-icon">🔌</span>
+      <div class="cat-name">Accessories</div>
+      <div class="cat-count">60+ products</div>
+    </a>
+  </div>
+</section>
+
+<!-- PRODUCTS -->
+<section class="section products-section reveal" id="products">
+  <div class="section-header">
+    <div>
+      <div style="font-size:12px;color:rgba(255,255,255,0.35);text-transform:uppercase;letter-spacing:.12em;margin-bottom:.4rem;font-weight:600;">Featured</div>
+      <h2 class="section-title">Hot <span>Phones</span></h2>
+    </div>
+    <a href="#" class="view-all">View All →</a>
+  </div>
+
+  <div class="filter-bar">
+    <button class="filter-btn active" onclick="filterProducts('all', this)">All</button>
+    <button class="filter-btn" onclick="filterProducts('apple', this)">Apple</button>
+    <button class="filter-btn" onclick="filterProducts('samsung', this)">Samsung</button>
+    <button class="filter-btn" onclick="filterProducts('google', this)">Google</button>
+    <button class="filter-btn" onclick="filterProducts('other', this)">Other</button>
+  </div>
+
+  <div class="products-grid" id="products-grid">
+
+    <div class="product-card" data-brand="apple">
+      <div class="product-img">
+        📱
+        <span class="product-badge">Sale</span>
+        <button class="wishlist-btn" onclick="toggleWish(this)">♡</button>
+      </div>
+      <div class="product-info">
+        <div class="product-brand">Apple</div>
+        <div class="product-name">iPhone 17 Pro</div>
+        <div class="color-dots">
+          <div class="color-dot" style="background:#d4a853;"></div>
+          <div class="color-dot" style="background:#c0c0c0;"></div>
+          <div class="color-dot" style="background:#1e3a5f;"></div>
+        </div>
+        <div class="product-footer">
+          <div class="product-price">
+            <span class="old-price">Rs. 459,900</span>
+            <span class="currency">Rs. </span>439,900
+          </div>
+          <button class="add-btn" onclick="addToCart('iPhone 17 Pro')">+</button>
+        </div>
+      </div>
     </div>
 
-    <!-- 1. NATURE: Aerial Ocean Waves -->
-    <section class="hero-section relative w-full h-screen overflow-hidden" id="nature">
-        <div class="absolute inset-0 video-loading" id="nature-video-container" style="background-image: url('https://images.unsplash.com/photo-1505118380757-91f5f5632de0?auto=format&fit=crop&w=1200&q=80');">
-            <video autoplay muted loop playsinline preload="auto" poster="https://images.unsplash.com/photo-1505118380757-91f5f5632de0?auto=format&fit=crop&w=1200&q=80" class="absolute inset-0 w-full h-full object-cover scale-105" id="nature-video">
-                <source src="https://videos.pexels.com/video-files/31676903/31676903-uhd_2560_1440_30fps.mp4" type="video/mp4">
-            </video>
+    <div class="product-card" data-brand="apple">
+      <div class="product-img">
+        📱
+        <span class="product-badge new">New</span>
+        <button class="wishlist-btn" onclick="toggleWish(this)">♡</button>
+      </div>
+      <div class="product-info">
+        <div class="product-brand">Apple</div>
+        <div class="product-name">iPhone 17e</div>
+        <div class="color-dots">
+          <div class="color-dot" style="background:#f8c8d4;"></div>
+          <div class="color-dot" style="background:#fff;"></div>
+          <div class="color-dot" style="background:#111;"></div>
         </div>
-        <div class="absolute inset-0 overlay-nature grain"></div>
-        <div class="relative z-10 h-full flex flex-col justify-center px-8 md:px-24 max-w-5xl">
-            <p class="reveal-text delay-100 text-emerald-200/70 text-xs tracking-[0.4em] uppercase mb-6 font-light">Organic Textures</p>
-            <h1 class="reveal-text delay-200 font-nature text-5xl md:text-8xl font-light leading-[0.9] mb-8">Where Forest<br><em class="italic font-light text-emerald-100/80">Meets Ocean</em></h1>
-            <button class="reveal-text delay-400 btn-hover w-fit px-8 py-4 bg-white/10 backdrop-blur-sm border border-white/20 text-xs tracking-widest uppercase">Explore Nature</button>
+        <div class="product-footer">
+          <div class="product-price">
+            <span class="currency">Rs. </span>264,900
+          </div>
+          <button class="add-btn" onclick="addToCart('iPhone 17e')">+</button>
         </div>
-    </section>
+      </div>
+    </div>
 
-    <!-- 2. STILL LIFE: Pottery Wheel Throwing -->
-    <section class="hero-section relative w-full h-screen overflow-hidden" id="still">
-        <div class="absolute inset-0 video-loading" id="still-video-container" style="background-image: url('https://images.unsplash.com/photo-1565193566173-7a0ee3dbe261?auto=format&fit=crop&w=1200&q=80');">
-            <video autoplay muted loop playsinline preload="metadata" poster="https://images.unsplash.com/photo-1565193566173-7a0ee3dbe261?auto=format&fit=crop&w=1200&q=80" class="absolute inset-0 w-full h-full object-cover scale-105" id="still-video">
-                <source src="https://videos.pexels.com/video-files/9736574/9736574-hd_1920_1080_25fps.mp4" type="video/mp4">
-            </video>
+    <div class="product-card" data-brand="samsung">
+      <div class="product-img">
+        📲
+        <span class="product-badge">Sale</span>
+        <button class="wishlist-btn" onclick="toggleWish(this)">♡</button>
+      </div>
+      <div class="product-info">
+        <div class="product-brand">Samsung</div>
+        <div class="product-name">Galaxy S25 Ultra</div>
+        <div class="color-dots">
+          <div class="color-dot" style="background:#222;"></div>
+          <div class="color-dot" style="background:#c8b89a;"></div>
+          <div class="color-dot" style="background:#8faacc;"></div>
         </div>
-        <div class="absolute inset-0 overlay-still grain"></div>
-        <div class="relative z-10 h-full flex flex-col justify-center items-end text-right px-8 md:px-24">
-            <p class="reveal-text delay-100 text-amber-200/60 text-xs tracking-[0.4em] uppercase mb-6">Artisan Collection</p>
-            <h1 class="reveal-text delay-200 font-still text-5xl md:text-8xl font-light leading-[0.9] mb-8">Form &<br><em class="italic font-light text-amber-100/70">Transparency</em></h1>
-            <button class="reveal-text delay-400 btn-hover px-8 py-4 bg-amber-950/30 border border-amber-200/20 text-xs tracking-widest uppercase">Shop Still Life</button>
+        <div class="product-footer">
+          <div class="product-price">
+            <span class="old-price">Rs. 389,900</span>
+            <span class="currency">Rs. </span>349,900
+          </div>
+          <button class="add-btn" onclick="addToCart('Galaxy S25 Ultra')">+</button>
         </div>
-    </section>
+      </div>
+    </div>
 
-    <!-- 3. MATERIALS: Leather Working/Close-up -->
-    <section class="hero-section relative w-full h-screen overflow-hidden" id="materials">
-        <div class="absolute inset-0 video-loading" id="materials-video-container" style="background-image: url('https://images.unsplash.com/photo-1558171813-4c088753af8f?auto=format&fit=crop&w=1200&q=80');">
-            <video autoplay muted loop playsinline preload="metadata" poster="https://images.unsplash.com/photo-1558171813-4c088753af8f?auto=format&fit=crop&w=1200&q=80" class="absolute inset-0 w-full h-full object-cover scale-105" id="materials-video">
-                <source src="https://videos.pexels.com/video-files/4043161/4043161-sd_960_540_30fps.mp4" type="video/mp4">
-            </video>
+    <div class="product-card" data-brand="google">
+      <div class="product-img">
+        📱
+        <span class="product-badge new">New</span>
+        <button class="wishlist-btn" onclick="toggleWish(this)">♡</button>
+      </div>
+      <div class="product-info">
+        <div class="product-brand">Google</div>
+        <div class="product-name">Pixel 10 Pro</div>
+        <div class="color-dots">
+          <div class="color-dot" style="background:#4fc3a4;"></div>
+          <div class="color-dot" style="background:#999;"></div>
+          <div class="color-dot" style="background:#111;"></div>
         </div>
-        <div class="absolute inset-0 overlay-material grain"></div>
-        <div class="relative z-10 h-full flex flex-col justify-center items-center text-center px-8">
-            <p class="reveal-text delay-100 text-stone-300/60 text-xs tracking-[0.4em] uppercase mb-6">Tactile Surfaces</p>
-            <h1 class="reveal-text delay-200 font-material text-5xl md:text-8xl font-light mb-8">Leather &<br><span class="font-extralight text-stone-200/80">Woven Texture</span></h1>
-            <button class="reveal-text delay-400 btn-hover px-10 py-4 bg-stone-800/40 border border-stone-400/30 text-xs tracking-widest uppercase">Discover Textures</button>
+        <div class="product-footer">
+          <div class="product-price">
+            <span class="currency">Rs. </span>279,900
+          </div>
+          <button class="add-btn" onclick="addToCart('Pixel 10 Pro')">+</button>
         </div>
-    </section>
+      </div>
+    </div>
 
-    <!-- 4. METAL: Industrial Machinery/Gears -->
-    <section class="hero-section relative w-full h-screen overflow-hidden" id="metal">
-        <div class="absolute inset-0 video-loading" id="metal-video-container" style="background-image: url('https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?auto=format&fit=crop&w=1200&q=80');">
-            <video autoplay muted loop playsinline preload="metadata" poster="https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?auto=format&fit=crop&w=1200&q=80" class="absolute inset-0 w-full h-full object-cover scale-105" id="metal-video">
-                <source src="https://videos.pexels.com/video-files/2796220/2796220-hd_1920_1080_25fps.mp4" type="video/mp4">
-            </video>
+    <div class="product-card" data-brand="other">
+      <div class="product-img">
+        📲
+        <button class="wishlist-btn" onclick="toggleWish(this)">♡</button>
+      </div>
+      <div class="product-info">
+        <div class="product-brand">OnePlus</div>
+        <div class="product-name">13 Pro</div>
+        <div class="color-dots">
+          <div class="color-dot" style="background:#111;"></div>
+          <div class="color-dot" style="background:#f5f0e8;"></div>
         </div>
-        <div class="absolute inset-0 overlay-metal grain"></div>
-        <div class="relative z-10 h-full flex flex-col justify-end pb-32 px-8 md:px-24">
-            <p class="reveal-text delay-100 text-blue-200/50 text-xs tracking-[0.4em] uppercase mb-6">Precision Engineering</p>
-            <h1 class="reveal-text delay-200 font-metal text-5xl md:text-8xl font-light mb-8">Mechanical<br><span class="font-bold text-blue-100/40">Harmony</span></h1>
-            <button class="reveal-text delay-400 btn-hover w-fit px-8 py-4 border border-white/20 text-xs tracking-widest uppercase">Technical Specs</button>
+        <div class="product-footer">
+          <div class="product-price">
+            <span class="currency">Rs. </span>189,900
+          </div>
+          <button class="add-btn" onclick="addToCart('OnePlus 13 Pro')">+</button>
         </div>
-    </section>
+      </div>
+    </div>
 
-    <!-- 5. TEXTILES: Black Silk Flowing -->
-    <section class="hero-section relative w-full h-screen overflow-hidden" id="textiles">
-        <div class="absolute inset-0 video-loading" id="textiles-video-container" style="background-image: url('https://images.unsplash.com/photo-1620799140408-edc6dcb6d633?auto=format&fit=crop&w=1200&q=80');">
-            <video autoplay muted loop playsinline preload="metadata" poster="https://images.unsplash.com/photo-1620799140408-edc6dcb6d633?auto=format&fit=crop&w=1200&q=80" class="absolute inset-0 w-full h-full object-cover scale-105" id="textiles-video">
-                <source src="https://videos.pexels.com/video-files/7677322/7677322-hd_1920_1080_30fps.mp4" type="video/mp4">
-            </video>
+    <div class="product-card" data-brand="samsung">
+      <div class="product-img">
+        📱
+        <span class="product-badge">Sale</span>
+        <button class="wishlist-btn" onclick="toggleWish(this)">♡</button>
+      </div>
+      <div class="product-info">
+        <div class="product-brand">Samsung</div>
+        <div class="product-name">Galaxy Z Fold 7</div>
+        <div class="color-dots">
+          <div class="color-dot" style="background:#3a3a3a;"></div>
+          <div class="color-dot" style="background:#c8d8c8;"></div>
         </div>
-        <div class="absolute inset-0 overlay-textile grain"></div>
-        <div class="relative z-10 h-full flex flex-col justify-center px-8 md:px-24">
-            <p class="reveal-text delay-100 text-rose-200/50 text-xs tracking-[0.4em] uppercase mb-6">Woven Narrative</p>
-            <h1 class="reveal-text delay-200 font-nature text-5xl md:text-8xl font-light leading-none mb-8">Raw Silk &<br><em class="italic text-rose-100/60">Linen</em></h1>
-            <button class="reveal-text delay-400 btn-hover w-fit px-10 py-4 border border-rose-200/20 text-xs tracking-widest uppercase">View Weaves</button>
+        <div class="product-footer">
+          <div class="product-price">
+            <span class="old-price">Rs. 479,900</span>
+            <span class="currency">Rs. </span>449,900
+          </div>
+          <button class="add-btn" onclick="addToCart('Galaxy Z Fold 7')">+</button>
         </div>
-    </section>
+      </div>
+    </div>
 
-    <!-- 6. ARCHITECTURE: Modern Concrete Building -->
-    <section class="hero-section relative w-full h-screen overflow-hidden" id="arch">
-        <div class="absolute inset-0 video-loading" id="arch-video-container" style="background-image: url('https://images.unsplash.com/photo-1486718448742-163732cd1544?auto=format&fit=crop&w=1200&q=80');">
-            <video autoplay muted loop playsinline preload="metadata" poster="https://images.unsplash.com/photo-1486718448742-163732cd1544?auto=format&fit=crop&w=1200&q=80" class="absolute inset-0 w-full h-full object-cover scale-105" id="arch-video">
-                <source src="https://videos.pexels.com/video-files/3847253/3847253-hd_1920_1080_25fps.mp4" type="video/mp4">
-            </video>
+    <div class="product-card" data-brand="other">
+      <div class="product-img">
+        📱
+        <span class="product-badge new">New</span>
+        <button class="wishlist-btn" onclick="toggleWish(this)">♡</button>
+      </div>
+      <div class="product-info">
+        <div class="product-brand">Nothing</div>
+        <div class="product-name">Phone (3a)</div>
+        <div class="color-dots">
+          <div class="color-dot" style="background:#e0e0e0;"></div>
+          <div class="color-dot" style="background:#111;"></div>
         </div>
-        <div class="absolute inset-0 overlay-arch grain"></div>
-        <div class="relative z-10 h-full flex flex-col justify-center items-end text-right px-8 md:px-24">
-            <p class="reveal-text delay-100 text-stone-400 text-xs tracking-[0.4em] uppercase mb-6">Brutalist Form</p>
-            <h1 class="reveal-text delay-200 font-arch text-5xl md:text-8xl mb-8 uppercase">Monolith<br>Shadows</h1>
-            <button class="reveal-text delay-400 btn-hover px-10 py-4 bg-white text-black text-xs tracking-widest uppercase">Explore Space</button>
+        <div class="product-footer">
+          <div class="product-price">
+            <span class="currency">Rs. </span>99,900
+          </div>
+          <button class="add-btn" onclick="addToCart('Nothing Phone 3a')">+</button>
         </div>
-    </section>
+      </div>
+    </div>
 
-    <!-- 7. LIQUID: Colorful Ink in Water -->
-    <section class="hero-section relative w-full h-screen overflow-hidden" id="liquid">
-        <div class="absolute inset-0 video-loading" id="liquid-video-container" style="background-image: url('https://images.unsplash.com/photo-1541701494587-cb58502866ab?auto=format&fit=crop&w=1200&q=80');">
-            <video autoplay muted loop playsinline preload="metadata" poster="https://images.unsplash.com/photo-1541701494587-cb58502866ab?auto=format&fit=crop&w=1200&q=80" class="absolute inset-0 w-full h-full object-cover scale-105" id="liquid-video">
-                <source src="https://videos.pexels.com/video-files/5593572/5593572-hd_1920_1080_30fps.mp4" type="video/mp4">
-            </video>
+    <div class="product-card" data-brand="apple">
+      <div class="product-img">
+        📱
+        <button class="wishlist-btn" onclick="toggleWish(this)">♡</button>
+      </div>
+      <div class="product-info">
+        <div class="product-brand">Apple</div>
+        <div class="product-name">iPhone 16</div>
+        <div class="color-dots">
+          <div class="color-dot" style="background:#4875c4;"></div>
+          <div class="color-dot" style="background:#3aafa9;"></div>
+          <div class="color-dot" style="background:#f0a5b8;"></div>
+          <div class="color-dot" style="background:#fff;"></div>
         </div>
-        <div class="absolute inset-0 overlay-liquid grain"></div>
-        <div class="relative z-10 h-full flex flex-col justify-center items-center text-center px-8">
-            <p class="reveal-text delay-100 text-blue-300/60 text-xs tracking-[0.4em] uppercase mb-6">Fluid Dynamics</p>
-            <h1 class="reveal-text delay-200 font-liquid text-6xl md:text-9xl font-light mb-8">Aqueous</h1>
-            <button class="reveal-text delay-400 btn-hover px-10 py-4 border border-blue-400/30 text-xs tracking-widest uppercase">Watch Flow</button>
+        <div class="product-footer">
+          <div class="product-price">
+            <span class="currency">Rs. </span>249,900
+          </div>
+          <button class="add-btn" onclick="addToCart('iPhone 16')">+</button>
         </div>
-    </section>
+      </div>
+    </div>
 
-    <!-- 8. LIGHT: Warm Golden Light Rays -->
-    <section class="hero-section relative w-full h-screen overflow-hidden" id="light">
-        <div class="absolute inset-0 video-loading" id="light-video-container" style="background-image: url('https://images.unsplash.com/photo-1507400492013-162706c8c05e?auto=format&fit=crop&w=1200&q=80');">
-            <video autoplay muted loop playsinline preload="metadata" poster="https://images.unsplash.com/photo-1507400492013-162706c8c05e?auto=format&fit=crop&w=1200&q=80" class="absolute inset-0 w-full h-full object-cover scale-105" id="light-video">
-                <source src="https://videos.pexels.com/video-files/3129671/3129671-hd_1920_1080_30fps.mp4" type="video/mp4">
-            </video>
+  </div>
+</section>
+
+<!-- PROMO BANNER -->
+<div style="padding: 0 clamp(1rem, 4vw, 3rem); margin-bottom: 4rem;">
+  <div class="promo-banner reveal">
+    <div>
+      <div class="promo-tag">🔥 Flash Sale — Today Only</div>
+      <h3 class="promo-title">Up to 20% Off<br>All Apple Devices</h3>
+      <p class="promo-sub">Limited stock. Free island-wide delivery on all orders above Rs. 50,000.</p>
+    </div>
+    <button class="promo-btn" onclick="showToast('🎉 Sale page loading!')">Shop Sale →</button>
+  </div>
+</div>
+
+<!-- FEATURES -->
+<section class="section reveal">
+  <div class="section-header">
+    <h2 class="section-title">Why Choose <span>Us?</span></h2>
+  </div>
+  <div class="features-grid">
+    <div class="feature-card">
+      <div class="feature-icon">🚚</div>
+      <div class="feature-title">Island-Wide Free Delivery</div>
+      <div class="feature-desc">Free delivery to any location across Sri Lanka. 1–3 business days.</div>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">✅</div>
+      <div class="feature-title">100% Original Products</div>
+      <div class="feature-desc">All products are authentic and come with a manufacturer warranty. No fakes, ever.</div>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">🔄</div>
+      <div class="feature-title">Easy Returns</div>
+      <div class="feature-desc">7-day no-questions-asked return policy. Product damaged? Money back guaranteed.</div>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">💳</div>
+      <div class="feature-title">Secure Payment</div>
+      <div class="feature-desc">Card, bank transfer, or cash on delivery — choose the payment method that suits you.</div>
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section class="section reveal">
+  <div class="section-header">
+    <h2 class="section-title">Customer <span>Reviews</span></h2>
+  </div>
+  <div class="testimonials-grid">
+    <div class="testimonial-card">
+      <div class="stars">★★★★★</div>
+      <p class="testimonial-text">"Ordered the iPhone 17 Pro — came in original box with warranty card and delivered super fast. Totally satisfied!"</p>
+      <div class="testimonial-author">
+        <div class="avatar">K</div>
+        <div>
+          <div class="author-name">Kasun Perera</div>
+          <div class="author-loc">Colombo</div>
         </div>
-        <div class="absolute inset-0 overlay-light grain"></div>
-        <div class="relative z-10 h-full flex flex-col justify-end pb-32 px-8 md:px-24">
-            <h1 class="reveal-text delay-200 font-metal text-6xl md:text-9xl font-bold mb-4 opacity-20">LUMEN</h1>
-            <p class="reveal-text delay-300 text-orange-100/60 text-sm max-w-sm mb-8">The study of light hitting surface. A spectrum of warmth and digital interference.</p>
-            <button class="reveal-text delay-400 btn-hover w-fit px-10 py-4 bg-orange-500/20 border border-orange-500/50 text-xs tracking-widest uppercase">Begin Study</button>
+      </div>
+    </div>
+    <div class="testimonial-card">
+      <div class="stars">★★★★★</div>
+      <p class="testimonial-text">"Got the Samsung Galaxy at a really reasonable price. Fast delivery, great packaging. Will definitely order again!"</p>
+      <div class="testimonial-author">
+        <div class="avatar">S</div>
+        <div>
+          <div class="author-name">Sithumi Fernando</div>
+          <div class="author-loc">Kandy</div>
         </div>
-    </section>
+      </div>
+    </div>
+    <div class="testimonial-card">
+      <div class="stars">★★★★☆</div>
+      <p class="testimonial-text">"Ordered the Google Pixel 10 Pro and it arrived within 2 days. The phone is absolutely gorgeous. Highly recommend!"</p>
+      <div class="testimonial-author">
+        <div class="avatar">D</div>
+        <div>
+          <div class="author-name">Dinith Rajapaksa</div>
+          <div class="author-loc">Galle</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
 
-    <footer class="bg-black py-12 px-8 text-center">
-        <p class="text-white/20 text-xs tracking-[0.3em] uppercase">Showcase Complete Collection 2026</p>
-    </footer>
+<!-- FOOTER -->
+<footer id="footer">
+  <div class="footer-grid">
+    <div class="footer-brand">
+      <a href="#" class="logo">Phone<span>Zone</span></a>
+      <p class="footer-desc">Sri Lanka's best online phone store. Original products, best prices, and fast delivery nationwide.</p>
+      <div class="social-links">
+        <a href="#" class="social-link">f</a>
+        <a href="#" class="social-link">ig</a>
+        <a href="#" class="social-link">tk</a>
+        <a href="#" class="social-link">yt</a>
+      </div>
+    </div>
+    <div class="footer-col">
+      <h4>Products</h4>
+      <ul>
+        <li><a href="#">iPhones</a></li>
+        <li><a href="#">Samsung</a></li>
+        <li><a href="#">Google Pixel</a></li>
+        <li><a href="#">Accessories</a></li>
+        <li><a href="#">Smartwatches</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Company</h4>
+      <ul>
+        <li><a href="#">About Us</a></li>
+        <li><a href="#">Contact</a></li>
+        <li><a href="#">Careers</a></li>
+        <li><a href="#">Blog</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Newsletter</h4>
+      <p style="font-size:13px;color:rgba(255,255,255,0.4);margin-bottom:.75rem;line-height:1.6;">Latest deals direct to your inbox.</p>
+      <div class="newsletter-form">
+        <input type="email" class="newsletter-input" placeholder="your@email.com">
+        <button class="nl-btn" onclick="showToast('✅ Subscribed!')">→</button>
+      </div>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>© 2026 PhoneZone LK. All rights reserved.</p>
+    <div class="payment-icons">
+      <div class="pay-icon">VISA</div>
+      <div class="pay-icon">MC</div>
+      <div class="pay-icon">COD</div>
+    </div>
+  </div>
+</footer>
 
-    <script>
-        const sections = ['nature', 'still', 'materials', 'metal', 'textiles', 'arch', 'liquid', 'light'];
-        const dots = document.querySelectorAll('.nav-dot');
-        let currentSection = 0;
+<!-- MOBILE NAV -->
+<div class="mobile-nav">
+  <a href="#home" class="mob-nav-item active"><span>🏠</span><span>Home</span></a>
+  <a href="#categories" class="mob-nav-item"><span>📂</span><span>Categories</span></a>
+  <a href="#products" class="mob-nav-item"><span>📱</span><span>Shop</span></a>
+  <a href="#footer" class="mob-nav-item"><span>👤</span><span>Account</span></a>
+</div>
 
-        // Video loading management
-        sections.forEach((id) => {
-            const video = document.getElementById(`${id}-video`);
-            const container = document.getElementById(`${id}-video-container`);
-            
-            if (video && container) {
-                video.addEventListener('canplay', () => {
-                    container.classList.remove('video-loading');
-                    container.style.backgroundImage = 'none';
-                });
-                
-                video.addEventListener('error', () => {
-                    console.log(`Video failed for ${id}, using poster`);
-                    container.classList.remove('video-loading');
-                });
-                
-                video.play().catch(err => {
-                    console.log(`Autoplay blocked for ${id}:`, err);
-                    document.addEventListener('click', () => video.play(), { once: true });
-                    document.addEventListener('scroll', () => video.play(), { once: true });
-                });
-            }
-        });
+<!-- TOAST -->
+<div class="toast" id="toast"></div>
 
-        // Intersection Observer for videos (Play only when visible)
-        const videoObserver = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                const video = entry.target.querySelector('video');
-                if (video) {
-                    if (entry.isIntersecting) {
-                        video.play().catch(e => console.log('Play error:', e));
-                    } else {
-                        video.pause();
-                    }
-                }
-            });
-        }, { threshold: 0.15 });
+<script>
+let cartCount = 0;
 
-        document.querySelectorAll('.hero-section').forEach(section => {
-            videoObserver.observe(section);
-        });
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 2500);
+}
 
-        function scrollToSection(index) {
-            const element = document.getElementById(sections[index]);
-            if (element) {
-                element.scrollIntoView({ behavior: 'smooth' });
-                updateDots(index);
-            }
-        }
+function addToCart(name) {
+  cartCount++;
+  document.querySelector('.nav-btn').textContent = `🛒 Cart (${cartCount})`;
+  showToast(`✅ ${name} added to cart!`);
+}
 
-        function updateDots(index) {
-            dots.forEach((dot, i) => dot.classList.toggle('active', i === index));
-            currentSection = index;
-        }
+function toggleWish(btn) {
+  btn.textContent = btn.textContent === '♡' ? '♥' : '♡';
+  btn.style.color = btn.textContent === '♥' ? '#ff6b6b' : '';
+  showToast(btn.textContent === '♥' ? '❤️ Added to wishlist!' : '💔 Removed from wishlist');
+}
 
-        const sectionObserver = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    const index = sections.indexOf(entry.target.id);
-                    if (index !== -1) updateDots(index);
-                    
-                    entry.target.querySelectorAll('.reveal-text').forEach(text => {
-                        text.style.animation = 'none';
-                        text.offsetHeight;
-                        text.style.animation = null;
-                    });
-                }
-            });
-        }, { threshold: 0.5 });
+function filterProducts(brand, btn) {
+  document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  document.querySelectorAll('.product-card').forEach(card => {
+    if (brand === 'all' || card.dataset.brand === brand) {
+      card.style.display = '';
+    } else {
+      card.style.display = 'none';
+    }
+  });
+}
 
-        sections.forEach(id => {
-            const el = document.getElementById(id);
-            if (el) sectionObserver.observe(el);
-        });
-
-        document.addEventListener('keydown', (e) => {
-            if (e.key === 'ArrowDown' && currentSection < sections.length - 1) {
-                e.preventDefault();
-                scrollToSection(currentSection + 1);
-            }
-            if (e.key === 'ArrowUp' && currentSection > 0) {
-                e.preventDefault();
-                scrollToSection(currentSection - 1);
-            }
-        });
-
-        let touchStartY = 0;
-        let touchStartTime = 0;
-        
-        document.addEventListener('touchstart', e => {
-            touchStartY = e.touches[0].clientY;
-            touchStartTime = Date.now();
-        }, { passive: true });
-        
-        document.addEventListener('touchend', e => {
-            const touchEndY = e.changedTouches[0].clientY;
-            const diff = touchStartY - touchEndY;
-            const timeDiff = Date.now() - touchStartTime;
-            
-            if (Math.abs(diff) > 80 && timeDiff < 800) {
-                if (diff > 0 && currentSection < sections.length - 1) {
-                    scrollToSection(currentSection + 1);
-                } else if (diff < 0 && currentSection > 0) {
-                    scrollToSection(currentSection - 1);
-                }
-            }
-        }, { passive: true });
-
-        window.addEventListener('load', () => {
-            document.querySelectorAll('video').forEach(video => {
-                video.play().catch(e => console.log('Load play error:', e));
-            });
-        });
-    </script>
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+}, { threshold: 0.1 });
+document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+</script>
 </body>
 </html>
